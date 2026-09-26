@@ -1,0 +1,2346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="RPM Patient Outcomes and Rewards prototype"
+  />
+
+  <!-- PWA / installed-app metadata -->
+  <meta name="theme-color" content="#102a43" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="RPM Rewards" />
+
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+
+  <title>RPM Rewards | Patient Portal</title>
+
+  <style>
+    :root {
+      --navy: #102a43;
+      --navy-dark: #081c2c;
+      --blue: #1976d2;
+      --blue-soft: #e8f2ff;
+      --green: #14804a;
+      --green-soft: #e9f8ef;
+      --amber: #a05b00;
+      --amber-soft: #fff4df;
+      --red: #b42318;
+      --red-soft: #fff0ef;
+      --slate-900: #172b4d;
+      --slate-700: #42526e;
+      --slate-600: #5e6c84;
+      --slate-500: #6b778c;
+      --slate-300: #c1c7d0;
+      --slate-200: #dfe1e6;
+      --slate-100: #f4f5f7;
+      --white: #ffffff;
+      --shadow: 0 14px 40px rgba(16, 42, 67, 0.10);
+      --radius-lg: 22px;
+      --radius-md: 14px;
+      --radius-sm: 10px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+      background: #edf3f8;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--slate-900);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(38, 132, 255, 0.15), transparent 31rem),
+        linear-gradient(160deg, #eef6fc 0%, #f6f9fc 48%, #ecf2f7 100%);
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.64;
+    }
+
+    .app-shell {
+      width: min(100%, 700px);
+      margin: 0 auto;
+      padding: 20px 16px 36px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 4px 0 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      color: var(--navy);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 39px;
+      height: 39px;
+      place-items: center;
+      color: white;
+      font-size: 20px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #1266b0, #00a58b);
+      box-shadow: 0 6px 16px rgba(25, 118, 210, 0.25);
+    }
+
+    .prototype-badge {
+      padding: 7px 10px;
+      color: var(--amber);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border: 1px solid #f0d6a2;
+      border-radius: 999px;
+      background: #fff8e9;
+    }
+
+    .screen {
+      display: none;
+      animation: fade-in 220ms ease-out;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+        transform: translateY(5px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card {
+      overflow: hidden;
+      border: 1px solid rgba(193, 199, 208, 0.65);
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.97);
+      box-shadow: var(--shadow);
+    }
+
+    .card-body {
+      padding: 24px;
+    }
+
+    .hero-card {
+      position: relative;
+      overflow: hidden;
+      color: white;
+      border: none;
+      background:
+        radial-gradient(circle at 100% 0%, rgba(69, 181, 255, 0.36), transparent 15rem),
+        linear-gradient(135deg, #102a43 0%, #0e4f77 65%, #008d7f 145%);
+    }
+
+    .hero-card::after {
+      position: absolute;
+      right: -58px;
+      bottom: -92px;
+      width: 220px;
+      height: 220px;
+      content: "";
+      border: 42px solid rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+    }
+
+    .hero-card .card-body {
+      position: relative;
+      z-index: 1;
+      padding: 31px 26px;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 520px;
+      margin-bottom: 12px;
+      font-size: clamp(1.8rem, 7vw, 2.6rem);
+      line-height: 1.1;
+      letter-spacing: -0.045em;
+    }
+
+    h2 {
+      margin-bottom: 7px;
+      font-size: 1.27rem;
+      letter-spacing: -0.025em;
+    }
+
+    h3 {
+      margin-bottom: 6px;
+      font-size: 1rem;
+    }
+
+    .hero-card p {
+      max-width: 480px;
+      margin-bottom: 0;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+
+    .section {
+      margin-top: 16px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 26px 4px 10px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 1.08rem;
+    }
+
+    .section-title span {
+      color: var(--slate-600);
+      font-size: 0.82rem;
+    }
+
+    .eyebrow {
+      margin-bottom: 8px;
+      color: var(--blue);
+      font-size: 0.75rem;
+      font-weight: 850;
+      letter-spacing: 0.095em;
+      text-transform: uppercase;
+    }
+
+    .muted {
+      color: var(--slate-600);
+      line-height: 1.55;
+    }
+
+    .small {
+      color: var(--slate-600);
+      font-size: 0.82rem;
+      line-height: 1.5;
+    }
+
+    .notice {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+      padding: 13px 14px;
+      color: #5d4918;
+      font-size: 0.84rem;
+      line-height: 1.45;
+      border: 1px solid #f1dcae;
+      border-radius: var(--radius-sm);
+      background: #fffaed;
+    }
+
+    .notice-icon {
+      flex: 0 0 auto;
+      font-size: 1.05rem;
+    }
+
+    .field {
+      margin-top: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--slate-700);
+      font-size: 0.9rem;
+      font-weight: 750;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .input-prefix {
+      position: absolute;
+      top: 50%;
+      left: 15px;
+      color: var(--slate-500);
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="number"] {
+      width: 100%;
+      padding: 14px 15px;
+      color: var(--slate-900);
+      font-size: 1rem;
+      font-weight: 600;
+      outline: none;
+      border: 1px solid var(--slate-300);
+      border-radius: 12px;
+      background: white;
+      transition: border-color 150ms ease, box-shadow 150ms ease;
+    }
+
+    input.has-prefix {
+      padding-left: 44px;
+    }
+
+    input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(25, 118, 210, 0.13);
+    }
+
+    input::placeholder {
+      color: #a5adba;
+      font-weight: 500;
+    }
+
+    .pin-input {
+      letter-spacing: 0.24em;
+      text-align: center;
+    }
+
+    .button-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 12px 17px;
+      border: 0;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 800;
+      transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease;
+    }
+
+    .button:hover:not(:disabled) {
+      transform: translateY(-1px);
+    }
+
+    .button-primary {
+      flex: 1;
+      color: white;
+      background: linear-gradient(135deg, #176fc0, #0960b1);
+      box-shadow: 0 9px 17px rgba(25, 118, 210, 0.22);
+    }
+
+    .button-success {
+      color: white;
+      background: linear-gradient(135deg, #11854c, #08733d);
+      box-shadow: 0 9px 17px rgba(20, 128, 74, 0.2);
+    }
+
+    .button-secondary {
+      color: var(--navy);
+      border: 1px solid var(--slate-300);
+      background: white;
+    }
+
+    .button-text {
+      min-height: 38px;
+      padding: 6px 9px;
+      color: var(--blue);
+      background: transparent;
+    }
+
+    .status-message {
+      display: none;
+      margin-top: 14px;
+      padding: 12px 13px;
+      font-size: 0.88rem;
+      line-height: 1.45;
+      border-radius: 10px;
+    }
+
+    .status-message.visible {
+      display: block;
+    }
+
+    .status-message.error {
+      color: var(--red);
+      border: 1px solid #f1c3c0;
+      background: var(--red-soft);
+    }
+
+    .status-message.info {
+      color: #155a96;
+      border: 1px solid #bddaf7;
+      background: var(--blue-soft);
+    }
+
+    .status-message.success {
+      color: var(--green);
+      border: 1px solid #bde3cc;
+      background: var(--green-soft);
+    }
+
+    /* PWA install banner */
+
+    .install-banner {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto auto;
+      gap: 10px;
+      align-items: center;
+      margin: -7px 0 18px;
+      padding: 11px 12px;
+      border: 1px solid #c9e5df;
+      border-radius: 14px;
+      background: linear-gradient(145deg, #f3fffc, #eaf8f5);
+      box-shadow: 0 7px 18px rgba(16, 42, 67, 0.07);
+    }
+
+    .install-banner-icon {
+      display: grid;
+      width: 35px;
+      height: 35px;
+      place-items: center;
+      color: white;
+      font-size: 0.95rem;
+      border-radius: 11px;
+      background: linear-gradient(135deg, #1266b0, #00a58b);
+    }
+
+    .install-banner-copy {
+      min-width: 0;
+    }
+
+    .install-banner-copy strong {
+      display: block;
+      color: var(--navy);
+      font-size: 0.83rem;
+    }
+
+    .install-banner-copy span {
+      display: block;
+      margin-top: 2px;
+      color: var(--slate-600);
+      font-size: 0.73rem;
+      line-height: 1.35;
+    }
+
+    .install-button {
+      min-height: 34px;
+      padding: 7px 10px;
+      color: white;
+      font-size: 0.78rem;
+      font-weight: 800;
+      border: 0;
+      border-radius: 9px;
+      background: linear-gradient(135deg, #176fc0, #0960b1);
+    }
+
+    .install-dismiss {
+      width: 29px;
+      height: 29px;
+      padding: 0;
+      color: var(--slate-600);
+      font-size: 1.15rem;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+    }
+
+    .ios-install-help {
+      margin: -7px 0 18px;
+      padding: 12px 13px;
+      color: #155a96;
+      font-size: 0.8rem;
+      line-height: 1.45;
+      border: 1px solid #bddaf7;
+      border-radius: 12px;
+      background: var(--blue-soft);
+    }
+
+    .ios-install-help strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--navy);
+      font-size: 0.84rem;
+    }
+
+    /* Monitoring plan card */
+
+    .monitoring-plan-card {
+      overflow: hidden;
+      border-color: #cfe7e2;
+      background:
+        radial-gradient(circle at 100% 0%, rgba(43, 184, 157, 0.15), transparent 13rem),
+        linear-gradient(145deg, #f8fffd, #eefaf7);
+    }
+
+    .monitoring-plan-topline {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .monitoring-plan-topline h2 {
+      margin-bottom: 6px;
+      color: var(--navy);
+    }
+
+    .monitoring-plan-topline p {
+      max-width: 450px;
+      margin-bottom: 0;
+    }
+
+    .monitoring-plan-icon {
+      display: grid;
+      flex: 0 0 auto;
+      width: 48px;
+      height: 48px;
+      place-items: center;
+      color: white;
+      font-size: 1.25rem;
+      border-radius: 15px;
+      background: linear-gradient(135deg, #1266b0, #00a58b);
+      box-shadow: 0 7px 16px rgba(0, 132, 114, 0.2);
+    }
+
+    .monitoring-plan-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 17px;
+    }
+
+    .monitoring-plan-item {
+      padding: 14px;
+      border: 1px solid #cfe7e2;
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.82);
+    }
+
+    .monitoring-plan-label {
+      margin-bottom: 7px;
+      color: var(--slate-600);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .monitoring-plan-value {
+      overflow-wrap: anywhere;
+      color: var(--navy);
+      font-size: 1.06rem;
+      font-weight: 850;
+      letter-spacing: -0.015em;
+    }
+
+    .monitoring-plan-reminder {
+      margin: 15px 0 0;
+      padding: 11px 12px;
+      color: #145f55;
+      font-size: 0.87rem;
+      font-weight: 650;
+      line-height: 1.45;
+      border-left: 3px solid #12a18c;
+      border-radius: 0 9px 9px 0;
+      background: rgba(202, 243, 233, 0.58);
+    }
+
+    .profile-card {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 16px;
+      padding: 19px;
+    }
+
+    .avatar {
+      display: grid;
+      width: 51px;
+      height: 51px;
+      place-items: center;
+      color: white;
+      font-size: 1.08rem;
+      font-weight: 850;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #286fae, #18a68e);
+    }
+
+    .profile-name {
+      margin-bottom: 3px;
+      color: var(--navy);
+      font-size: 1.14rem;
+      font-weight: 850;
+      letter-spacing: -0.02em;
+    }
+
+    .profile-meta {
+      color: var(--slate-600);
+      font-size: 0.86rem;
+      line-height: 1.5;
+    }
+
+    .metric-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .metric-box {
+      padding: 14px;
+      border: 1px solid #dce8f4;
+      border-radius: var(--radius-md);
+      background: linear-gradient(155deg, #f8fbff, #f1f8fc);
+    }
+
+    .metric-label {
+      margin-bottom: 7px;
+      color: var(--slate-600);
+      font-size: 0.75rem;
+      font-weight: 750;
+      letter-spacing: 0.035em;
+      text-transform: uppercase;
+    }
+
+    .metric-value {
+      overflow-wrap: anywhere;
+      color: var(--navy);
+      font-size: 1.03rem;
+      font-weight: 850;
+    }
+
+    .result-card {
+      position: relative;
+      overflow: hidden;
+      margin-top: 16px;
+      padding: 22px;
+      border-radius: var(--radius-lg);
+    }
+
+    .result-card.success {
+      border: 1px solid #c4ead2;
+      background: linear-gradient(145deg, #edfbf2, #e0f6e8);
+    }
+
+    .result-card.missed {
+      border: 1px solid #f0d6a1;
+      background: linear-gradient(145deg, #fffaf0, #fff2da);
+    }
+
+    .result-card h2 {
+      margin-bottom: 7px;
+    }
+
+    .result-card p {
+      margin-bottom: 0;
+      color: #385060;
+      line-height: 1.55;
+    }
+
+    .result-icon {
+      display: grid;
+      width: 44px;
+      height: 44px;
+      place-items: center;
+      margin-bottom: 13px;
+      font-size: 1.34rem;
+      border-radius: 14px;
+    }
+
+    .success .result-icon {
+      color: var(--green);
+      background: #c7f0d6;
+    }
+
+    .missed .result-icon {
+      color: var(--amber);
+      background: #ffe5b9;
+    }
+
+    .reward-line {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 15px;
+      padding: 9px 11px;
+      color: var(--green);
+      font-size: 0.9rem;
+      font-weight: 850;
+      border: 1px solid #bce3ca;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.75);
+    }
+
+    .no-reward-line {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 15px;
+      padding: 9px 11px;
+      color: var(--amber);
+      font-size: 0.9rem;
+      font-weight: 800;
+      border: 1px solid #efd49f;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.75);
+    }
+
+    .history-list {
+      overflow: hidden;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md);
+      background: white;
+    }
+
+    .history-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      padding: 15px;
+      border-bottom: 1px solid var(--slate-200);
+    }
+
+    .history-row:last-child {
+      border-bottom: 0;
+    }
+
+    .history-reading {
+      margin-bottom: 4px;
+      color: var(--navy);
+      font-weight: 850;
+    }
+
+    .history-date {
+      color: var(--slate-600);
+      font-size: 0.79rem;
+      line-height: 1.4;
+    }
+
+    .history-message {
+      grid-column: 1 / -1;
+      color: var(--slate-600);
+      font-size: 0.84rem;
+      line-height: 1.45;
+    }
+
+    .pill {
+      align-self: start;
+      padding: 6px 8px;
+      font-size: 0.71rem;
+      font-weight: 850;
+      letter-spacing: 0.025em;
+      white-space: nowrap;
+      border-radius: 999px;
+    }
+
+    .pill-achieved {
+      color: var(--green);
+      background: #dbf5e5;
+    }
+
+    .pill-missed {
+      color: var(--amber);
+      background: #ffefd1;
+    }
+
+    .pill-other {
+      color: var(--slate-600);
+      background: var(--slate-100);
+    }
+
+    .wallet-card {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 15px;
+      align-items: center;
+      padding: 19px;
+      color: white;
+      border: 0;
+      background:
+        radial-gradient(circle at 100% 100%, rgba(109, 246, 205, 0.17), transparent 10rem),
+        linear-gradient(135deg, #12435d, #0a7469);
+    }
+
+    .wallet-icon {
+      display: grid;
+      width: 48px;
+      height: 48px;
+      place-items: center;
+      font-size: 1.3rem;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    .wallet-label {
+      margin-bottom: 4px;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.77rem;
+      font-weight: 750;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .wallet-total {
+      font-size: 1.65rem;
+      font-weight: 900;
+      letter-spacing: -0.035em;
+    }
+
+    .empty-state {
+      padding: 27px 20px;
+      color: var(--slate-600);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      text-align: center;
+      border: 1px dashed var(--slate-300);
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.55);
+    }
+
+    .loading {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--slate-600);
+      font-size: 0.9rem;
+    }
+
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid #cdd6e0;
+      border-top-color: var(--blue);
+      border-radius: 999px;
+      animation: spin 700ms linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .footer-note {
+      margin: 23px 10px 0;
+      color: var(--slate-500);
+      font-size: 0.74rem;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    @media (max-width: 430px) {
+      .install-banner {
+        grid-template-columns: auto minmax(0, 1fr) auto;
+      }
+
+      .install-dismiss {
+        display: none;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .app-shell {
+        padding-right: 12px;
+        padding-left: 12px;
+      }
+
+      .card-body {
+        padding: 20px;
+      }
+
+      .hero-card .card-body {
+        padding: 27px 22px;
+      }
+
+      .prototype-badge {
+        display: none;
+      }
+
+      .metric-strip,
+      .monitoring-plan-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">♥</div>
+        <span>RPM Rewards</span>
+      </div>
+      <span class="prototype-badge">Prototype</span>
+    </header>
+
+    <!-- Install banner: shown only after a Chromium browser permits it -->
+    <section
+      id="installBanner"
+      class="install-banner hidden"
+      role="region"
+      aria-label="Install RPM Rewards"
+    >
+      <div class="install-banner-icon">♥</div>
+
+      <div class="install-banner-copy">
+        <strong>Install RPM Rewards</strong>
+        <span>Save this app to your device for faster access.</span>
+      </div>
+
+      <button id="installAppButton" class="install-button" type="button">
+        Install
+      </button>
+
+      <button
+        id="dismissInstallButton"
+        class="install-dismiss"
+        type="button"
+        aria-label="Dismiss install option"
+      >
+        ×
+      </button>
+    </section>
+
+    <!-- iPhone/iPad Safari instructions -->
+    <section
+      id="iosInstallHelp"
+      class="ios-install-help hidden"
+      role="region"
+      aria-label="Install instructions for iPhone and iPad"
+    >
+      <strong>Install on iPhone or iPad</strong>
+      <span>
+        Open this page in Safari, tap the Share button, choose
+        <b>Add to Home Screen</b>, then tap <b>Add</b>.
+      </span>
+    </section>
+
+    <!-- PIN ENTRY SCREEN -->
+    <section id="pinScreen" class="screen active" aria-labelledby="pinTitle">
+      <article class="card hero-card">
+        <div class="card-body">
+          <div class="eyebrow" style="color: #aee7ff;">Remote Patient Monitoring</div>
+          <h1 id="pinTitle">Your daily progress matters.</h1>
+          <p>
+            Enter the secure PIN provided by your clinic to submit today’s reading,
+            review your recent activity, and view eligible rewards.
+          </p>
+        </div>
+      </article>
+
+      <article class="card section">
+        <div class="card-body">
+          <h2>Access your account</h2>
+          <p class="muted">
+            Use the clinic-assigned patient PIN for this prototype portal.
+          </p>
+
+          <form id="pinForm" novalidate>
+            <div class="field">
+              <label for="pinInput">Clinic-assigned PIN</label>
+              <input
+                id="pinInput"
+                class="pin-input"
+                type="password"
+                inputmode="numeric"
+                autocomplete="off"
+                maxlength="32"
+                placeholder="Enter your PIN"
+                aria-describedby="pinHint"
+                required
+              />
+              <p id="pinHint" class="small" style="margin: 8px 0 0;">
+                This prototype uses test data only.
+              </p>
+            </div>
+
+            <div id="pinStatus" class="status-message" role="alert"></div>
+
+            <div class="button-row">
+              <button id="pinSubmitButton" class="button button-primary" type="submit">
+                Continue
+              </button>
+            </div>
+          </form>
+
+          <div class="notice">
+            <span class="notice-icon">⚠</span>
+            <span>
+              <strong>Prototype only:</strong> this direct Airtable connection exposes
+              a browser-accessible credential. Use synthetic test data only and replace
+              this approach with a secure server-side proxy before real-world use.
+            </span>
+          </div>
+        </div>
+      </article>
+
+      <article
+        id="monitoringPlanCard"
+        class="card section monitoring-plan-card hidden"
+        aria-live="polite"
+      >
+        <div class="card-body">
+          <div class="monitoring-plan-topline">
+            <div>
+              <div class="eyebrow">Your Monitoring Plan</div>
+              <h2 id="monitoringPlanGreeting">Welcome</h2>
+              <p class="muted">
+                Here is the measurement your care team has asked you to track.
+              </p>
+            </div>
+            <div class="monitoring-plan-icon" aria-hidden="true">♥</div>
+          </div>
+
+          <div class="monitoring-plan-grid">
+            <div class="monitoring-plan-item">
+              <div class="monitoring-plan-label">What to measure</div>
+              <div id="planMetricType" class="monitoring-plan-value">—</div>
+            </div>
+
+            <div class="monitoring-plan-item">
+              <div class="monitoring-plan-label">Your current goal</div>
+              <div id="planTargetValue" class="monitoring-plan-value">—</div>
+            </div>
+          </div>
+
+          <p id="monitoringPlanReminder" class="monitoring-plan-reminder"></p>
+        </div>
+      </article>
+    </section>
+
+    <!-- PATIENT DASHBOARD / SUBMISSION SCREEN -->
+    <section id="dashboardScreen" class="screen" aria-labelledby="dashboardTitle">
+      <article class="card profile-card">
+        <div id="patientAvatar" class="avatar">P</div>
+        <div>
+          <div id="dashboardTitle" class="profile-name">Welcome</div>
+          <div id="patientMeta" class="profile-meta">Loading patient information…</div>
+        </div>
+      </article>
+
+      <article class="card section">
+        <div class="card-body">
+          <div class="eyebrow">Today’s submission</div>
+          <h2>Log your <span id="metricTypeTitle">reading</span></h2>
+          <p id="metricInstruction" class="muted">
+            Enter the requested measurement exactly as taken.
+          </p>
+
+          <div class="metric-strip">
+            <div class="metric-box">
+              <div class="metric-label">Monitoring type</div>
+              <div id="metricTypeValue" class="metric-value">—</div>
+            </div>
+
+            <div class="metric-box">
+              <div class="metric-label">Your current goal</div>
+              <div id="targetValue" class="metric-value">—</div>
+            </div>
+          </div>
+
+          <form id="readingForm" novalidate>
+            <div class="field">
+              <label id="readingLabel" for="readingInput">Your reading</label>
+
+              <div class="input-wrap">
+                <span id="inputPrefix" class="input-prefix hidden"></span>
+                <input
+                  id="readingInput"
+                  type="text"
+                  autocomplete="off"
+                  aria-describedby="readingHelp"
+                  required
+                />
+              </div>
+
+              <p id="readingHelp" class="small" style="margin: 8px 0 0;"></p>
+            </div>
+
+            <div id="readingStatus" class="status-message" role="alert"></div>
+
+            <div class="button-row">
+              <button id="readingSubmitButton" class="button button-success" type="submit">
+                Submit Reading
+              </button>
+
+              <button id="signOutButton" class="button button-secondary" type="button">
+                Sign Out
+              </button>
+            </div>
+          </form>
+        </div>
+      </article>
+
+      <section id="submissionResult" class="hidden" aria-live="polite"></section>
+
+      <div class="section-title">
+        <h2>Your Rewards Wallet</h2>
+        <button id="refreshButton" class="button button-text" type="button">
+          Refresh
+        </button>
+      </div>
+
+      <article class="card wallet-card">
+        <div class="wallet-icon">★</div>
+        <div>
+          <div class="wallet-label">Total rewards earned</div>
+          <div id="walletTotal" class="wallet-total">$0.00</div>
+        </div>
+      </article>
+
+      <section class="section">
+        <div class="section-title">
+          <h2>Recent rewards</h2>
+          <span>Latest activity</span>
+        </div>
+
+        <div id="walletHistory">
+          <div class="empty-state">Loading rewards activity…</div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-title">
+          <h2>Recent readings</h2>
+          <span>Last 10 submissions</span>
+        </div>
+
+        <div id="vitalsHistory">
+          <div class="empty-state">Loading reading history…</div>
+        </div>
+      </section>
+    </section>
+
+    <p class="footer-note">
+      RPM Rewards prototype · Automated target comparison only · Not clinical advice or
+      a substitute for care from your clinician.
+    </p>
+  </main>
+
+  <script>
+    "use strict";
+
+    /*
+      =======================================================================
+      CONFIGURATION
+      =======================================================================
+
+      DIRECT BROWSER-TO-AIRTABLE PROTOTYPE ONLY.
+      Do not use this PAT-based architecture with actual PHI or production data.
+    */
+
+    const AIRTABLE_BASE_ID = "appM02rx1BXGfqZBg";
+    const AIRTABLE_PAT = "patJ3q6pem42aW1Vw.026ff4a06a3a34ad35e7c64f07690e4292aa7a987809045fa5c34752da0c2a06";
+
+    const TABLES = {
+      patients: "Patients",
+      vitals: "Vitals Log",
+      wallet: "Rewards Wallet",
+      providers: "Providers"
+    };
+
+    const REWARD_AMOUNT = 5.00;
+    const MAX_HISTORY_RECORDS = 10;
+
+    const REWARD_CONFIG = {
+      "Blood Pressure": {
+        eligible: true,
+        milestone: "BP Target Achieved"
+      },
+      "Weight (lbs)": {
+        eligible: true,
+        milestone: "Weight Loss Goal"
+      },
+      "HbA1c (%)": {
+        eligible: false,
+        milestone: null
+      },
+      "BMI": {
+        eligible: false,
+        milestone: null
+      }
+    };
+
+    const state = {
+      patient: null,
+      submittedPin: "",
+      vitals: [],
+      rewards: []
+    };
+
+    const elements = {
+      pinScreen: document.getElementById("pinScreen"),
+      dashboardScreen: document.getElementById("dashboardScreen"),
+
+      installBanner: document.getElementById("installBanner"),
+      installAppButton: document.getElementById("installAppButton"),
+      dismissInstallButton: document.getElementById("dismissInstallButton"),
+      iosInstallHelp: document.getElementById("iosInstallHelp"),
+
+      pinForm: document.getElementById("pinForm"),
+      pinInput: document.getElementById("pinInput"),
+      pinStatus: document.getElementById("pinStatus"),
+      pinSubmitButton: document.getElementById("pinSubmitButton"),
+
+      monitoringPlanCard: document.getElementById("monitoringPlanCard"),
+      monitoringPlanGreeting: document.getElementById("monitoringPlanGreeting"),
+      planMetricType: document.getElementById("planMetricType"),
+      planTargetValue: document.getElementById("planTargetValue"),
+      monitoringPlanReminder: document.getElementById("monitoringPlanReminder"),
+
+      patientAvatar: document.getElementById("patientAvatar"),
+      dashboardTitle: document.getElementById("dashboardTitle"),
+      patientMeta: document.getElementById("patientMeta"),
+
+      metricTypeTitle: document.getElementById("metricTypeTitle"),
+      metricInstruction: document.getElementById("metricInstruction"),
+      metricTypeValue: document.getElementById("metricTypeValue"),
+      targetValue: document.getElementById("targetValue"),
+
+      readingForm: document.getElementById("readingForm"),
+      readingLabel: document.getElementById("readingLabel"),
+      readingInput: document.getElementById("readingInput"),
+      readingHelp: document.getElementById("readingHelp"),
+      inputPrefix: document.getElementById("inputPrefix"),
+      readingStatus: document.getElementById("readingStatus"),
+      readingSubmitButton: document.getElementById("readingSubmitButton"),
+      signOutButton: document.getElementById("signOutButton"),
+
+      submissionResult: document.getElementById("submissionResult"),
+      walletTotal: document.getElementById("walletTotal"),
+      walletHistory: document.getElementById("walletHistory"),
+      vitalsHistory: document.getElementById("vitalsHistory"),
+      refreshButton: document.getElementById("refreshButton")
+    };
+
+    function tableUrl(tableName) {
+      return `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(tableName)}`;
+    }
+
+    function airtableHeaders() {
+      return {
+        Authorization: `Bearer ${AIRTABLE_PAT}`,
+        "Content-Type": "application/json"
+      };
+    }
+
+    function isPatConfigured() {
+      return (
+        AIRTABLE_PAT &&
+        AIRTABLE_PAT !== "PASTE_YOUR_AIRTABLE_PAT_HERE" &&
+        AIRTABLE_PAT.startsWith("pat")
+      );
+    }
+
+    function escapeAirtableFormulaString(value) {
+      return String(value)
+        .replace(/\\/g, "\\\\")
+        .replace(/'/g, "\\'");
+    }
+
+    function getFirstFieldValue(fields, fieldName, fallback = "") {
+      const value = fields[fieldName];
+
+      if (Array.isArray(value)) {
+        return value.length ? value[0] : fallback;
+      }
+
+      return value ?? fallback;
+    }
+
+    function getInitials(name) {
+      return (
+        String(name || "P")
+          .split(/\s+/)
+          .filter(Boolean)
+          .slice(0, 2)
+          .map((part) => part.charAt(0).toUpperCase())
+          .join("") || "P"
+      );
+    }
+
+    function formatCurrency(value) {
+      const amount = Number(value) || 0;
+
+      return new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD"
+      }).format(amount);
+    }
+
+    function formatDateTime(value) {
+      if (!value) return "Date unavailable";
+
+      const date = new Date(value);
+
+      if (Number.isNaN(date.getTime())) {
+        return String(value);
+      }
+
+      return new Intl.DateTimeFormat("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "2-digit"
+      }).format(date);
+    }
+
+    function formatMetricDisplay(metric, value) {
+      if (value === null || value === undefined || value === "") return "—";
+
+      if (metric === "Weight (lbs)") return `${value} lbs`;
+      if (metric === "HbA1c (%)") return `${value}%`;
+
+      return String(value);
+    }
+
+    function setStatus(element, message = "", type = "info") {
+      element.textContent = message;
+      element.className = "status-message";
+
+      if (message) {
+        element.classList.add("visible", type);
+      }
+    }
+
+    function setButtonLoading(button, loading, label) {
+      if (!button.dataset.defaultLabel) {
+        button.dataset.defaultLabel = button.textContent;
+      }
+
+      button.disabled = loading;
+      button.textContent = loading ? label : button.dataset.defaultLabel;
+    }
+
+    function showScreen(screenName) {
+      elements.pinScreen.classList.toggle("active", screenName === "pin");
+      elements.dashboardScreen.classList.toggle("active", screenName === "dashboard");
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }
+
+    async function airtableRequest(url, options = {}) {
+      const response = await fetch(url, {
+        ...options,
+        headers: {
+          ...airtableHeaders(),
+          ...(options.headers || {})
+        }
+      });
+
+      let body = null;
+
+      try {
+        body = await response.json();
+      } catch {
+        body = null;
+      }
+
+      if (!response.ok) {
+        const apiError =
+          body?.error?.message ||
+          body?.error?.type ||
+          `Airtable request failed with status ${response.status}.`;
+
+        throw new Error(apiError);
+      }
+
+      return body;
+    }
+
+    async function fetchAllAirtableRecords(tableName, params) {
+      const records = [];
+      let offset = null;
+
+      do {
+        const searchParams = new URLSearchParams(params);
+
+        if (offset) {
+          searchParams.set("offset", offset);
+        }
+
+        const data = await airtableRequest(
+          `${tableUrl(tableName)}?${searchParams.toString()}`
+        );
+
+        records.push(...(data.records || []));
+        offset = data.offset || null;
+      } while (offset);
+
+      return records;
+    }
+
+    async function findPatientByPin(pin) {
+      const safePin = escapeAirtableFormulaString(pin);
+      const formula = `{App PIN}='${safePin}'`;
+
+      const records = await fetchAllAirtableRecords(TABLES.patients, {
+        filterByFormula: formula,
+        maxRecords: "1",
+        pageSize: "1"
+      });
+
+      return records[0] || null;
+    }
+
+    function normalizePatientRecord(record) {
+      const fields = record.fields || {};
+
+      return {
+        recordId: record.id,
+        name: getFirstFieldValue(fields, "Name", "Patient"),
+        displayName: getFirstFieldValue(
+          fields,
+          "Patient Display Name",
+          getFirstFieldValue(fields, "Name", "Patient")
+        ),
+        assignedDoctor: getFirstFieldValue(fields, "Assigned Doctor", ""),
+        targetMetricType: getFirstFieldValue(fields, "Target Metric Type", ""),
+        targetValue: getFirstFieldValue(fields, "Target Value", ""),
+        clinicChartId: getFirstFieldValue(fields, "Clinic Chart ID", "")
+      };
+    }
+
+    function configureMetricInput(patient) {
+      const metric = patient.targetMetricType;
+
+      elements.metricTypeTitle.textContent = metric || "reading";
+      elements.metricTypeValue.textContent = metric || "Not configured";
+      elements.targetValue.textContent = formatMetricDisplay(metric, patient.targetValue);
+
+      elements.readingInput.value = "";
+      elements.inputPrefix.classList.add("hidden");
+      elements.inputPrefix.textContent = "";
+      elements.readingInput.classList.remove("has-prefix");
+
+      if (metric === "Blood Pressure") {
+        elements.readingLabel.textContent = "Blood pressure reading";
+        elements.readingInput.type = "text";
+        elements.readingInput.inputMode = "text";
+        elements.readingInput.placeholder = "Example: 124/76";
+        elements.readingInput.maxLength = 15;
+        elements.readingHelp.textContent =
+          "Enter systolic and diastolic values using a slash, such as 124/76.";
+        elements.metricInstruction.textContent =
+          "Enter your blood pressure reading exactly as recorded by your monitor.";
+        return;
+      }
+
+      if (metric === "Weight (lbs)") {
+        elements.readingLabel.textContent = "Weight reading";
+        elements.readingInput.type = "number";
+        elements.readingInput.inputMode = "decimal";
+        elements.readingInput.step = "0.1";
+        elements.readingInput.min = "0";
+        elements.readingInput.placeholder = "Example: 178.4";
+
+        elements.inputPrefix.textContent = "lbs";
+        elements.inputPrefix.classList.remove("hidden");
+        elements.readingInput.classList.add("has-prefix");
+
+        elements.readingHelp.textContent =
+          "Enter your current weight in pounds. Decimals are allowed.";
+        elements.metricInstruction.textContent =
+          "Enter your current weight in pounds.";
+        return;
+      }
+
+      if (metric === "HbA1c (%)") {
+        elements.readingLabel.textContent = "HbA1c result";
+        elements.readingInput.type = "number";
+        elements.readingInput.inputMode = "decimal";
+        elements.readingInput.step = "0.1";
+        elements.readingInput.min = "0";
+        elements.readingInput.placeholder = "Example: 6.7";
+
+        elements.inputPrefix.textContent = "%";
+        elements.inputPrefix.classList.remove("hidden");
+        elements.readingInput.classList.add("has-prefix");
+
+        elements.readingHelp.textContent =
+          "Enter the HbA1c percentage exactly as reported by your test.";
+        elements.metricInstruction.textContent =
+          "Enter your latest HbA1c result as a percentage.";
+        return;
+      }
+
+      if (metric === "BMI") {
+        elements.readingLabel.textContent = "BMI reading";
+        elements.readingInput.type = "number";
+        elements.readingInput.inputMode = "decimal";
+        elements.readingInput.step = "0.1";
+        elements.readingInput.min = "0";
+        elements.readingInput.placeholder = "Example: 24.8";
+        elements.readingHelp.textContent =
+          "Enter your BMI value. Decimals are allowed.";
+        elements.metricInstruction.textContent =
+          "Enter your current body mass index (BMI).";
+        return;
+      }
+
+      elements.readingLabel.textContent = "Your reading";
+      elements.readingInput.type = "text";
+      elements.readingInput.inputMode = "text";
+      elements.readingInput.placeholder = "Enter your reading";
+      elements.readingHelp.textContent =
+        "This patient record has an unsupported or missing target metric type.";
+      elements.metricInstruction.textContent =
+        "Your clinic must configure a supported metric before you can submit a reading.";
+    }
+
+    function renderMonitoringPlan(patient) {
+      const metric = patient.targetMetricType || "Monitoring metric";
+      const target = formatMetricDisplay(metric, patient.targetValue);
+
+      const firstName =
+        String(patient.name || "there")
+          .trim()
+          .split(/\s+/)[0] || "there";
+
+      elements.monitoringPlanGreeting.textContent = `Welcome, ${firstName}`;
+      elements.planMetricType.textContent = metric;
+      elements.planTargetValue.textContent = target;
+
+      let reminder = "";
+
+      if (metric === "Blood Pressure") {
+        reminder =
+          `Today, please measure and submit your blood pressure. Your current goal is ${target}.`;
+      } else if (metric === "Weight (lbs)") {
+        reminder =
+          `Today, please record and submit your current weight. Your current goal is ${target}.`;
+      } else if (metric === "HbA1c (%)") {
+        reminder =
+          `Please submit your most recent HbA1c result when it is available. Your current goal is ${target}.`;
+      } else if (metric === "BMI") {
+        reminder =
+          `Today, please record and submit your current BMI. Your current goal is ${target}.`;
+      } else {
+        reminder =
+          `Please submit the measurement requested by your care team. Your current goal is ${target}.`;
+      }
+
+      elements.monitoringPlanReminder.textContent = reminder;
+      elements.monitoringPlanCard.classList.remove("hidden");
+    }
+
+    function parseBloodPressure(value) {
+      const match = String(value)
+        .trim()
+        .match(/^(\d{2,3})\s*\/\s*(\d{2,3})$/);
+
+      if (!match) {
+        throw new Error(
+          "Enter blood pressure in the format systolic/diastolic, such as 124/76."
+        );
+      }
+
+      const systolic = Number(match[1]);
+      const diastolic = Number(match[2]);
+
+      if (
+        !Number.isFinite(systolic) ||
+        !Number.isFinite(diastolic) ||
+        systolic < 50 ||
+        systolic > 300 ||
+        diastolic < 30 ||
+        diastolic > 200
+      ) {
+        throw new Error("Enter a valid blood pressure reading, such as 124/76.");
+      }
+
+      return {
+        systolic,
+        diastolic,
+        normalized: `${systolic}/${diastolic}`
+      };
+    }
+
+    function parseNumericValue(value, metric) {
+      const normalized = String(value).trim();
+
+      if (!/^\d+(\.\d+)?$/.test(normalized)) {
+        throw new Error(`Enter a valid numeric value for ${metric}.`);
+      }
+
+      const numericValue = Number(normalized);
+
+      if (!Number.isFinite(numericValue) || numericValue < 0) {
+        throw new Error(`Enter a valid non-negative value for ${metric}.`);
+      }
+
+      return {
+        numericValue,
+        normalized: normalized.replace(/\.0+$/, "")
+      };
+    }
+
+    function evaluateReading(metric, targetValue, submittedValue) {
+      if (!metric || targetValue === "") {
+        throw new Error(
+          "This patient record is missing a monitoring type or target value. Please contact your clinic."
+        );
+      }
+
+      if (metric === "Blood Pressure") {
+        const target = parseBloodPressure(targetValue);
+        const submitted = parseBloodPressure(submittedValue);
+
+        return {
+          achieved:
+            submitted.systolic <= target.systolic &&
+            submitted.diastolic <= target.diastolic,
+          normalizedSubmittedValue: submitted.normalized,
+          normalizedTargetValue: target.normalized
+        };
+      }
+
+      if (["Weight (lbs)", "HbA1c (%)", "BMI"].includes(metric)) {
+        const target = parseNumericValue(targetValue, metric);
+        const submitted = parseNumericValue(submittedValue, metric);
+
+        return {
+          achieved: submitted.numericValue <= target.numericValue,
+          normalizedSubmittedValue: submitted.normalized,
+          normalizedTargetValue: target.normalized
+        };
+      }
+
+      throw new Error(
+        `The metric "${metric}" is not supported by this prototype. Supported metrics are Blood Pressure, Weight (lbs), HbA1c (%), and BMI.`
+      );
+    }
+
+    function buildMessages(patient, evaluation) {
+      const metric = patient.targetMetricType;
+      const submitted = formatMetricDisplay(metric, evaluation.normalizedSubmittedValue);
+      const target = formatMetricDisplay(metric, evaluation.normalizedTargetValue);
+
+      const rewardConfig = REWARD_CONFIG[metric] || {
+        eligible: false,
+        milestone: null
+      };
+
+      const rewardEligible = evaluation.achieved && rewardConfig.eligible;
+
+      let patientMessage = "";
+      let clinicalLog = "";
+
+      if (evaluation.achieved && rewardEligible) {
+        patientMessage =
+          `Reading received — goal achieved. Your submitted ${metric} of ${submitted} meets your current target of ${target}. A $${REWARD_AMOUNT.toFixed(
+            2
+          )} reward has been added to your Rewards Wallet.`;
+
+        clinicalLog =
+          `RPM prototype submission logged on ${new Date().toLocaleString()}. ` +
+          `Patient-reported ${metric}: ${submitted}. Configured target: ${target}. ` +
+          `Automated prototype evaluation: Target Achieved. Reward-eligible metric; $${REWARD_AMOUNT.toFixed(
+            2
+          )} wallet transaction created. ` +
+          `System-generated prototype workflow entry; not a substitute for clinical assessment.`;
+      } else if (evaluation.achieved) {
+        patientMessage =
+          `Reading received — goal achieved. Your submitted ${metric} of ${submitted} meets your current target of ${target}. This measurement has been logged for your care team. Rewards are not currently offered for this metric.`;
+
+        clinicalLog =
+          `RPM prototype submission logged on ${new Date().toLocaleString()}. ` +
+          `Patient-reported ${metric}: ${submitted}. Configured target: ${target}. ` +
+          `Automated prototype evaluation: Target Achieved. No reward issued because this metric is not reward-enabled in the current prototype. ` +
+          `System-generated prototype workflow entry; not a substitute for clinical assessment.`;
+      } else {
+        patientMessage =
+          `Reading received. Your submitted ${metric} of ${submitted} does not meet your current target of ${target} today, so no reward was issued. Please continue your care plan and submit your next reading as scheduled.`;
+
+        clinicalLog =
+          `RPM prototype submission logged on ${new Date().toLocaleString()}. ` +
+          `Patient-reported ${metric}: ${submitted}. Configured target: ${target}. ` +
+          `Automated prototype evaluation: Target Missed. No reward issued. ` +
+          `System-generated prototype workflow entry; not a substitute for clinical assessment.`;
+      }
+
+      return {
+        rewardEligible,
+        milestone: rewardConfig.milestone,
+        patientMessage,
+        clinicalLog
+      };
+    }
+
+    async function createVitalsLog(patient, submittedValue, evaluation, messages) {
+      const payload = {
+        records: [
+          {
+            fields: {
+              Patient: [patient.recordId],
+              "Patient Submitted Value": submittedValue,
+              "AI Evaluation Status": evaluation.achieved
+                ? "Target Achieved"
+                : "Target Missed",
+              "AI Coach Message": messages.patientMessage,
+              "CPT 99457 Log": messages.clinicalLog,
+              "Submitted PIN Verification": state.submittedPin
+            }
+          }
+        ]
+      };
+
+      const data = await airtableRequest(tableUrl(TABLES.vitals), {
+        method: "POST",
+        body: JSON.stringify(payload)
+      });
+
+      return data.records?.[0] || null;
+    }
+
+    async function createReward(patient, milestone) {
+      const payload = {
+        records: [
+          {
+            fields: {
+              Patient: [patient.recordId],
+              Amount: REWARD_AMOUNT,
+              "Milestone Trigger": milestone
+            }
+          }
+        ]
+      };
+
+      const data = await airtableRequest(tableUrl(TABLES.wallet), {
+        method: "POST",
+        body: JSON.stringify(payload)
+      });
+
+      return data.records?.[0] || null;
+    }
+
+    function linkedPatientFormula(patientName) {
+      const safePatientName = escapeAirtableFormulaString(patientName);
+      return `{Patient}='${safePatientName}'`;
+    }
+
+    async function fetchPatientVitals(patientName) {
+      return fetchAllAirtableRecords(TABLES.vitals, {
+        filterByFormula: linkedPatientFormula(patientName),
+        "sort[0][field]": "System Created Time",
+        "sort[0][direction]": "desc",
+        maxRecords: String(MAX_HISTORY_RECORDS),
+        pageSize: String(MAX_HISTORY_RECORDS)
+      });
+    }
+
+    async function fetchPatientRewards(patientName) {
+      return fetchAllAirtableRecords(TABLES.wallet, {
+        filterByFormula: linkedPatientFormula(patientName),
+        "sort[0][field]": "Date Created",
+        "sort[0][direction]": "desc",
+        maxRecords: String(MAX_HISTORY_RECORDS),
+        pageSize: String(MAX_HISTORY_RECORDS)
+      });
+    }
+
+    function getVitalDate(record) {
+      const fields = record.fields || {};
+      return fields["System Created Time"] || record.createdTime || "";
+    }
+
+    function getRewardDate(record) {
+      const fields = record.fields || {};
+      return (
+        fields["Date Created"] ||
+        fields["Date Earned"] ||
+        record.createdTime ||
+        ""
+      );
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function renderVitals(records) {
+      if (!records.length) {
+        elements.vitalsHistory.innerHTML =
+          '<div class="empty-state">No readings have been logged yet. Submit your first reading above.</div>';
+        return;
+      }
+
+      const rows = records
+        .map((record) => {
+          const fields = record.fields || {};
+
+          const value = getFirstFieldValue(
+            fields,
+            "Patient Submitted Value",
+            "Reading unavailable"
+          );
+
+          const status = getFirstFieldValue(
+            fields,
+            "AI Evaluation Status",
+            "Logged"
+          );
+
+          const message = getFirstFieldValue(fields, "AI Coach Message", "");
+          const date = getVitalDate(record);
+
+          let pillClass = "pill-other";
+
+          if (status === "Target Achieved") {
+            pillClass = "pill-achieved";
+          }
+
+          if (status === "Target Missed") {
+            pillClass = "pill-missed";
+          }
+
+          return `
+            <article class="history-row">
+              <div>
+                <div class="history-reading">${escapeHtml(value)}</div>
+                <div class="history-date">${escapeHtml(formatDateTime(date))}</div>
+              </div>
+
+              <span class="pill ${pillClass}">
+                ${escapeHtml(status)}
+              </span>
+
+              ${
+                message
+                  ? `<div class="history-message">${escapeHtml(message)}</div>`
+                  : ""
+              }
+            </article>
+          `;
+        })
+        .join("");
+
+      elements.vitalsHistory.innerHTML = `<div class="history-list">${rows}</div>`;
+    }
+
+    function renderRewards(records) {
+      const total = records.reduce((sum, record) => {
+        const amount = Number(record.fields?.Amount) || 0;
+        return sum + amount;
+      }, 0);
+
+      elements.walletTotal.textContent = formatCurrency(total);
+
+      if (!records.length) {
+        elements.walletHistory.innerHTML =
+          '<div class="empty-state">No rewards have been earned yet. Eligible Blood Pressure and Weight goals can earn rewards in this prototype.</div>';
+        return;
+      }
+
+      const rows = records
+        .map((record) => {
+          const fields = record.fields || {};
+          const amount = Number(fields.Amount) || 0;
+
+          const milestone = getFirstFieldValue(
+            fields,
+            "Milestone Trigger",
+            "Reward"
+          );
+
+          const date = getRewardDate(record);
+
+          return `
+            <article class="history-row">
+              <div>
+                <div class="history-reading">
+                  ${escapeHtml(formatCurrency(amount))}
+                </div>
+
+                <div class="history-date">
+                  ${escapeHtml(formatDateTime(date))}
+                </div>
+              </div>
+
+              <span class="pill pill-achieved">
+                ${escapeHtml(milestone)}
+              </span>
+            </article>
+          `;
+        })
+        .join("");
+
+      elements.walletHistory.innerHTML = `<div class="history-list">${rows}</div>`;
+    }
+
+    async function refreshPatientData() {
+      if (!state.patient) {
+        return;
+      }
+
+      elements.refreshButton.disabled = true;
+      elements.refreshButton.textContent = "Refreshing…";
+
+      elements.vitalsHistory.innerHTML =
+        '<div class="empty-state"><span class="loading"><span class="spinner"></span>Loading recent readings…</span></div>';
+
+      elements.walletHistory.innerHTML =
+        '<div class="empty-state"><span class="loading"><span class="spinner"></span>Loading rewards activity…</span></div>';
+
+      try {
+        const [vitals, rewards] = await Promise.all([
+          fetchPatientVitals(state.patient.name),
+          fetchPatientRewards(state.patient.name)
+        ]);
+
+        state.vitals = vitals;
+        state.rewards = rewards;
+
+        renderVitals(vitals);
+        renderRewards(rewards);
+      } catch (error) {
+        const errorMessage = escapeHtml(
+          error.message || "Unable to refresh patient activity."
+        );
+
+        elements.vitalsHistory.innerHTML =
+          `<div class="empty-state">Unable to load reading history: ${errorMessage}</div>`;
+
+        elements.walletHistory.innerHTML =
+          `<div class="empty-state">Unable to load rewards activity: ${errorMessage}</div>`;
+      } finally {
+        elements.refreshButton.disabled = false;
+        elements.refreshButton.textContent = "Refresh";
+      }
+    }
+
+    function renderSubmissionResult(evaluation, messages) {
+      const metric = state.patient.targetMetricType;
+
+      const submitted = formatMetricDisplay(
+        metric,
+        evaluation.normalizedSubmittedValue
+      );
+
+      const target = formatMetricDisplay(
+        metric,
+        evaluation.normalizedTargetValue
+      );
+
+      let cardClass = "missed";
+      let icon = "!";
+      let title = "Reading received";
+      let body = "";
+      let rewardLine = "";
+
+      if (evaluation.achieved && messages.rewardEligible) {
+        cardClass = "success";
+        icon = "✓";
+        title = "Goal achieved";
+
+        body =
+          `Your submitted ${metric} of ${submitted} meets your current target of ${target}.`;
+
+        rewardLine =
+          `<div class="reward-line">★ ${formatCurrency(
+            REWARD_AMOUNT
+          )} reward added to your wallet</div>`;
+      } else if (evaluation.achieved) {
+        cardClass = "success";
+        icon = "✓";
+        title = "Goal achieved";
+
+        body =
+          `Your submitted ${metric} of ${submitted} meets your current target of ${target}. Your measurement has been logged for your care team.`;
+
+        rewardLine =
+          '<div class="no-reward-line">ⓘ Rewards are not currently offered for this metric</div>';
+      } else {
+        body =
+          `Your submitted ${metric} of ${submitted} does not meet your current target of ${target} today. Your measurement has been logged.`;
+
+        rewardLine =
+          '<div class="no-reward-line">ⓘ No reward was issued for this reading</div>';
+      }
+
+      elements.submissionResult.className = "";
+
+      elements.submissionResult.innerHTML = `
+        <article class="result-card ${cardClass}">
+          <div class="result-icon">${icon}</div>
+          <h2>${escapeHtml(title)}</h2>
+          <p>${escapeHtml(body)}</p>
+          ${rewardLine}
+        </article>
+      `;
+    }
+
+    async function handlePinSubmit(event) {
+      event.preventDefault();
+
+      setStatus(elements.pinStatus, "");
+
+      const pin = elements.pinInput.value.trim();
+
+      if (!pin) {
+        setStatus(
+          elements.pinStatus,
+          "Enter the clinic-assigned PIN to continue.",
+          "error"
+        );
+
+        elements.pinInput.focus();
+        return;
+      }
+
+      if (!isPatConfigured()) {
+        setStatus(
+          elements.pinStatus,
+          "Add your dedicated Airtable prototype PAT in the AIRTABLE_PAT configuration constant before testing this app.",
+          "error"
+        );
+
+        return;
+      }
+
+      setButtonLoading(elements.pinSubmitButton, true, "Verifying…");
+
+      try {
+        const record = await findPatientByPin(pin);
+
+        if (!record) {
+          setStatus(
+            elements.pinStatus,
+            "We could not verify that PIN. Please check the PIN provided by your clinic and try again.",
+            "error"
+          );
+          return;
+        }
+
+        const patient = normalizePatientRecord(record);
+
+        if (!patient.targetMetricType || patient.targetValue === "") {
+          setStatus(
+            elements.pinStatus,
+            "This patient account is missing a configured monitoring type or target. Please contact the clinic.",
+            "error"
+          );
+          return;
+        }
+
+        state.patient = patient;
+        state.submittedPin = pin;
+
+        elements.patientAvatar.textContent = getInitials(patient.name);
+        elements.dashboardTitle.textContent = `Welcome, ${patient.name}`;
+
+        const metaParts = [];
+
+        if (patient.clinicChartId) {
+          metaParts.push(`Chart ID: ${patient.clinicChartId}`);
+        }
+
+        if (patient.assignedDoctor) {
+          metaParts.push(`Care team: ${patient.assignedDoctor}`);
+        }
+
+        elements.patientMeta.textContent =
+          metaParts.join(" · ") || "Remote patient monitoring participant";
+
+        configureMetricInput(patient);
+        renderMonitoringPlan(patient);
+
+        elements.submissionResult.className = "hidden";
+        elements.submissionResult.innerHTML = "";
+
+        showScreen("dashboard");
+
+        elements.readingInput.focus();
+
+        await refreshPatientData();
+      } catch (error) {
+        setStatus(
+          elements.pinStatus,
+          `Unable to verify the PIN right now. ${
+            error.message || "Please try again."
+          }`,
+          "error"
+        );
+      } finally {
+        setButtonLoading(elements.pinSubmitButton, false);
+      }
+    }
+
+    async function handleReadingSubmit(event) {
+      event.preventDefault();
+
+      if (!state.patient) {
+        showScreen("pin");
+        return;
+      }
+
+      setStatus(elements.readingStatus, "");
+
+      const submittedValue = elements.readingInput.value.trim();
+
+      if (!submittedValue) {
+        setStatus(
+          elements.readingStatus,
+          "Enter your reading before submitting.",
+          "error"
+        );
+
+        elements.readingInput.focus();
+        return;
+      }
+
+      let evaluation;
+
+      try {
+        evaluation = evaluateReading(
+          state.patient.targetMetricType,
+          state.patient.targetValue,
+          submittedValue
+        );
+      } catch (error) {
+        setStatus(elements.readingStatus, error.message, "error");
+        elements.readingInput.focus();
+        return;
+      }
+
+      const messages = buildMessages(state.patient, evaluation);
+
+      setButtonLoading(elements.readingSubmitButton, true, "Saving reading…");
+
+      try {
+        await createVitalsLog(
+          state.patient,
+          evaluation.normalizedSubmittedValue,
+          evaluation,
+          messages
+        );
+
+        if (messages.rewardEligible) {
+          setButtonLoading(
+            elements.readingSubmitButton,
+            true,
+            "Adding reward…"
+          );
+
+          await createReward(state.patient, messages.milestone);
+        }
+
+        renderSubmissionResult(evaluation, messages);
+        elements.readingInput.value = "";
+
+        setStatus(
+          elements.readingStatus,
+          "Your submission has been saved.",
+          "success"
+        );
+
+        await refreshPatientData();
+
+        elements.submissionResult.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+      } catch (error) {
+        setStatus(
+          elements.readingStatus,
+          `Your reading could not be saved. ${
+            error.message || "Please try again."
+          }`,
+          "error"
+        );
+      } finally {
+        setButtonLoading(elements.readingSubmitButton, false);
+      }
+    }
+
+    function signOut() {
+      state.patient = null;
+      state.submittedPin = "";
+      state.vitals = [];
+      state.rewards = [];
+
+      elements.pinForm.reset();
+      elements.readingForm.reset();
+
+      setStatus(elements.pinStatus, "");
+      setStatus(elements.readingStatus, "");
+
+      elements.monitoringPlanCard.classList.add("hidden");
+
+      elements.submissionResult.className = "hidden";
+      elements.submissionResult.innerHTML = "";
+
+      elements.walletTotal.textContent = "$0.00";
+
+      elements.walletHistory.innerHTML =
+        '<div class="empty-state">Sign in to view rewards activity.</div>';
+
+      elements.vitalsHistory.innerHTML =
+        '<div class="empty-state">Sign in to view recent readings.</div>';
+
+      showScreen("pin");
+      elements.pinInput.focus();
+    }
+
+    /*
+      =======================================================================
+      PWA INSTALLATION AND SERVICE WORKER
+      =======================================================================
+    */
+
+    let deferredInstallPrompt = null;
+
+    function isIosDevice() {
+      return /iphone|ipad|ipod/i.test(window.navigator.userAgent);
+    }
+
+    function isStandaloneDisplayMode() {
+      return (
+        window.matchMedia("(display-mode: standalone)").matches ||
+        window.navigator.standalone === true
+      );
+    }
+
+    function showIosInstallInstructionsIfNeeded() {
+      const dismissed = localStorage.getItem("rpmRewardsIosInstallHelpDismissed");
+
+      if (
+        isIosDevice() &&
+        !isStandaloneDisplayMode() &&
+        !dismissed
+      ) {
+        elements.iosInstallHelp.classList.remove("hidden");
+      }
+    }
+
+    window.addEventListener("beforeinstallprompt", (event) => {
+      event.preventDefault();
+
+      if (localStorage.getItem("rpmRewardsInstallBannerDismissed")) {
+        return;
+      }
+
+      deferredInstallPrompt = event;
+
+      if (!isStandaloneDisplayMode()) {
+        elements.installBanner.classList.remove("hidden");
+      }
+    });
+
+    elements.installAppButton.addEventListener("click", async () => {
+      if (!deferredInstallPrompt) {
+        return;
+      }
+
+      deferredInstallPrompt.prompt();
+
+      const choice = await deferredInstallPrompt.userChoice;
+
+      if (choice.outcome === "accepted") {
+        elements.installBanner.classList.add("hidden");
+      }
+
+      deferredInstallPrompt = null;
+    });
+
+    elements.dismissInstallButton.addEventListener("click", () => {
+      elements.installBanner.classList.add("hidden");
+      localStorage.setItem("rpmRewardsInstallBannerDismissed", "true");
+    });
+
+    window.addEventListener("appinstalled", () => {
+      deferredInstallPrompt = null;
+      elements.installBanner.classList.add("hidden");
+      elements.iosInstallHelp.classList.add("hidden");
+    });
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker
+          .register("./service-worker.js")
+          .catch((error) => {
+            console.warn("Service worker registration failed:", error);
+          });
+      });
+    }
+
+    elements.pinForm.addEventListener("submit", handlePinSubmit);
+    elements.readingForm.addEventListener("submit", handleReadingSubmit);
+    elements.signOutButton.addEventListener("click", signOut);
+    elements.refreshButton.addEventListener("click", refreshPatientData);
+
+    elements.pinInput.addEventListener("input", () => {
+      setStatus(elements.pinStatus, "");
+    });
+
+    elements.readingInput.addEventListener("input", () => {
+      setStatus(elements.readingStatus, "");
+    });
+
+    elements.walletHistory.innerHTML =
+      '<div class="empty-state">Sign in to view rewards activity.</div>';
+
+    elements.vitalsHistory.innerHTML =
+      '<div class="empty-state">Sign in to view recent readings.</div>';
+
+    if (!isStandaloneDisplayMode()) {
+      showIosInstallInstructionsIfNeeded();
+    }
+  </script>
+</body>
+</html>

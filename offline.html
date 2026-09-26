@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#102a43" />
+  <title>RPM Rewards | Connection Needed</title>
+
+  <style>
+    :root {
+      --navy: #102a43;
+      --blue: #1976d2;
+      --slate: #5e6c84;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      display: grid;
+      min-height: 100vh;
+      margin: 0;
+      place-items: center;
+      color: var(--navy);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(38, 132, 255, 0.16), transparent 31rem),
+        linear-gradient(160deg, #eef6fc 0%, #f6f9fc 48%, #ecf2f7 100%);
+    }
+
+    main {
+      width: min(92%, 460px);
+      padding: 30px;
+      text-align: center;
+      border: 1px solid rgba(193, 199, 208, 0.8);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.97);
+      box-shadow: 0 14px 40px rgba(16, 42, 67, 0.1);
+    }
+
+    .icon {
+      display: grid;
+      width: 58px;
+      height: 58px;
+      margin: 0 auto 18px;
+      place-items: center;
+      color: white;
+      font-size: 1.5rem;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #1266b0, #00a58b);
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 1.6rem;
+      letter-spacing: -0.035em;
+    }
+
+    p {
+      margin: 0;
+      color: var(--slate);
+      line-height: 1.55;
+    }
+
+    button {
+      margin-top: 22px;
+      padding: 12px 16px;
+      color: white;
+      font: inherit;
+      font-weight: 800;
+      border: 0;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #176fc0, #0960b1);
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <div class="icon">♥</div>
+    <h1>Connection needed</h1>
+    <p>
+      RPM Rewards needs an internet connection to verify your account, load
+      your monitoring history, and safely submit a reading.
+    </p>
+    <button type="button" onclick="window.location.reload()">
+      Try Again
+    </button>
+  </main>
+</body>
+</html>

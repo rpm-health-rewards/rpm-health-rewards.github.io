@@ -1,0 +1,3313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="RPM Rewards Provider Portal prototype"
+  />
+  <title>RPM Rewards | Provider Portal</title>
+
+  <style>
+    :root {
+      --navy: #102a43;
+      --navy-deep: #092237;
+      --blue: #1976d2;
+      --blue-dark: #0e5fae;
+      --blue-soft: #e8f2ff;
+      --teal: #078878;
+      --teal-soft: #e7faf6;
+      --green: #14804a;
+      --green-soft: #e9f8ef;
+      --amber: #a05b00;
+      --amber-soft: #fff4df;
+      --red: #b42318;
+      --red-soft: #fff0ef;
+      --purple: #6d3ba3;
+      --purple-soft: #f3eafe;
+      --slate-900: #172b4d;
+      --slate-800: #253858;
+      --slate-700: #42526e;
+      --slate-600: #5e6c84;
+      --slate-500: #6b778c;
+      --slate-400: #8993a4;
+      --slate-300: #c1c7d0;
+      --slate-200: #dfe1e6;
+      --slate-100: #f4f5f7;
+      --white: #ffffff;
+      --shadow: 0 14px 40px rgba(16, 42, 67, 0.1);
+      --shadow-lg: 0 24px 65px rgba(16, 42, 67, 0.22);
+      --radius-xl: 22px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-sm: 9px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+      background: #edf3f8;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      color: var(--slate-900);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 8% 0%, rgba(38, 132, 255, 0.16), transparent 30rem),
+        linear-gradient(160deg, #edf6fc 0%, #f7fafc 48%, #e9f0f5 100%);
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.62;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .screen {
+      display: none;
+      animation: fade-in 200ms ease-out;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+        transform: translateY(5px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .app-shell {
+      width: min(100%, 1480px);
+      margin: 0 auto;
+      padding: 20px 22px 38px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin: 2px 0 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      color: var(--navy);
+      font-weight: 850;
+      letter-spacing: -0.025em;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 40px;
+      height: 40px;
+      place-items: center;
+      color: var(--white);
+      font-size: 20px;
+      border-radius: 13px;
+      background: linear-gradient(135deg, #1266b0, #00a58b);
+      box-shadow: 0 6px 16px rgba(25, 118, 210, 0.25);
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .prototype-badge {
+      padding: 7px 10px;
+      color: var(--amber);
+      font-size: 0.72rem;
+      font-weight: 850;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border: 1px solid #f0d6a2;
+      border-radius: 999px;
+      background: #fff8e9;
+    }
+
+    .card {
+      overflow: hidden;
+      border: 1px solid rgba(193, 199, 208, 0.7);
+      border-radius: var(--radius-xl);
+      background: rgba(255, 255, 255, 0.97);
+      box-shadow: var(--shadow);
+    }
+
+    .card-body {
+      padding: 24px;
+    }
+
+    .hero-card {
+      position: relative;
+      overflow: hidden;
+      color: white;
+      border: 0;
+      background:
+        radial-gradient(circle at 93% 15%, rgba(67, 182, 255, 0.37), transparent 15rem),
+        linear-gradient(135deg, #102a43 0%, #0e4f77 65%, #008d7f 145%);
+    }
+
+    .hero-card::before {
+      position: absolute;
+      top: -88px;
+      right: -92px;
+      width: 260px;
+      height: 260px;
+      content: "";
+      border: 44px solid rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+    }
+
+    .hero-card .card-body {
+      position: relative;
+      z-index: 1;
+      padding: 34px 30px;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 630px;
+      margin-bottom: 12px;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.06;
+      letter-spacing: -0.05em;
+    }
+
+    h2 {
+      margin-bottom: 7px;
+      font-size: 1.26rem;
+      letter-spacing: -0.025em;
+    }
+
+    h3 {
+      margin-bottom: 7px;
+      font-size: 1rem;
+      letter-spacing: -0.012em;
+    }
+
+    .hero-card p {
+      max-width: 630px;
+      margin-bottom: 0;
+      color: rgba(255, 255, 255, 0.82);
+      line-height: 1.55;
+    }
+
+    .eyebrow {
+      margin-bottom: 8px;
+      color: var(--blue);
+      font-size: 0.75rem;
+      font-weight: 850;
+      letter-spacing: 0.095em;
+      text-transform: uppercase;
+    }
+
+    .muted {
+      color: var(--slate-600);
+      line-height: 1.55;
+    }
+
+    .small {
+      color: var(--slate-600);
+      font-size: 0.82rem;
+      line-height: 1.48;
+    }
+
+    .section {
+      margin-top: 16px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 26px 2px 10px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 1.1rem;
+    }
+
+    .section-title span {
+      color: var(--slate-600);
+      font-size: 0.82rem;
+    }
+
+    .field {
+      margin-top: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--slate-700);
+      font-size: 0.88rem;
+      font-weight: 760;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px 13px;
+      color: var(--slate-900);
+      font-size: 0.94rem;
+      font-weight: 600;
+      outline: none;
+      border: 1px solid var(--slate-300);
+      border-radius: 11px;
+      background: white;
+      transition: border-color 150ms ease, box-shadow 150ms ease;
+    }
+
+    textarea {
+      min-height: 86px;
+      resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(25, 118, 210, 0.12);
+    }
+
+    input::placeholder {
+      color: #a5adba;
+      font-weight: 500;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 42px;
+      padding: 10px 14px;
+      border: 0;
+      border-radius: 11px;
+      font-size: 0.9rem;
+      font-weight: 800;
+      transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease;
+    }
+
+    .button:hover:not(:disabled) {
+      transform: translateY(-1px);
+    }
+
+    .button-primary {
+      color: white;
+      background: linear-gradient(135deg, #176fc0, #0960b1);
+      box-shadow: 0 9px 17px rgba(25, 118, 210, 0.2);
+    }
+
+    .button-success {
+      color: white;
+      background: linear-gradient(135deg, #11854c, #08733d);
+      box-shadow: 0 9px 17px rgba(20, 128, 74, 0.18);
+    }
+
+    .button-secondary {
+      color: var(--navy);
+      border: 1px solid var(--slate-300);
+      background: white;
+    }
+
+    .button-danger {
+      color: var(--red);
+      border: 1px solid #efc2bf;
+      background: #fff6f5;
+    }
+
+    .button-text {
+      min-height: 34px;
+      padding: 5px 8px;
+      color: var(--blue);
+      background: transparent;
+    }
+
+    .button-small {
+      min-height: 35px;
+      padding: 7px 10px;
+      font-size: 0.8rem;
+    }
+
+    .status-message {
+      display: none;
+      margin-top: 14px;
+      padding: 12px 13px;
+      font-size: 0.88rem;
+      line-height: 1.45;
+      border-radius: 10px;
+    }
+
+    .status-message.visible {
+      display: block;
+    }
+
+    .status-message.error {
+      color: var(--red);
+      border: 1px solid #f1c3c0;
+      background: var(--red-soft);
+    }
+
+    .status-message.success {
+      color: var(--green);
+      border: 1px solid #bde3cc;
+      background: var(--green-soft);
+    }
+
+    .status-message.info {
+      color: #155a96;
+      border: 1px solid #bddaf7;
+      background: var(--blue-soft);
+    }
+
+    .notice {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+      padding: 13px 14px;
+      color: #5d4918;
+      font-size: 0.84rem;
+      line-height: 1.48;
+      border: 1px solid #f1dcae;
+      border-radius: var(--radius-sm);
+      background: #fffaed;
+    }
+
+    .notice-icon {
+      flex: 0 0 auto;
+      font-size: 1.05rem;
+    }
+
+    .select-card {
+      width: min(100%, 620px);
+      margin: 16px auto 0;
+    }
+
+    .button-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .button-row .button-primary {
+      flex: 1;
+    }
+
+    .dashboard-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 22px 24px;
+      color: white;
+      border-radius: var(--radius-xl);
+      background:
+        radial-gradient(circle at 100% 0%, rgba(68, 182, 255, 0.25), transparent 16rem),
+        linear-gradient(135deg, #102a43, #0d5975 68%, #087a6f);
+      box-shadow: var(--shadow);
+    }
+
+    .dashboard-provider {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .provider-avatar {
+      display: grid;
+      flex: 0 0 auto;
+      width: 54px;
+      height: 54px;
+      place-items: center;
+      color: white;
+      font-size: 1.05rem;
+      font-weight: 850;
+      border: 1px solid rgba(255, 255, 255, 0.19);
+      border-radius: 17px;
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    .provider-title {
+      min-width: 0;
+    }
+
+    .provider-title h1 {
+      margin-bottom: 4px;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+    }
+
+    .provider-title p {
+      margin-bottom: 0;
+      overflow-wrap: anywhere;
+      color: rgba(255, 255, 255, 0.76);
+      font-size: 0.9rem;
+    }
+
+    .dashboard-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 9px;
+    }
+
+    .dashboard-actions .button-secondary {
+      color: white;
+      border-color: rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.11);
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .kpi-card {
+      min-height: 140px;
+      padding: 18px;
+      border: 1px solid rgba(193, 199, 208, 0.7);
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: 0 7px 23px rgba(16, 42, 67, 0.065);
+    }
+
+    .kpi-icon {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      margin-bottom: 14px;
+      font-size: 1rem;
+      border-radius: 10px;
+    }
+
+    .kpi-card:nth-child(1) .kpi-icon {
+      color: var(--blue);
+      background: var(--blue-soft);
+    }
+
+    .kpi-card:nth-child(2) .kpi-icon {
+      color: var(--teal);
+      background: var(--teal-soft);
+    }
+
+    .kpi-card:nth-child(3) .kpi-icon {
+      color: var(--purple);
+      background: var(--purple-soft);
+    }
+
+    .kpi-card:nth-child(4) .kpi-icon {
+      color: var(--green);
+      background: var(--green-soft);
+    }
+
+    .kpi-label {
+      margin-bottom: 6px;
+      color: var(--slate-600);
+      font-size: 0.76rem;
+      font-weight: 760;
+      letter-spacing: 0.045em;
+      text-transform: uppercase;
+    }
+
+    .kpi-value {
+      color: var(--navy);
+      font-size: clamp(1.35rem, 2.4vw, 1.9rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+    }
+
+    .kpi-footnote {
+      margin-top: 6px;
+      color: var(--slate-500);
+      font-size: 0.74rem;
+      line-height: 1.35;
+    }
+
+    .workspace-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.75fr) minmax(280px, 0.75fr);
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .roster-card {
+      overflow: hidden;
+    }
+
+    .roster-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 21px 22px 15px;
+      border-bottom: 1px solid var(--slate-200);
+    }
+
+    .roster-card-header h2 {
+      margin-bottom: 4px;
+    }
+
+    .roster-card-header p {
+      margin-bottom: 0;
+      color: var(--slate-600);
+      font-size: 0.86rem;
+    }
+
+    .roster-controls {
+      display: grid;
+      grid-template-columns: minmax(190px, 1.6fr) minmax(145px, 0.75fr) minmax(145px, 0.75fr);
+      gap: 9px;
+      padding: 15px 22px;
+      border-bottom: 1px solid var(--slate-200);
+      background: #fbfcfd;
+    }
+
+    .input-with-icon {
+      position: relative;
+    }
+
+    .input-with-icon span {
+      position: absolute;
+      top: 50%;
+      left: 12px;
+      color: var(--slate-500);
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    .input-with-icon input {
+      padding-left: 38px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      min-width: 850px;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 14px 13px;
+      text-align: left;
+      border-bottom: 1px solid var(--slate-200);
+    }
+
+    th {
+      color: var(--slate-600);
+      font-size: 0.72rem;
+      font-weight: 850;
+      letter-spacing: 0.045em;
+      text-transform: uppercase;
+      background: #fcfdfe;
+    }
+
+    th.sortable {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    th.sortable:hover {
+      color: var(--blue);
+    }
+
+    td {
+      color: var(--slate-700);
+      font-size: 0.86rem;
+      vertical-align: middle;
+    }
+
+    tbody tr {
+      cursor: pointer;
+      transition: background 130ms ease;
+    }
+
+    tbody tr:hover {
+      background: #f3f9fd;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .patient-cell {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 165px;
+    }
+
+    .patient-initial {
+      display: grid;
+      flex: 0 0 auto;
+      width: 33px;
+      height: 33px;
+      place-items: center;
+      color: var(--blue-dark);
+      font-size: 0.77rem;
+      font-weight: 850;
+      border-radius: 10px;
+      background: var(--blue-soft);
+    }
+
+    .patient-name {
+      color: var(--navy);
+      font-weight: 830;
+    }
+
+    .patient-subline {
+      margin-top: 2px;
+      color: var(--slate-500);
+      font-size: 0.73rem;
+    }
+
+    .reading-main {
+      color: var(--slate-800);
+      font-weight: 760;
+    }
+
+    .reading-sub {
+      margin-top: 2px;
+      color: var(--slate-500);
+      font-size: 0.72rem;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 150px;
+      padding: 6px 8px;
+      font-size: 0.69rem;
+      font-weight: 850;
+      line-height: 1.2;
+      letter-spacing: 0.015em;
+      text-align: center;
+      white-space: normal;
+      border-radius: 999px;
+    }
+
+    .pill-neutral {
+      color: var(--slate-600);
+      background: var(--slate-100);
+    }
+
+    .pill-success {
+      color: var(--green);
+      background: #d9f5e4;
+    }
+
+    .pill-warning {
+      color: var(--amber);
+      background: #ffefd1;
+    }
+
+    .pill-danger {
+      color: var(--red);
+      background: #ffdfdd;
+    }
+
+    .pill-info {
+      color: var(--blue-dark);
+      background: var(--blue-soft);
+    }
+
+    .pill-purple {
+      color: var(--purple);
+      background: var(--purple-soft);
+    }
+
+    .insights-card {
+      padding: 21px;
+    }
+
+    .insights-card h2 {
+      margin-bottom: 4px;
+    }
+
+    .insights-card > p {
+      margin-bottom: 17px;
+      color: var(--slate-600);
+      font-size: 0.86rem;
+      line-height: 1.5;
+    }
+
+    .activity-stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .activity-stat {
+      padding: 13px;
+      border: 1px solid var(--slate-200);
+      border-radius: 12px;
+      background: #fbfcfd;
+    }
+
+    .activity-stat-value {
+      color: var(--navy);
+      font-size: 1.3rem;
+      font-weight: 900;
+      letter-spacing: -0.035em;
+    }
+
+    .activity-stat-label {
+      margin-top: 3px;
+      color: var(--slate-600);
+      font-size: 0.74rem;
+      line-height: 1.32;
+    }
+
+    .activity-list {
+      overflow: hidden;
+      border: 1px solid var(--slate-200);
+      border-radius: 13px;
+    }
+
+    .activity-row {
+      padding: 13px;
+      border-bottom: 1px solid var(--slate-200);
+    }
+
+    .activity-row:last-child {
+      border-bottom: 0;
+    }
+
+    .activity-row-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .activity-patient {
+      overflow: hidden;
+      color: var(--navy);
+      font-size: 0.84rem;
+      font-weight: 800;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .activity-meta {
+      margin-top: 4px;
+      color: var(--slate-600);
+      font-size: 0.75rem;
+      line-height: 1.35;
+    }
+
+    .empty-state {
+      padding: 28px 20px;
+      color: var(--slate-600);
+      font-size: 0.88rem;
+      line-height: 1.5;
+      text-align: center;
+      border: 1px dashed var(--slate-300);
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.55);
+    }
+
+    .table-empty {
+      padding: 28px 20px;
+      color: var(--slate-600);
+      font-size: 0.88rem;
+      text-align: center;
+    }
+
+    .drawer-backdrop {
+      position: fixed;
+      z-index: 100;
+      inset: 0;
+      display: none;
+      background: rgba(8, 28, 44, 0.36);
+      backdrop-filter: blur(2px);
+    }
+
+    .drawer-backdrop.open {
+      display: block;
+    }
+
+    .drawer {
+      position: fixed;
+      z-index: 101;
+      top: 0;
+      right: 0;
+      width: min(100%, 640px);
+      height: 100vh;
+      overflow-y: auto;
+      background: #f7fafc;
+      box-shadow: var(--shadow-lg);
+      transform: translateX(104%);
+      transition: transform 240ms ease;
+    }
+
+    .drawer.open {
+      transform: translateX(0);
+    }
+
+    .drawer-header {
+      position: sticky;
+      z-index: 4;
+      top: 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 20px 22px;
+      color: white;
+      background:
+        radial-gradient(circle at 100% 0%, rgba(77, 192, 253, 0.25), transparent 12rem),
+        linear-gradient(135deg, #102a43, #0e5877);
+    }
+
+    .drawer-header h2 {
+      margin: 0 0 4px;
+      color: white;
+    }
+
+    .drawer-header p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.75);
+      font-size: 0.84rem;
+      line-height: 1.45;
+    }
+
+    .drawer-close {
+      display: grid;
+      flex: 0 0 auto;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      color: white;
+      font-size: 1.25rem;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .drawer-body {
+      padding: 20px;
+    }
+
+    .drawer-summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .drawer-summary-card {
+      padding: 12px;
+      border: 1px solid #dce7ef;
+      border-radius: 13px;
+      background: white;
+    }
+
+    .drawer-summary-label {
+      margin-bottom: 5px;
+      color: var(--slate-600);
+      font-size: 0.68rem;
+      font-weight: 820;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .drawer-summary-value {
+      overflow-wrap: anywhere;
+      color: var(--navy);
+      font-size: 0.91rem;
+      font-weight: 850;
+    }
+
+    .drawer-section {
+      margin-top: 16px;
+      padding: 17px;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-lg);
+      background: white;
+    }
+
+    .drawer-section-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 13px;
+    }
+
+    .drawer-section-head h3 {
+      margin: 0;
+    }
+
+    .drawer-section-head p {
+      margin: 3px 0 0;
+      color: var(--slate-600);
+      font-size: 0.78rem;
+      line-height: 1.4;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .detail-item {
+      padding: 11px;
+      border-radius: 10px;
+      background: #f8fafc;
+    }
+
+    .detail-label {
+      margin-bottom: 4px;
+      color: var(--slate-600);
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.035em;
+      text-transform: uppercase;
+    }
+
+    .detail-value {
+      overflow-wrap: anywhere;
+      color: var(--slate-800);
+      font-size: 0.87rem;
+      font-weight: 750;
+      line-height: 1.35;
+    }
+
+    .workflow-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .workflow-status-display {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 13px;
+      padding: 11px;
+      border: 1px solid var(--slate-200);
+      border-radius: 11px;
+      background: #fafcfd;
+    }
+
+    .timeline {
+      overflow: hidden;
+      border: 1px solid var(--slate-200);
+      border-radius: 12px;
+    }
+
+    .timeline-item {
+      padding: 14px;
+      border-bottom: 1px solid var(--slate-200);
+    }
+
+    .timeline-item:last-child {
+      border-bottom: 0;
+    }
+
+    .timeline-main {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .timeline-reading {
+      color: var(--navy);
+      font-size: 0.91rem;
+      font-weight: 850;
+    }
+
+    .timeline-meta {
+      margin-top: 4px;
+      color: var(--slate-600);
+      font-size: 0.75rem;
+      line-height: 1.4;
+    }
+
+    details {
+      margin-top: 10px;
+      border: 1px solid var(--slate-200);
+      border-radius: 9px;
+      background: #fbfcfd;
+    }
+
+    summary {
+      padding: 9px 10px;
+      color: var(--blue-dark);
+      font-size: 0.79rem;
+      font-weight: 780;
+      cursor: pointer;
+    }
+
+    details p {
+      margin: 0;
+      padding: 0 10px 10px;
+      color: var(--slate-600);
+      font-size: 0.8rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+    }
+
+    .wallet-summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+      padding: 13px;
+      color: white;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #12435d, #0a7469);
+    }
+
+    .wallet-summary span {
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.77rem;
+      font-weight: 750;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .wallet-summary strong {
+      font-size: 1.25rem;
+      letter-spacing: -0.03em;
+    }
+
+    .wallet-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--slate-200);
+    }
+
+    .wallet-row:last-child {
+      border-bottom: 0;
+    }
+
+    .wallet-amount {
+      color: var(--green);
+      font-size: 0.91rem;
+      font-weight: 870;
+    }
+
+    .wallet-meta {
+      margin-top: 3px;
+      color: var(--slate-600);
+      font-size: 0.74rem;
+    }
+
+    .drawer-footer-note {
+      margin-top: 14px;
+      color: var(--slate-500);
+      font-size: 0.73rem;
+      line-height: 1.45;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 12px;
+    }
+
+    .form-grid .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .footer-note {
+      margin: 24px 8px 0;
+      color: var(--slate-500);
+      font-size: 0.74rem;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    @media (max-width: 1150px) {
+      .kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .workspace-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .insights-card {
+        min-height: 0;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .app-shell {
+        padding: 16px 12px 30px;
+      }
+
+      .topbar {
+        margin-bottom: 17px;
+      }
+
+      .prototype-badge {
+        display: none;
+      }
+
+      .dashboard-header {
+        flex-direction: column;
+        padding: 20px;
+      }
+
+      .dashboard-actions {
+        justify-content: flex-start;
+      }
+
+      .roster-card-header {
+        flex-direction: column;
+      }
+
+      .roster-controls {
+        grid-template-columns: 1fr;
+      }
+
+      .drawer-summary {
+        grid-template-columns: 1fr;
+      }
+
+      .details-grid,
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-grid .field.full {
+        grid-column: auto;
+      }
+
+      .drawer {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .kpi-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .button-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .button-row .button {
+        width: 100%;
+      }
+
+      .dashboard-provider {
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">♥</div>
+        <span>RPM Rewards</span>
+      </div>
+
+      <div class="topbar-actions">
+        <span class="prototype-badge">Provider Prototype</span>
+      </div>
+    </header>
+
+    <!-- ================================================================
+         SCREEN 1: PROVIDER SELECTION
+         ================================================================ -->
+    <section id="providerSelectScreen" class="screen active">
+      <article class="card hero-card">
+        <div class="card-body">
+          <div class="eyebrow" style="color: #aee7ff;">Remote Patient Monitoring</div>
+          <h1>Provider Portal</h1>
+          <p>
+            Select a provider workspace to review the connected RPM patient
+            roster, monitoring activity, rewards, and internal billing workflow.
+          </p>
+        </div>
+      </article>
+
+      <article class="card select-card">
+        <div class="card-body">
+          <h2>Open provider workspace</h2>
+          <p class="muted">
+            This prototype scopes the dashboard to patients linked to the
+            selected provider record.
+          </p>
+
+          <form id="providerSelectForm" novalidate>
+            <div class="field">
+              <label for="providerSelect">Provider / clinic</label>
+              <select id="providerSelect" required>
+                <option value="">Loading available providers…</option>
+              </select>
+            </div>
+
+            <div id="providerSelectStatus" class="status-message" role="alert"></div>
+
+            <div class="button-row">
+              <button id="providerContinueButton" class="button button-primary" type="submit">
+                Continue to Dashboard
+              </button>
+            </div>
+          </form>
+
+          <div class="notice">
+            <span class="notice-icon">⚠</span>
+            <span>
+              <strong>Prototype only:</strong> this app connects directly to
+              Airtable from the browser. Use synthetic data and a restricted
+              prototype PAT only. Replace this architecture with authenticated,
+              server-side access before real-world use.
+            </span>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- ================================================================
+         SCREEN 2: PROVIDER DASHBOARD
+         ================================================================ -->
+    <section id="dashboardScreen" class="screen">
+      <section class="dashboard-header">
+        <div class="dashboard-provider">
+          <div id="providerAvatar" class="provider-avatar">DR</div>
+          <div class="provider-title">
+            <div class="eyebrow" style="margin-bottom: 6px; color: #b9ecff;">
+              Provider Workspace
+            </div>
+            <h1 id="providerNameHeading">Loading provider…</h1>
+            <p id="providerMeta">Loading clinic information…</p>
+          </div>
+        </div>
+
+        <div class="dashboard-actions">
+          <button id="refreshDashboardButton" class="button button-secondary" type="button">
+            ↻ Refresh
+          </button>
+          <button id="changeProviderButton" class="button button-secondary" type="button">
+            Switch Provider
+          </button>
+        </div>
+      </section>
+
+      <section class="kpi-grid" aria-label="Practice financial and RPM summary">
+        <article class="kpi-card">
+          <div class="kpi-icon">◉</div>
+          <div class="kpi-label">Active RPM Patients</div>
+          <div id="activePatientsKpi" class="kpi-value">—</div>
+          <div class="kpi-footnote">Patients currently linked to this provider</div>
+        </article>
+
+        <article class="kpi-card">
+          <div class="kpi-icon">$</div>
+          <div class="kpi-label">Est. Gross RPM Billing</div>
+          <div id="grossBillingKpi" class="kpi-value">—</div>
+          <div class="kpi-footnote">Current model: active RPM count × $150/month</div>
+        </article>
+
+        <article class="kpi-card">
+          <div class="kpi-icon">↗</div>
+          <div class="kpi-label">Platform Revenue Share</div>
+          <div id="platformShareKpi" class="kpi-value">—</div>
+          <div class="kpi-footnote">Current prototype model: 50% of gross estimate</div>
+        </article>
+
+        <article class="kpi-card">
+          <div class="kpi-icon">✓</div>
+          <div class="kpi-label">Est. Clinic Retained</div>
+          <div id="clinicShareKpi" class="kpi-value">—</div>
+          <div class="kpi-footnote">Gross estimate less platform revenue share</div>
+        </article>
+      </section>
+
+      <section class="workspace-grid">
+        <article class="card roster-card">
+          <div class="roster-card-header">
+            <div>
+              <h2>Patient Roster</h2>
+              <p id="rosterSubtitle">Loading connected patients…</p>
+            </div>
+            <button id="addPatientButton" class="button button-primary" type="button">
+              + Add Patient
+            </button>
+          </div>
+
+          <div class="roster-controls">
+            <div class="input-with-icon">
+              <span>⌕</span>
+              <input
+                id="patientSearchInput"
+                type="text"
+                autocomplete="off"
+                placeholder="Search patient, Chart ID, doctor, target…"
+              />
+            </div>
+
+            <select id="workflowFilter">
+              <option value="">All billing statuses</option>
+              <option value="Not Ready">Not Ready</option>
+              <option value="Ready for Review">Ready for Review</option>
+              <option value="Under Review">Under Review</option>
+              <option value="Ready to Bill">Ready to Bill</option>
+              <option value="Billed">Billed</option>
+              <option value="On Hold">On Hold</option>
+            </select>
+
+            <select id="metricFilter">
+              <option value="">All metrics</option>
+              <option value="Blood Pressure">Blood Pressure</option>
+              <option value="Weight (lbs)">Weight (lbs)</option>
+              <option value="HbA1c (%)">HbA1c (%)</option>
+              <option value="BMI">BMI</option>
+            </select>
+          </div>
+
+          <div class="table-wrap">
+            <table aria-label="Selected provider patient roster">
+              <thead>
+                <tr>
+                  <th class="sortable" data-sort-key="name">Patient ↕</th>
+                  <th class="sortable" data-sort-key="chartId">Chart ID ↕</th>
+                  <th class="sortable" data-sort-key="metric">Program ↕</th>
+                  <th>Goal</th>
+                  <th class="sortable" data-sort-key="latestDate">Latest Reading ↕</th>
+                  <th class="sortable" data-sort-key="result">Result ↕</th>
+                  <th class="sortable" data-sort-key="workflow">Billing Workflow ↕</th>
+                  <th>Open</th>
+                </tr>
+              </thead>
+              <tbody id="patientRosterBody">
+                <tr>
+                  <td colspan="8" class="table-empty">Loading patient roster…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <aside class="card insights-card">
+          <h2>Monitoring Snapshot</h2>
+          <p>
+            Current monitoring activity across patients connected to this provider.
+          </p>
+
+          <div class="activity-stat-grid">
+            <div class="activity-stat">
+              <div id="achievedCount" class="activity-stat-value">—</div>
+              <div class="activity-stat-label">Recent target achieved</div>
+            </div>
+            <div class="activity-stat">
+              <div id="missedCount" class="activity-stat-value">—</div>
+              <div class="activity-stat-label">Recent target missed</div>
+            </div>
+            <div class="activity-stat">
+              <div id="billingReviewCount" class="activity-stat-value">—</div>
+              <div class="activity-stat-label">Ready for review</div>
+            </div>
+            <div class="activity-stat">
+              <div id="onHoldCount" class="activity-stat-value">—</div>
+              <div class="activity-stat-label">On hold</div>
+            </div>
+          </div>
+
+          <div class="section-title" style="margin: 0 0 10px;">
+            <h2 style="font-size: 0.98rem;">Recent activity</h2>
+            <span>Latest 6</span>
+          </div>
+
+          <div id="recentActivityList">
+            <div class="empty-state">Loading recent monitoring activity…</div>
+          </div>
+        </aside>
+      </section>
+
+      <p class="footer-note">
+        RPM Rewards Provider Portal prototype · Automated target results and
+        system-generated notes are not clinician review or payer-billing proof.
+      </p>
+    </section>
+  </main>
+
+  <!-- ================================================================
+       SHARED DRAWER BACKDROP
+       ================================================================ -->
+  <div id="drawerBackdrop" class="drawer-backdrop"></div>
+
+  <!-- ================================================================
+       PATIENT DETAIL / EDIT DRAWER
+       ================================================================ -->
+  <aside id="patientDrawer" class="drawer" aria-hidden="true">
+    <header class="drawer-header">
+      <div>
+        <h2 id="drawerPatientName">Patient Details</h2>
+        <p id="drawerPatientMeta">Loading patient information…</p>
+      </div>
+      <button id="closePatientDrawerButton" class="drawer-close" type="button" aria-label="Close patient details">
+        ×
+      </button>
+    </header>
+
+    <div id="patientDrawerBody" class="drawer-body">
+      <div class="empty-state">Select a patient to review details.</div>
+    </div>
+  </aside>
+
+  <!-- ================================================================
+       ADD PATIENT DRAWER
+       ================================================================ -->
+  <aside id="addPatientDrawer" class="drawer" aria-hidden="true">
+    <header class="drawer-header">
+      <div>
+        <h2>Add New Patient</h2>
+        <p id="addPatientProviderContext">Patient will be linked to the selected provider.</p>
+      </div>
+      <button id="closeAddPatientDrawerButton" class="drawer-close" type="button" aria-label="Close add patient form">
+        ×
+      </button>
+    </header>
+
+    <div class="drawer-body">
+      <div class="drawer-section" style="margin-top: 0;">
+        <div class="drawer-section-head">
+          <div>
+            <h3>Patient Enrollment</h3>
+            <p>
+              Add a synthetic test patient and connect the record to the active
+              provider workspace.
+            </p>
+          </div>
+        </div>
+
+        <form id="addPatientForm" novalidate>
+          <div class="form-grid">
+            <div class="field">
+              <label for="newPatientName">Patient Name</label>
+              <input id="newPatientName" type="text" maxlength="120" placeholder="Example: Demo Patient 004" required />
+            </div>
+
+            <div class="field">
+              <label for="newPatientChartId">Clinic Chart ID</label>
+              <input id="newPatientChartId" type="text" maxlength="120" placeholder="Example: TEST-004" required />
+            </div>
+
+            <div class="field">
+              <label for="newPatientMetric">Target Metric Type</label>
+              <select id="newPatientMetric" required>
+                <option value="Blood Pressure">Blood Pressure</option>
+                <option value="Weight (lbs)">Weight (lbs)</option>
+                <option value="HbA1c (%)">HbA1c (%)</option>
+                <option value="BMI">BMI</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="newPatientTarget">Target Value</label>
+              <input id="newPatientTarget" type="text" maxlength="50" placeholder="Example: 130/80" required />
+            </div>
+
+            <div class="field">
+              <label for="newPatientPin">Patient App PIN</label>
+              <input id="newPatientPin" type="text" inputmode="numeric" autocomplete="off" maxlength="32" placeholder="Example: 4004" required />
+            </div>
+
+            <div class="field">
+              <label for="newPatientWorkflow">Billing Workflow Status</label>
+              <select id="newPatientWorkflow" required>
+                <option value="Not Ready" selected>Not Ready</option>
+                <option value="Ready for Review">Ready for Review</option>
+                <option value="Under Review">Under Review</option>
+                <option value="Ready to Bill">Ready to Bill</option>
+                <option value="Billed">Billed</option>
+                <option value="On Hold">On Hold</option>
+              </select>
+            </div>
+
+            <div class="field full">
+              <label for="newPatientAssignedDoctor">Assigned Doctor</label>
+              <input id="newPatientAssignedDoctor" type="text" maxlength="120" readonly />
+              <p class="small" style="margin: 7px 0 0;">
+                This is prefilled from the selected provider and may be edited
+                later in the patient detail drawer.
+              </p>
+            </div>
+          </div>
+
+          <div id="addPatientStatus" class="status-message" role="alert"></div>
+
+          <div class="button-row">
+            <button id="saveNewPatientButton" class="button button-primary" type="submit">
+              Create Patient
+            </button>
+            <button id="cancelNewPatientButton" class="button button-secondary" type="button">
+              Cancel
+            </button>
+          </div>
+        </form>
+
+        <div class="notice">
+          <span class="notice-icon">ⓘ</span>
+          <span>
+            The portal will validate duplicate patient name, Clinic Chart ID,
+            and App PIN values before creating the prototype record.
+          </span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <script>
+    "use strict";
+
+    /*
+      =======================================================================
+      CONFIGURATION
+      =======================================================================
+
+      DIRECT BROWSER-TO-AIRTABLE PROTOTYPE ONLY.
+      Use a dedicated, restricted test-data PAT and replace it with a
+      secure server-side / authenticated architecture before production.
+    */
+
+    const AIRTABLE_BASE_ID = "appM02rx1BXGfqZBg";
+    const AIRTABLE_PAT = "patJ3q6pem42aW1Vw.026ff4a06a3a34ad35e7c64f07690e4292aa7a987809045fa5c34752da0c2a06";
+
+    const TABLES = {
+      patients: "Patients",
+      vitals: "Vitals Log",
+      wallet: "Rewards Wallet",
+      providers: "Providers"
+    };
+
+    const REVENUE_PER_ACTIVE_PATIENT = 150;
+    const PLATFORM_REVENUE_SHARE = 0.50;
+    const MAX_PATIENT_DETAIL_HISTORY = 10;
+    const MAX_ACTIVITY_ITEMS = 6;
+
+    const BILLING_WORKFLOW_OPTIONS = [
+      "Not Ready",
+      "Ready for Review",
+      "Under Review",
+      "Ready to Bill",
+      "Billed",
+      "On Hold"
+    ];
+
+    const state = {
+      providers: [],
+      selectedProvider: null,
+      allPatients: [],
+      rosterPatients: [],
+      patientSummaries: new Map(),
+      selectedPatient: null,
+      patientDetail: null,
+      sort: {
+        key: "name",
+        direction: "asc"
+      }
+    };
+
+    const el = {
+      providerSelectScreen: document.getElementById("providerSelectScreen"),
+      dashboardScreen: document.getElementById("dashboardScreen"),
+
+      providerSelectForm: document.getElementById("providerSelectForm"),
+      providerSelect: document.getElementById("providerSelect"),
+      providerSelectStatus: document.getElementById("providerSelectStatus"),
+      providerContinueButton: document.getElementById("providerContinueButton"),
+
+      providerAvatar: document.getElementById("providerAvatar"),
+      providerNameHeading: document.getElementById("providerNameHeading"),
+      providerMeta: document.getElementById("providerMeta"),
+      refreshDashboardButton: document.getElementById("refreshDashboardButton"),
+      changeProviderButton: document.getElementById("changeProviderButton"),
+
+      activePatientsKpi: document.getElementById("activePatientsKpi"),
+      grossBillingKpi: document.getElementById("grossBillingKpi"),
+      platformShareKpi: document.getElementById("platformShareKpi"),
+      clinicShareKpi: document.getElementById("clinicShareKpi"),
+
+      rosterSubtitle: document.getElementById("rosterSubtitle"),
+      patientSearchInput: document.getElementById("patientSearchInput"),
+      workflowFilter: document.getElementById("workflowFilter"),
+      metricFilter: document.getElementById("metricFilter"),
+      patientRosterBody: document.getElementById("patientRosterBody"),
+      addPatientButton: document.getElementById("addPatientButton"),
+
+      achievedCount: document.getElementById("achievedCount"),
+      missedCount: document.getElementById("missedCount"),
+      billingReviewCount: document.getElementById("billingReviewCount"),
+      onHoldCount: document.getElementById("onHoldCount"),
+      recentActivityList: document.getElementById("recentActivityList"),
+
+      drawerBackdrop: document.getElementById("drawerBackdrop"),
+
+      patientDrawer: document.getElementById("patientDrawer"),
+      drawerPatientName: document.getElementById("drawerPatientName"),
+      drawerPatientMeta: document.getElementById("drawerPatientMeta"),
+      patientDrawerBody: document.getElementById("patientDrawerBody"),
+      closePatientDrawerButton: document.getElementById("closePatientDrawerButton"),
+
+      addPatientDrawer: document.getElementById("addPatientDrawer"),
+      addPatientProviderContext: document.getElementById("addPatientProviderContext"),
+      closeAddPatientDrawerButton: document.getElementById("closeAddPatientDrawerButton"),
+      cancelNewPatientButton: document.getElementById("cancelNewPatientButton"),
+      addPatientForm: document.getElementById("addPatientForm"),
+      newPatientName: document.getElementById("newPatientName"),
+      newPatientChartId: document.getElementById("newPatientChartId"),
+      newPatientMetric: document.getElementById("newPatientMetric"),
+      newPatientTarget: document.getElementById("newPatientTarget"),
+      newPatientPin: document.getElementById("newPatientPin"),
+      newPatientWorkflow: document.getElementById("newPatientWorkflow"),
+      newPatientAssignedDoctor: document.getElementById("newPatientAssignedDoctor"),
+      addPatientStatus: document.getElementById("addPatientStatus"),
+      saveNewPatientButton: document.getElementById("saveNewPatientButton")
+    };
+
+    /* ================================================================
+       GENERIC HELPERS
+       ================================================================ */
+
+    function tableUrl(tableName) {
+      return `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(tableName)}`;
+    }
+
+    function recordUrl(tableName, recordId) {
+      return `${tableUrl(tableName)}/${recordId}`;
+    }
+
+    function airtableHeaders() {
+      return {
+        Authorization: `Bearer ${AIRTABLE_PAT}`,
+        "Content-Type": "application/json"
+      };
+    }
+
+    function isPatConfigured() {
+      return (
+        AIRTABLE_PAT &&
+        AIRTABLE_PAT !== "PASTE_YOUR_AIRTABLE_PAT_HERE" &&
+        AIRTABLE_PAT.startsWith("pat")
+      );
+    }
+
+    function setStatus(element, message = "", type = "info") {
+      element.textContent = message;
+      element.className = "status-message";
+
+      if (message) {
+        element.classList.add("visible", type);
+      }
+    }
+
+    function setButtonLoading(button, loading, loadingText) {
+      if (!button.dataset.defaultLabel) {
+        button.dataset.defaultLabel = button.textContent;
+      }
+
+      button.disabled = loading;
+      button.textContent = loading ? loadingText : button.dataset.defaultLabel;
+    }
+
+    function showScreen(name) {
+      el.providerSelectScreen.classList.toggle("active", name === "select");
+      el.dashboardScreen.classList.toggle("active", name === "dashboard");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function escapeAirtableFormulaString(value) {
+      return String(value)
+        .replace(/\\/g, "\\\\")
+        .replace(/'/g, "\\'");
+    }
+
+    function getFirstFieldValue(fields, fieldName, fallback = "") {
+      const value = fields?.[fieldName];
+
+      if (Array.isArray(value)) {
+        return value.length ? value[0] : fallback;
+      }
+
+      return value ?? fallback;
+    }
+
+    function getArrayFieldValue(fields, fieldName) {
+      const value = fields?.[fieldName];
+      return Array.isArray(value) ? value : [];
+    }
+
+    function initials(value) {
+      return (
+        String(value || "RP")
+          .replace(/^Dr\.?\s*/i, "")
+          .split(/\s+/)
+          .filter(Boolean)
+          .slice(0, 2)
+          .map((piece) => piece.charAt(0).toUpperCase())
+          .join("") || "RP"
+      );
+    }
+
+    function formatCurrency(value) {
+      const amount = Number(value) || 0;
+
+      return new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+        maximumFractionDigits: 2
+      }).format(amount);
+    }
+
+    function formatDateTime(value) {
+      if (!value) return "No activity yet";
+
+      const date = new Date(value);
+
+      if (Number.isNaN(date.getTime())) {
+        return String(value);
+      }
+
+      return new Intl.DateTimeFormat("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "2-digit"
+      }).format(date);
+    }
+
+    function formatShortDate(value) {
+      if (!value) return "No activity";
+
+      const date = new Date(value);
+
+      if (Number.isNaN(date.getTime())) {
+        return String(value);
+      }
+
+      return new Intl.DateTimeFormat("en-US", {
+        month: "short",
+        day: "numeric",
+        hour: "numeric"
+      }).format(date);
+    }
+
+    function formatMetric(metric, value) {
+      if (value === null || value === undefined || value === "") return "—";
+
+      if (metric === "Weight (lbs)") return `${value} lbs`;
+      if (metric === "HbA1c (%)") return `${value}%`;
+
+      return String(value);
+    }
+
+    function workflowPillClass(status) {
+      switch (status) {
+        case "Ready for Review":
+          return "pill-warning";
+        case "Under Review":
+          return "pill-info";
+        case "Ready to Bill":
+          return "pill-success";
+        case "Billed":
+          return "pill-purple";
+        case "On Hold":
+          return "pill-danger";
+        default:
+          return "pill-neutral";
+      }
+    }
+
+    function resultPillClass(status) {
+      if (status === "Target Achieved") return "pill-success";
+      if (status === "Target Missed") return "pill-warning";
+      if (status === "Critical Escalation") return "pill-danger";
+      return "pill-neutral";
+    }
+
+    function normalizeSingleSelect(value, fallback = "") {
+      if (Array.isArray(value)) return value[0] || fallback;
+      return value || fallback;
+    }
+
+    async function airtableRequest(url, options = {}) {
+      const response = await fetch(url, {
+        ...options,
+        headers: {
+          ...airtableHeaders(),
+          ...(options.headers || {})
+        }
+      });
+
+      let data = null;
+
+      try {
+        data = await response.json();
+      } catch {
+        data = null;
+      }
+
+      if (!response.ok) {
+        const message =
+          data?.error?.message ||
+          data?.error?.type ||
+          `Airtable request failed with status ${response.status}.`;
+
+        throw new Error(message);
+      }
+
+      return data;
+    }
+
+    async function fetchAllRecords(tableName, params = {}) {
+      const records = [];
+      let offset = null;
+
+      do {
+        const searchParams = new URLSearchParams(params);
+
+        if (offset) {
+          searchParams.set("offset", offset);
+        }
+
+        const data = await airtableRequest(
+          `${tableUrl(tableName)}?${searchParams.toString()}`
+        );
+
+        records.push(...(data.records || []));
+        offset = data.offset || null;
+      } while (offset);
+
+      return records;
+    }
+
+    /* ================================================================
+       NORMALIZERS
+       ================================================================ */
+
+    function normalizeProvider(record) {
+      const fields = record.fields || {};
+
+      return {
+        recordId: record.id,
+        name: getFirstFieldValue(fields, "Provider Name", "Unnamed Provider"),
+        clinicName: getFirstFieldValue(fields, "Clinic / Facility Name", ""),
+        npi: getFirstFieldValue(fields, "NPI Number", ""),
+        email: getFirstFieldValue(fields, "Provider Email", ""),
+        assignedPatientIds: getArrayFieldValue(fields, "Assigned Patients"),
+        activeRpmCount: Number(fields["Active RPM Count"]) || 0,
+        grossBilling: Number(fields["Gross RPM Billing Est."]) || 0,
+        platformShare: Number(fields["Startup Revenue Share"]) || 0
+      };
+    }
+
+    function normalizePatient(record) {
+      const fields = record.fields || {};
+
+      return {
+        recordId: record.id,
+        name: getFirstFieldValue(fields, "Name", "Unnamed Patient"),
+        displayName: getFirstFieldValue(
+          fields,
+          "Patient Display Name",
+          getFirstFieldValue(fields, "Name", "Unnamed Patient")
+        ),
+        chartId: getFirstFieldValue(fields, "Clinic Chart ID", ""),
+        assignedDoctor: getFirstFieldValue(fields, "Assigned Doctor", ""),
+        metric: getFirstFieldValue(fields, "Target Metric Type", ""),
+        target: getFirstFieldValue(fields, "Target Value", ""),
+        appPin: getFirstFieldValue(fields, "App PIN", ""),
+        providerIds: getArrayFieldValue(fields, "Providers"),
+        billingWorkflow: normalizeSingleSelect(
+          fields["Billing Workflow Status"],
+          "Not Ready"
+        ),
+        billingReviewStatus: getFirstFieldValue(fields, "Billing Review Status", ""),
+        raw: record
+      };
+    }
+
+    function normalizeVital(record) {
+      const fields = record.fields || {};
+
+      return {
+        recordId: record.id,
+        patientNames: getArrayFieldValue(fields, "Patient"),
+        submittedValue: getFirstFieldValue(fields, "Patient Submitted Value", ""),
+        metricCategory: getFirstFieldValue(
+          fields,
+          "Patient Metric Category Text",
+          getFirstFieldValue(fields, "Metric Category", "")
+        ),
+        targetBaseline: getFirstFieldValue(fields, "Patient Target Baseline", ""),
+        evaluationStatus: normalizeSingleSelect(
+          fields["AI Evaluation Status"],
+          "Logged"
+        ),
+        coachMessage: getFirstFieldValue(fields, "AI Coach Message", ""),
+        cptLog: getFirstFieldValue(fields, "CPT 99457 Log", ""),
+        createdTime: fields["System Created Time"] || record.createdTime || "",
+        raw: record
+      };
+    }
+
+    function normalizeReward(record) {
+      const fields = record.fields || {};
+
+      return {
+        recordId: record.id,
+        patientNames: getArrayFieldValue(fields, "Patient"),
+        transactionId: fields["Transaction ID"] ?? "",
+        amount: Number(fields.Amount) || 0,
+        milestone: normalizeSingleSelect(fields["Milestone Trigger"], "Reward"),
+        dateEarned: fields["Date Earned"] || fields["Date Created"] || record.createdTime || "",
+        raw: record
+      };
+    }
+
+    /* ================================================================
+       PROVIDER SELECT
+       ================================================================ */
+
+    async function loadProviders() {
+      if (!isPatConfigured()) {
+        throw new Error(
+          "Add a dedicated Airtable prototype PAT in AIRTABLE_PAT before using this portal."
+        );
+      }
+
+      const records = await fetchAllRecords(TABLES.providers, {
+        "sort[0][field]": "Provider Name",
+        "sort[0][direction]": "asc",
+        pageSize: "100"
+      });
+
+      state.providers = records.map(normalizeProvider);
+
+      el.providerSelect.innerHTML = `
+        <option value="">Select a provider workspace…</option>
+        ${state.providers
+          .map((provider) => {
+            const label = provider.clinicName
+              ? `${provider.name} — ${provider.clinicName}`
+              : provider.name;
+
+            return `<option value="${escapeHtml(provider.recordId)}">${escapeHtml(label)}</option>`;
+          })
+          .join("")}
+      `;
+
+      if (!state.providers.length) {
+        setStatus(
+          el.providerSelectStatus,
+          'No Provider records were found. Add at least one record to the "Providers" table before continuing.',
+          "error"
+        );
+      }
+    }
+
+    async function handleProviderSelectSubmit(event) {
+      event.preventDefault();
+      setStatus(el.providerSelectStatus, "");
+
+      const selectedId = el.providerSelect.value;
+
+      if (!selectedId) {
+        setStatus(el.providerSelectStatus, "Select a provider workspace to continue.", "error");
+        return;
+      }
+
+      const provider = state.providers.find((entry) => entry.recordId === selectedId);
+
+      if (!provider) {
+        setStatus(el.providerSelectStatus, "The selected provider could not be loaded. Please try again.", "error");
+        return;
+      }
+
+      state.selectedProvider = provider;
+
+      setButtonLoading(el.providerContinueButton, true, "Loading workspace…");
+
+      try {
+        renderProviderHeader();
+        showScreen("dashboard");
+        await refreshDashboard();
+      } catch (error) {
+        showScreen("select");
+        setStatus(
+          el.providerSelectStatus,
+          `Unable to load provider workspace. ${error.message || "Please try again."}`,
+          "error"
+        );
+      } finally {
+        setButtonLoading(el.providerContinueButton, false);
+      }
+    }
+
+    function renderProviderHeader() {
+      const provider = state.selectedProvider;
+
+      if (!provider) return;
+
+      el.providerAvatar.textContent = initials(provider.name);
+      el.providerNameHeading.textContent = provider.name;
+
+      const meta = [];
+
+      if (provider.clinicName) meta.push(provider.clinicName);
+      if (provider.npi) meta.push(`NPI: ${provider.npi}`);
+      if (provider.email) meta.push(provider.email);
+
+      el.providerMeta.textContent = meta.join(" · ") || "RPM Provider Workspace";
+    }
+
+    /* ================================================================
+       PATIENT QUERIES AND DASHBOARD LOADING
+       ================================================================ */
+
+    /*
+      Controlled-prototype provider scoping:
+      The app filters the Patients linked record field using the selected
+      Provider table primary value: Provider Name.
+
+      This assumes Provider Name is unique in this prototype. A future
+      production-ready version should expose a Provider RECORD_ID() lookup
+      field in Patients and filter by immutable record ID instead.
+    */
+    function providerPatientFormula(providerName) {
+      const safeProviderName = escapeAirtableFormulaString(providerName);
+      return `{Providers}='${safeProviderName}'`;
+    }
+
+    async function fetchProviderPatients(provider) {
+      const records = await fetchAllRecords(TABLES.patients, {
+        filterByFormula: providerPatientFormula(provider.name),
+        "sort[0][field]": "Name",
+        "sort[0][direction]": "asc",
+        pageSize: "100"
+      });
+
+      return records.map(normalizePatient);
+    }
+
+    /*
+      Controlled-prototype history lookup:
+      Existing patient app history uses linked Patient primary-field values
+      (Patient Name) for Vitals Log and Rewards Wallet filters.
+
+      This works with unique synthetic Names. Upgrade later to an immutable
+      Patient Internal Record ID lookup in both child tables.
+    */
+    function patientHistoryFormula(patientName) {
+      const safePatientName = escapeAirtableFormulaString(patientName);
+      return `{Patient}='${safePatientName}'`;
+    }
+
+    async function fetchVitalsForPatient(patientName, maxRecords = MAX_PATIENT_DETAIL_HISTORY) {
+      const records = await fetchAllRecords(TABLES.vitals, {
+        filterByFormula: patientHistoryFormula(patientName),
+        "sort[0][field]": "System Created Time",
+        "sort[0][direction]": "desc",
+        maxRecords: String(maxRecords),
+        pageSize: String(maxRecords)
+      });
+
+      return records.map(normalizeVital);
+    }
+
+    async function fetchRewardsForPatient(patientName, maxRecords = MAX_PATIENT_DETAIL_HISTORY) {
+      const records = await fetchAllRecords(TABLES.wallet, {
+        filterByFormula: patientHistoryFormula(patientName),
+        "sort[0][field]": "Date Created",
+        "sort[0][direction]": "desc",
+        maxRecords: String(maxRecords),
+        pageSize: String(maxRecords)
+      });
+
+      return records.map(normalizeReward);
+    }
+
+    async function buildPatientSummaries(patients) {
+      const summaryMap = new Map();
+
+      /*
+        This launches the small per-patient history queries in parallel.
+        It is suitable for a limited synthetic-data prototype roster.
+        For larger real-world panels, replace it with denormalized Airtable
+        rollups/lookups or server-side aggregation to reduce API volume.
+      */
+      await Promise.all(
+        patients.map(async (patient) => {
+          try {
+            const [vitals, rewards] = await Promise.all([
+              fetchVitalsForPatient(patient.name, 1),
+              fetchRewardsForPatient(patient.name, 100)
+            ]);
+
+            const latestVital = vitals[0] || null;
+            const rewardTotal = rewards.reduce((sum, reward) => sum + reward.amount, 0);
+
+            summaryMap.set(patient.recordId, {
+              latestVital,
+              rewardTotal,
+              recentRewards: rewards
+            });
+          } catch (error) {
+            summaryMap.set(patient.recordId, {
+              latestVital: null,
+              rewardTotal: 0,
+              recentRewards: [],
+              error: error.message
+            });
+          }
+        })
+      );
+
+      return summaryMap;
+    }
+
+    async function refreshDashboard() {
+      if (!state.selectedProvider) return;
+
+      setButtonLoading(el.refreshDashboardButton, true, "Refreshing…");
+
+      el.patientRosterBody.innerHTML =
+        '<tr><td colspan="8" class="table-empty">Loading provider-scoped patient roster…</td></tr>';
+
+      el.recentActivityList.innerHTML =
+        '<div class="empty-state">Loading recent monitoring activity…</div>';
+
+      try {
+        const patients = await fetchProviderPatients(state.selectedProvider);
+
+        state.allPatients = patients;
+        state.patientSummaries = await buildPatientSummaries(patients);
+
+        renderKpis();
+        applyRosterFiltersAndRender();
+        renderMonitoringSnapshot();
+      } catch (error) {
+        el.patientRosterBody.innerHTML =
+          `<tr><td colspan="8" class="table-empty">Unable to load patient roster: ${escapeHtml(error.message || "Unknown error")}</td></tr>`;
+
+        el.recentActivityList.innerHTML =
+          `<div class="empty-state">Unable to load activity: ${escapeHtml(error.message || "Unknown error")}</div>`;
+      } finally {
+        setButtonLoading(el.refreshDashboardButton, false);
+      }
+    }
+
+    function renderKpis() {
+      const provider = state.selectedProvider;
+      const patientCount = state.allPatients.length;
+
+      /*
+        Prefer the actual number of provider-scoped Patients shown in this
+        portal. Provider formula fields are still used as a fallback if needed.
+      */
+      const activeCount = patientCount || provider.activeRpmCount || 0;
+
+      const gross =
+        Number(provider.grossBilling) ||
+        activeCount * REVENUE_PER_ACTIVE_PATIENT;
+
+      const platform =
+        Number(provider.platformShare) ||
+        gross * PLATFORM_REVENUE_SHARE;
+
+      const clinic = gross - platform;
+
+      el.activePatientsKpi.textContent = activeCount.toLocaleString("en-US");
+      el.grossBillingKpi.textContent = formatCurrency(gross);
+      el.platformShareKpi.textContent = formatCurrency(platform);
+      el.clinicShareKpi.textContent = formatCurrency(clinic);
+
+      el.rosterSubtitle.textContent =
+        `${patientCount} patient${patientCount === 1 ? "" : "s"} linked to ${provider.name}`;
+    }
+
+    /* ================================================================
+       ROSTER RENDERING
+       ================================================================ */
+
+    function getFilteredPatients() {
+      const query = el.patientSearchInput.value.trim().toLowerCase();
+      const workflow = el.workflowFilter.value;
+      const metric = el.metricFilter.value;
+
+      const filtered = state.allPatients.filter((patient) => {
+        const matchesSearch =
+          !query ||
+          [
+            patient.name,
+            patient.displayName,
+            patient.chartId,
+            patient.assignedDoctor,
+            patient.metric,
+            patient.target,
+            patient.billingWorkflow
+          ]
+            .join(" ")
+            .toLowerCase()
+            .includes(query);
+
+        const matchesWorkflow = !workflow || patient.billingWorkflow === workflow;
+        const matchesMetric = !metric || patient.metric === metric;
+
+        return matchesSearch && matchesWorkflow && matchesMetric;
+      });
+
+      return filtered.sort((a, b) => {
+        const summaryA = state.patientSummaries.get(a.recordId) || {};
+        const summaryB = state.patientSummaries.get(b.recordId) || {};
+        const direction = state.sort.direction === "asc" ? 1 : -1;
+
+        let valueA = "";
+        let valueB = "";
+
+        switch (state.sort.key) {
+          case "chartId":
+            valueA = a.chartId || "";
+            valueB = b.chartId || "";
+            break;
+          case "metric":
+            valueA = a.metric || "";
+            valueB = b.metric || "";
+            break;
+          case "latestDate":
+            valueA = summaryA.latestVital?.createdTime || "";
+            valueB = summaryB.latestVital?.createdTime || "";
+            break;
+          case "result":
+            valueA = summaryA.latestVital?.evaluationStatus || "";
+            valueB = summaryB.latestVital?.evaluationStatus || "";
+            break;
+          case "workflow":
+            valueA = a.billingWorkflow || "";
+            valueB = b.billingWorkflow || "";
+            break;
+          case "name":
+          default:
+            valueA = a.name || "";
+            valueB = b.name || "";
+            break;
+        }
+
+        if (state.sort.key === "latestDate") {
+          const timeA = valueA ? new Date(valueA).getTime() : 0;
+          const timeB = valueB ? new Date(valueB).getTime() : 0;
+          return (timeA - timeB) * direction;
+        }
+
+        return String(valueA).localeCompare(String(valueB), undefined, {
+          numeric: true,
+          sensitivity: "base"
+        }) * direction;
+      });
+    }
+
+    function applyRosterFiltersAndRender() {
+      state.rosterPatients = getFilteredPatients();
+      renderRoster(state.rosterPatients);
+    }
+
+    function renderRoster(patients) {
+      if (!patients.length) {
+        el.patientRosterBody.innerHTML =
+          '<tr><td colspan="8" class="table-empty">No patients match the current search or filters.</td></tr>';
+        return;
+      }
+
+      el.patientRosterBody.innerHTML = patients
+        .map((patient) => {
+          const summary = state.patientSummaries.get(patient.recordId) || {};
+          const latest = summary.latestVital;
+          const latestReading = latest?.submittedValue || "No submissions";
+          const latestDate = latest?.createdTime
+            ? formatShortDate(latest.createdTime)
+            : "No activity";
+          const latestResult = latest?.evaluationStatus || "No result";
+
+          return `
+            <tr data-patient-id="${escapeHtml(patient.recordId)}" tabindex="0">
+              <td>
+                <div class="patient-cell">
+                  <div class="patient-initial">${escapeHtml(initials(patient.name))}</div>
+                  <div>
+                    <div class="patient-name">${escapeHtml(patient.name)}</div>
+                    <div class="patient-subline">${escapeHtml(patient.assignedDoctor || "No doctor assigned")}</div>
+                  </div>
+                </div>
+              </td>
+              <td>${escapeHtml(patient.chartId || "—")}</td>
+              <td>${escapeHtml(patient.metric || "—")}</td>
+              <td>${escapeHtml(formatMetric(patient.metric, patient.target))}</td>
+              <td>
+                <div class="reading-main">${escapeHtml(latestReading)}</div>
+                <div class="reading-sub">${escapeHtml(latestDate)}</div>
+              </td>
+              <td>
+                <span class="pill ${resultPillClass(latestResult)}">${escapeHtml(latestResult)}</span>
+              </td>
+              <td>
+                <span class="pill ${workflowPillClass(patient.billingWorkflow)}">${escapeHtml(patient.billingWorkflow || "Not Ready")}</span>
+              </td>
+              <td>
+                <button class="button button-text button-small open-patient-button" type="button" data-patient-id="${escapeHtml(patient.recordId)}">
+                  Open →
+                </button>
+              </td>
+            </tr>
+          `;
+        })
+        .join("");
+
+      el.patientRosterBody.querySelectorAll("tr[data-patient-id]").forEach((row) => {
+        row.addEventListener("click", (event) => {
+          const button = event.target.closest(".open-patient-button");
+
+          if (button) {
+            event.stopPropagation();
+          }
+
+          const patientId = button?.dataset.patientId || row.dataset.patientId;
+          openPatientDrawer(patientId);
+        });
+
+        row.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            openPatientDrawer(row.dataset.patientId);
+          }
+        });
+      });
+    }
+
+    function renderMonitoringSnapshot() {
+      const summaries = [...state.patientSummaries.entries()]
+        .map(([patientId, summary]) => {
+          const patient = state.allPatients.find((entry) => entry.recordId === patientId);
+          return { patient, summary };
+        })
+        .filter((entry) => entry.patient);
+
+      const achieved = summaries.filter(
+        (entry) => entry.summary.latestVital?.evaluationStatus === "Target Achieved"
+      ).length;
+
+      const missed = summaries.filter(
+        (entry) => entry.summary.latestVital?.evaluationStatus === "Target Missed"
+      ).length;
+
+      const readyForReview = state.allPatients.filter(
+        (patient) => patient.billingWorkflow === "Ready for Review"
+      ).length;
+
+      const onHold = state.allPatients.filter(
+        (patient) => patient.billingWorkflow === "On Hold"
+      ).length;
+
+      el.achievedCount.textContent = achieved.toLocaleString("en-US");
+      el.missedCount.textContent = missed.toLocaleString("en-US");
+      el.billingReviewCount.textContent = readyForReview.toLocaleString("en-US");
+      el.onHoldCount.textContent = onHold.toLocaleString("en-US");
+
+      const activity = summaries
+        .filter((entry) => entry.summary.latestVital?.createdTime)
+        .sort((a, b) => {
+          const dateA = new Date(a.summary.latestVital.createdTime).getTime();
+          const dateB = new Date(b.summary.latestVital.createdTime).getTime();
+          return dateB - dateA;
+        })
+        .slice(0, MAX_ACTIVITY_ITEMS);
+
+      if (!activity.length) {
+        el.recentActivityList.innerHTML =
+          '<div class="empty-state">No submitted vitals are available for this provider’s patients yet.</div>';
+        return;
+      }
+
+      el.recentActivityList.innerHTML = `
+        <div class="activity-list">
+          ${activity
+            .map(({ patient, summary }) => {
+              const vital = summary.latestVital;
+
+              return `
+                <article class="activity-row">
+                  <div class="activity-row-top">
+                    <div class="activity-patient">${escapeHtml(patient.name)}</div>
+                    <span class="pill ${resultPillClass(vital.evaluationStatus)}">${escapeHtml(vital.evaluationStatus)}</span>
+                  </div>
+                  <div class="activity-meta">
+                    ${escapeHtml(vital.submittedValue || "Reading")} ·
+                    ${escapeHtml(formatShortDate(vital.createdTime))}
+                  </div>
+                </article>
+              `;
+            })
+            .join("")}
+        </div>
+      `;
+    }
+
+    /* ================================================================
+       PATIENT DRAWER
+       ================================================================ */
+
+    function openDrawer(drawer) {
+      el.drawerBackdrop.classList.add("open");
+      drawer.classList.add("open");
+      drawer.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeAllDrawers() {
+      el.drawerBackdrop.classList.remove("open");
+      el.patientDrawer.classList.remove("open");
+      el.addPatientDrawer.classList.remove("open");
+      el.patientDrawer.setAttribute("aria-hidden", "true");
+      el.addPatientDrawer.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
+    async function openPatientDrawer(patientId) {
+      const patient = state.allPatients.find((entry) => entry.recordId === patientId);
+
+      if (!patient) return;
+
+      state.selectedPatient = patient;
+      state.patientDetail = null;
+
+      el.drawerPatientName.textContent = patient.name;
+      el.drawerPatientMeta.textContent =
+        `${patient.chartId || "No Chart ID"} · ${patient.metric || "Monitoring type not configured"}`;
+
+      el.patientDrawerBody.innerHTML =
+        '<div class="empty-state">Loading patient history, reward activity, and workflow details…</div>';
+
+      openDrawer(el.patientDrawer);
+
+      try {
+        const [vitals, rewards] = await Promise.all([
+          fetchVitalsForPatient(patient.name, MAX_PATIENT_DETAIL_HISTORY),
+          fetchRewardsForPatient(patient.name, MAX_PATIENT_DETAIL_HISTORY)
+        ]);
+
+        state.patientDetail = {
+          patient,
+          vitals,
+          rewards
+        };
+
+        renderPatientDrawer();
+      } catch (error) {
+        el.patientDrawerBody.innerHTML =
+          `<div class="empty-state">Unable to load patient detail: ${escapeHtml(error.message || "Unknown error")}</div>`;
+      }
+    }
+
+    function renderPatientDrawer() {
+      if (!state.patientDetail) return;
+
+      const { patient, vitals, rewards } = state.patientDetail;
+      const latestVital = vitals[0] || null;
+      const rewardTotal = rewards.reduce((sum, reward) => sum + reward.amount, 0);
+
+      const summaryHtml = `
+        <div class="drawer-summary">
+          <div class="drawer-summary-card">
+            <div class="drawer-summary-label">Configured Goal</div>
+            <div class="drawer-summary-value">${escapeHtml(formatMetric(patient.metric, patient.target))}</div>
+          </div>
+          <div class="drawer-summary-card">
+            <div class="drawer-summary-label">Latest Reading</div>
+            <div class="drawer-summary-value">${escapeHtml(latestVital?.submittedValue || "No readings")}</div>
+          </div>
+          <div class="drawer-summary-card">
+            <div class="drawer-summary-label">Rewards Earned</div>
+            <div class="drawer-summary-value">${escapeHtml(formatCurrency(rewardTotal))}</div>
+          </div>
+        </div>
+      `;
+
+      const patientDetails = `
+        <section class="drawer-section">
+          <div class="drawer-section-head">
+            <div>
+              <h3>Patient Overview</h3>
+              <p>Editable enrollment and monitoring configuration.</p>
+            </div>
+            <button id="toggleEditPatientButton" class="button button-secondary button-small" type="button">
+              Edit Patient
+            </button>
+          </div>
+
+          <div id="patientDetailsDisplay">
+            <div class="details-grid">
+              <div class="detail-item">
+                <div class="detail-label">Clinic Chart ID</div>
+                <div class="detail-value">${escapeHtml(patient.chartId || "—")}</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-label">Assigned Doctor</div>
+                <div class="detail-value">${escapeHtml(patient.assignedDoctor || "—")}</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-label">Target Metric</div>
+                <div class="detail-value">${escapeHtml(patient.metric || "—")}</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-label">Target Value</div>
+                <div class="detail-value">${escapeHtml(formatMetric(patient.metric, patient.target))}</div>
+              </div>
+            </div>
+          </div>
+
+          <form id="editPatientForm" class="hidden" novalidate>
+            <div class="form-grid">
+              <div class="field">
+                <label for="editPatientName">Patient Name</label>
+                <input id="editPatientName" type="text" maxlength="120" value="${escapeHtml(patient.name)}" required />
+              </div>
+              <div class="field">
+                <label for="editPatientChartId">Clinic Chart ID</label>
+                <input id="editPatientChartId" type="text" maxlength="120" value="${escapeHtml(patient.chartId)}" required />
+              </div>
+              <div class="field">
+                <label for="editPatientDoctor">Assigned Doctor</label>
+                <input id="editPatientDoctor" type="text" maxlength="120" value="${escapeHtml(patient.assignedDoctor)}" />
+              </div>
+              <div class="field">
+                <label for="editPatientMetric">Target Metric Type</label>
+                <select id="editPatientMetric" required>
+                  ${metricOptionsHtml(patient.metric)}
+                </select>
+              </div>
+              <div class="field">
+                <label for="editPatientTarget">Target Value</label>
+                <input id="editPatientTarget" type="text" maxlength="50" value="${escapeHtml(patient.target)}" required />
+              </div>
+              <div class="field">
+                <label for="editPatientPin">Patient App PIN</label>
+                <input id="editPatientPin" type="text" maxlength="32" value="${escapeHtml(patient.appPin)}" required />
+              </div>
+            </div>
+
+            <div id="editPatientStatus" class="status-message" role="alert"></div>
+
+            <div class="button-row">
+              <button id="savePatientEditsButton" class="button button-primary" type="submit">
+                Save Changes
+              </button>
+              <button id="cancelPatientEditsButton" class="button button-secondary" type="button">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </section>
+      `;
+
+      const workflowHtml = `
+        <section class="drawer-section">
+          <div class="drawer-section-head">
+            <div>
+              <h3>Internal Billing Workflow</h3>
+              <p>
+                This is an internal prototype worklist state. It does not submit,
+                adjudicate, or prove an insurance claim.
+              </p>
+            </div>
+          </div>
+
+          <div class="workflow-status-display">
+            <div>
+              <div class="detail-label">Current workflow state</div>
+              <div style="margin-top: 4px;">
+                <span class="pill ${workflowPillClass(patient.billingWorkflow)}">
+                  ${escapeHtml(patient.billingWorkflow || "Not Ready")}
+                </span>
+              </div>
+            </div>
+            ${
+              patient.billingReviewStatus
+                ? `<div style="text-align: right;">
+                    <div class="detail-label">System indicator</div>
+                    <div class="small" style="margin-top: 4px;">${escapeHtml(patient.billingReviewStatus)}</div>
+                  </div>`
+                : ""
+            }
+          </div>
+
+          <div class="workflow-actions">
+            ${workflowActionButtons(patient.billingWorkflow)}
+          </div>
+
+          <div id="workflowUpdateStatus" class="status-message" role="alert"></div>
+        </section>
+      `;
+
+      const vitalsHtml = `
+        <section class="drawer-section">
+          <div class="drawer-section-head">
+            <div>
+              <h3>Monitoring Activity</h3>
+              <p>Most recent ${MAX_PATIENT_DETAIL_HISTORY} Vitals Log records.</p>
+            </div>
+          </div>
+
+          ${
+            vitals.length
+              ? `<div class="timeline">
+                  ${vitals.map(renderVitalTimelineItem).join("")}
+                </div>`
+              : '<div class="empty-state">No Vitals Log records exist for this patient yet.</div>'
+          }
+        </section>
+      `;
+
+      const rewardsHtml = `
+        <section class="drawer-section">
+          <div class="drawer-section-head">
+            <div>
+              <h3>Rewards Wallet</h3>
+              <p>Recorded incentive transactions for this patient.</p>
+            </div>
+          </div>
+
+          <div class="wallet-summary">
+            <span>Total rewards earned</span>
+            <strong>${escapeHtml(formatCurrency(rewardTotal))}</strong>
+          </div>
+
+          ${
+            rewards.length
+              ? `<div>
+                  ${rewards.map(renderRewardRow).join("")}
+                </div>`
+              : '<div class="empty-state">No rewards wallet records exist for this patient yet.</div>'
+          }
+        </section>
+      `;
+
+      el.patientDrawerBody.innerHTML = `
+        ${summaryHtml}
+        ${patientDetails}
+        ${workflowHtml}
+        ${vitalsHtml}
+        ${rewardsHtml}
+        <p class="drawer-footer-note">
+          Patient-facing automated messages and system-generated activity notes
+          are shown for operational review. They are not independently verified
+          clinician documentation or payer-billing proof.
+        </p>
+      `;
+
+      wirePatientDrawerEvents();
+    }
+
+    function metricOptionsHtml(selectedMetric) {
+      const options = ["Blood Pressure", "Weight (lbs)", "HbA1c (%)", "BMI"];
+
+      return options
+        .map(
+          (metric) =>
+            `<option value="${escapeHtml(metric)}" ${metric === selectedMetric ? "selected" : ""}>${escapeHtml(metric)}</option>`
+        )
+        .join("");
+    }
+
+    function workflowActionButtons(status) {
+      const buttons = [];
+
+      if (status === "Not Ready" || !status) {
+        buttons.push(
+          '<button class="button button-primary button-small workflow-action" data-workflow-status="Ready for Review" type="button">Mark for Billing Review</button>'
+        );
+      }
+
+      if (status === "Ready for Review") {
+        buttons.push(
+          '<button class="button button-primary button-small workflow-action" data-workflow-status="Under Review" type="button">Start Review</button>'
+        );
+      }
+
+      if (status === "Under Review") {
+        buttons.push(
+          '<button class="button button-success button-small workflow-action" data-workflow-status="Ready to Bill" type="button">Mark Ready to Bill</button>'
+        );
+      }
+
+      if (status === "Ready to Bill") {
+        buttons.push(
+          '<button class="button button-success button-small workflow-action" data-workflow-status="Billed" type="button">Mark Billed</button>'
+        );
+      }
+
+      if (status === "On Hold") {
+        buttons.push(
+          '<button class="button button-primary button-small workflow-action" data-workflow-status="Ready for Review" type="button">Resume Review</button>'
+        );
+      }
+
+      if (status === "Billed") {
+        buttons.push(
+          '<button class="button button-secondary button-small workflow-action" data-workflow-status="Under Review" type="button">Reopen Review</button>'
+        );
+      }
+
+      if (!["Billed", "On Hold"].includes(status)) {
+        buttons.push(
+          '<button class="button button-danger button-small workflow-action" data-workflow-status="On Hold" type="button">Place On Hold</button>'
+        );
+      }
+
+      return buttons.join("");
+    }
+
+    function renderVitalTimelineItem(vital) {
+      const metric = vital.metricCategory || state.selectedPatient?.metric || "Reading";
+      const target = vital.targetBaseline || state.selectedPatient?.target || "—";
+
+      return `
+        <article class="timeline-item">
+          <div class="timeline-main">
+            <div>
+              <div class="timeline-reading">
+                ${escapeHtml(metric)} · ${escapeHtml(vital.submittedValue || "Value unavailable")}
+              </div>
+              <div class="timeline-meta">
+                Configured target: ${escapeHtml(target)} ·
+                ${escapeHtml(formatDateTime(vital.createdTime))}
+              </div>
+            </div>
+            <span class="pill ${resultPillClass(vital.evaluationStatus)}">
+              ${escapeHtml(vital.evaluationStatus || "Logged")}
+            </span>
+          </div>
+
+          ${
+            vital.coachMessage
+              ? `<details>
+                  <summary>Patient-facing automated message</summary>
+                  <p>${escapeHtml(vital.coachMessage)}</p>
+                </details>`
+              : ""
+          }
+
+          ${
+            vital.cptLog
+              ? `<details>
+                  <summary>System-generated activity note</summary>
+                  <p>${escapeHtml(vital.cptLog)}</p>
+                </details>`
+              : ""
+          }
+        </article>
+      `;
+    }
+
+    function renderRewardRow(reward) {
+      return `
+        <div class="wallet-row">
+          <div>
+            <div class="wallet-amount">${escapeHtml(formatCurrency(reward.amount))}</div>
+            <div class="wallet-meta">
+              ${escapeHtml(formatDateTime(reward.dateEarned))}
+              ${reward.transactionId !== "" ? ` · Transaction #${escapeHtml(reward.transactionId)}` : ""}
+            </div>
+          </div>
+          <span class="pill pill-success">${escapeHtml(reward.milestone || "Reward")}</span>
+        </div>
+      `;
+    }
+
+    function wirePatientDrawerEvents() {
+      const editToggle = document.getElementById("toggleEditPatientButton");
+      const editForm = document.getElementById("editPatientForm");
+      const detailDisplay = document.getElementById("patientDetailsDisplay");
+      const cancelEdit = document.getElementById("cancelPatientEditsButton");
+
+      editToggle?.addEventListener("click", () => {
+        detailDisplay.classList.add("hidden");
+        editForm.classList.remove("hidden");
+        editToggle.classList.add("hidden");
+      });
+
+      cancelEdit?.addEventListener("click", () => {
+        editForm.classList.add("hidden");
+        detailDisplay.classList.remove("hidden");
+        editToggle.classList.remove("hidden");
+      });
+
+      editForm?.addEventListener("submit", handlePatientEditSubmit);
+
+      document.querySelectorAll(".workflow-action").forEach((button) => {
+        button.addEventListener("click", () => {
+          updateBillingWorkflow(button.dataset.workflowStatus, button);
+        });
+      });
+    }
+
+    async function handlePatientEditSubmit(event) {
+      event.preventDefault();
+
+      if (!state.selectedPatient) return;
+
+      const formStatus = document.getElementById("editPatientStatus");
+      const saveButton = document.getElementById("savePatientEditsButton");
+
+      const name = document.getElementById("editPatientName").value.trim();
+      const chartId = document.getElementById("editPatientChartId").value.trim();
+      const doctor = document.getElementById("editPatientDoctor").value.trim();
+      const metric = document.getElementById("editPatientMetric").value;
+      const target = document.getElementById("editPatientTarget").value.trim();
+      const appPin = document.getElementById("editPatientPin").value.trim();
+
+      setStatus(formStatus, "");
+
+      if (!name || !chartId || !metric || !target || !appPin) {
+        setStatus(
+          formStatus,
+          "Patient Name, Clinic Chart ID, Target Metric Type, Target Value, and App PIN are required.",
+          "error"
+        );
+        return;
+      }
+
+      try {
+        validateTargetFormat(metric, target);
+      } catch (error) {
+        setStatus(formStatus, error.message, "error");
+        return;
+      }
+
+      setButtonLoading(saveButton, true, "Saving…");
+
+      try {
+        await patchPatientRecord(state.selectedPatient.recordId, {
+          Name: name,
+          "Clinic Chart ID": chartId,
+          "Assigned Doctor": doctor,
+          "Target Metric Type": metric,
+          "Target Value": target,
+          "App PIN": appPin
+        });
+
+        setStatus(formStatus, "Patient record updated successfully.", "success");
+
+        await refreshDashboard();
+
+        const refreshedPatient = state.allPatients.find(
+          (patient) => patient.recordId === state.selectedPatient.recordId
+        );
+
+        if (refreshedPatient) {
+          state.selectedPatient = refreshedPatient;
+          await openPatientDrawer(refreshedPatient.recordId);
+        }
+      } catch (error) {
+        setStatus(
+          formStatus,
+          `Unable to save patient changes. ${error.message || "Please try again."}`,
+          "error"
+        );
+      } finally {
+        setButtonLoading(saveButton, false);
+      }
+    }
+
+    async function updateBillingWorkflow(newStatus, button) {
+      if (!state.selectedPatient) return;
+
+      const statusElement = document.getElementById("workflowUpdateStatus");
+
+      if (!BILLING_WORKFLOW_OPTIONS.includes(newStatus)) {
+        setStatus(statusElement, "Invalid workflow status requested.", "error");
+        return;
+      }
+
+      setStatus(statusElement, "");
+      setButtonLoading(button, true, "Updating…");
+
+      try {
+        await patchPatientRecord(state.selectedPatient.recordId, {
+          "Billing Workflow Status": newStatus
+        });
+
+        const localPatient = state.allPatients.find(
+          (patient) => patient.recordId === state.selectedPatient.recordId
+        );
+
+        if (localPatient) {
+          localPatient.billingWorkflow = newStatus;
+        }
+
+        state.selectedPatient.billingWorkflow = newStatus;
+
+        if (state.patientDetail?.patient) {
+          state.patientDetail.patient.billingWorkflow = newStatus;
+        }
+
+        renderKpis();
+        applyRosterFiltersAndRender();
+        renderMonitoringSnapshot();
+        renderPatientDrawer();
+      } catch (error) {
+        setStatus(
+          statusElement,
+          `Unable to update billing workflow. ${error.message || "Please try again."}`,
+          "error"
+        );
+      } finally {
+        setButtonLoading(button, false);
+      }
+    }
+
+    async function patchPatientRecord(recordId, fields) {
+      return airtableRequest(recordUrl(TABLES.patients, recordId), {
+        method: "PATCH",
+        body: JSON.stringify({ fields })
+      });
+    }
+
+    /* ================================================================
+       ADD PATIENT
+       ================================================================ */
+
+    function openAddPatientDrawer() {
+      if (!state.selectedProvider) return;
+
+      el.addPatientForm.reset();
+      setStatus(el.addPatientStatus, "");
+
+      el.newPatientWorkflow.value = "Not Ready";
+      el.newPatientAssignedDoctor.value = state.selectedProvider.name;
+      el.addPatientProviderContext.textContent =
+        `This patient will be linked to ${state.selectedProvider.name}${
+          state.selectedProvider.clinicName
+            ? ` · ${state.selectedProvider.clinicName}`
+            : ""
+        }.`;
+
+      openDrawer(el.addPatientDrawer);
+      setTimeout(() => el.newPatientName.focus(), 150);
+    }
+
+    async function handleAddPatientSubmit(event) {
+      event.preventDefault();
+
+      if (!state.selectedProvider) return;
+
+      const name = el.newPatientName.value.trim();
+      const chartId = el.newPatientChartId.value.trim();
+      const metric = el.newPatientMetric.value;
+      const target = el.newPatientTarget.value.trim();
+      const pin = el.newPatientPin.value.trim();
+      const workflow = el.newPatientWorkflow.value;
+      const doctor = el.newPatientAssignedDoctor.value.trim();
+
+      setStatus(el.addPatientStatus, "");
+
+      if (!name || !chartId || !metric || !target || !pin) {
+        setStatus(
+          el.addPatientStatus,
+          "Patient Name, Clinic Chart ID, Target Metric Type, Target Value, and App PIN are required.",
+          "error"
+        );
+        return;
+      }
+
+      try {
+        validateTargetFormat(metric, target);
+      } catch (error) {
+        setStatus(el.addPatientStatus, error.message, "error");
+        return;
+      }
+
+      if (!BILLING_WORKFLOW_OPTIONS.includes(workflow)) {
+        setStatus(el.addPatientStatus, "Choose a valid billing workflow status.", "error");
+        return;
+      }
+
+      setButtonLoading(el.saveNewPatientButton, true, "Checking records…");
+
+      try {
+        await validateUniquePatientFields({
+          name,
+          chartId,
+          pin
+        });
+
+        setButtonLoading(el.saveNewPatientButton, true, "Creating patient…");
+
+        const payload = {
+          records: [
+            {
+              fields: {
+                Name: name,
+                "Clinic Chart ID": chartId,
+                "Assigned Doctor": doctor,
+                "Target Metric Type": metric,
+                "Target Value": target,
+                "App PIN": pin,
+                Providers: [state.selectedProvider.recordId],
+                "Billing Workflow Status": workflow
+              }
+            }
+          ]
+        };
+
+        const data = await airtableRequest(tableUrl(TABLES.patients), {
+          method: "POST",
+          body: JSON.stringify(payload)
+        });
+
+        const newRecord = data.records?.[0];
+
+        setStatus(
+          el.addPatientStatus,
+          "Patient created and linked to the selected provider.",
+          "success"
+        );
+
+        await refreshDashboard();
+
+        if (newRecord?.id) {
+          closeAllDrawers();
+          await openPatientDrawer(newRecord.id);
+        }
+      } catch (error) {
+        setStatus(
+          el.addPatientStatus,
+          `Unable to create patient. ${error.message || "Please try again."}`,
+          "error"
+        );
+      } finally {
+        setButtonLoading(el.saveNewPatientButton, false);
+      }
+    }
+
+    async function validateUniquePatientFields({ name, chartId, pin }) {
+      const safeName = escapeAirtableFormulaString(name);
+      const safeChartId = escapeAirtableFormulaString(chartId);
+      const safePin = escapeAirtableFormulaString(pin);
+
+      const formula = `OR({Name}='${safeName}', {Clinic Chart ID}='${safeChartId}', {App PIN}='${safePin}')`;
+
+      const records = await fetchAllRecords(TABLES.patients, {
+        filterByFormula: formula,
+        maxRecords: "10",
+        pageSize: "10"
+      });
+
+      if (!records.length) return;
+
+      const matches = records.map(normalizePatient);
+
+      const duplicateName = matches.some((patient) => patient.name === name);
+      const duplicateChartId = matches.some((patient) => patient.chartId === chartId);
+      const duplicatePin = matches.some((patient) => patient.appPin === pin);
+
+      const issues = [];
+
+      if (duplicateName) issues.push("Patient Name");
+      if (duplicateChartId) issues.push("Clinic Chart ID");
+      if (duplicatePin) issues.push("Patient App PIN");
+
+      throw new Error(
+        `A record already uses this ${issues.join(", ")}. Use unique synthetic prototype values.`
+      );
+    }
+
+    function validateTargetFormat(metric, target) {
+      if (metric === "Blood Pressure") {
+        const bp = String(target).trim();
+
+        if (!/^(\d{2,3})\s*\/\s*(\d{2,3})$/.test(bp)) {
+          throw new Error(
+            'For Blood Pressure, use a target in systolic/diastolic format, such as "130/80".'
+          );
+        }
+
+        return;
+      }
+
+      if (["Weight (lbs)", "HbA1c (%)", "BMI"].includes(metric)) {
+        if (!/^\d+(\.\d+)?$/.test(String(target).trim())) {
+          throw new Error(
+            `For ${metric}, use a numeric target value, such as "180", "7.0", or "25".`
+          );
+        }
+      }
+    }
+
+    /* ================================================================
+       EVENT WIRING
+       ================================================================ */
+
+    el.providerSelectForm.addEventListener("submit", handleProviderSelectSubmit);
+
+    el.refreshDashboardButton.addEventListener("click", refreshDashboard);
+
+    el.changeProviderButton.addEventListener("click", () => {
+      closeAllDrawers();
+      state.selectedProvider = null;
+      state.allPatients = [];
+      state.rosterPatients = [];
+      state.patientSummaries = new Map();
+      state.selectedPatient = null;
+      state.patientDetail = null;
+      showScreen("select");
+      el.providerSelect.focus();
+    });
+
+    el.patientSearchInput.addEventListener("input", applyRosterFiltersAndRender);
+    el.workflowFilter.addEventListener("change", applyRosterFiltersAndRender);
+    el.metricFilter.addEventListener("change", applyRosterFiltersAndRender);
+
+    document.querySelectorAll("th.sortable").forEach((header) => {
+      header.addEventListener("click", () => {
+        const key = header.dataset.sortKey;
+
+        if (state.sort.key === key) {
+          state.sort.direction = state.sort.direction === "asc" ? "desc" : "asc";
+        } else {
+          state.sort.key = key;
+          state.sort.direction = "asc";
+        }
+
+        applyRosterFiltersAndRender();
+      });
+    });
+
+    el.addPatientButton.addEventListener("click", openAddPatientDrawer);
+    el.addPatientForm.addEventListener("submit", handleAddPatientSubmit);
+
+    el.closePatientDrawerButton.addEventListener("click", closeAllDrawers);
+    el.closeAddPatientDrawerButton.addEventListener("click", closeAllDrawers);
+    el.cancelNewPatientButton.addEventListener("click", closeAllDrawers);
+    el.drawerBackdrop.addEventListener("click", closeAllDrawers);
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        closeAllDrawers();
+      }
+    });
+
+    /* ================================================================
+       INITIALIZATION
+       ================================================================ */
+
+    async function initialize() {
+      if (!isPatConfigured()) {
+        el.providerSelect.innerHTML =
+          '<option value="">Add AIRTABLE_PAT in the code first</option>';
+
+        setStatus(
+          el.providerSelectStatus,
+          "Before testing, replace the AIRTABLE_PAT placeholder near the top of this file with your dedicated prototype Airtable PAT.",
+          "error"
+        );
+
+        return;
+      }
+
+      try {
+        setStatus(el.providerSelectStatus, "Loading available provider workspaces…", "info");
+        await loadProviders();
+        setStatus(el.providerSelectStatus, "");
+      } catch (error) {
+        el.providerSelect.innerHTML =
+          '<option value="">Unable to load providers</option>';
+
+        setStatus(
+          el.providerSelectStatus,
+          `Unable to load Providers. ${error.message || "Check your PAT, base access, table name, and browser network connection."}`,
+          "error"
+        );
+      }
+    }
+
+    initialize();
+  </script>
+</body>
+</html>
+
