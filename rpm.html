@@ -8,7 +8,6 @@
     content="RPM Patient Outcomes and Rewards prototype"
   />
 
-  <!-- PWA / installed-app metadata -->
   <meta name="theme-color" content="#102a43" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -24,13 +23,19 @@
       --navy: #102a43;
       --navy-dark: #081c2c;
       --blue: #1976d2;
+      --blue-dark: #0e5fae;
       --blue-soft: #e8f2ff;
+      --teal: #078878;
+      --teal-dark: #056e62;
+      --teal-soft: #e7faf6;
       --green: #14804a;
       --green-soft: #e9f8ef;
       --amber: #a05b00;
       --amber-soft: #fff4df;
       --red: #b42318;
       --red-soft: #fff0ef;
+      --purple: #6d3ba3;
+      --purple-soft: #f3eafe;
       --slate-900: #172b4d;
       --slate-700: #42526e;
       --slate-600: #5e6c84;
@@ -321,7 +326,7 @@
     }
 
     input.has-prefix {
-      padding-left: 44px;
+      padding-left: 52px;
     }
 
     input:focus {
@@ -389,6 +394,12 @@
       background: transparent;
     }
 
+    .button-small {
+      min-height: 38px;
+      padding: 9px 12px;
+      font-size: 0.84rem;
+    }
+
     .status-message {
       display: none;
       margin-top: 14px;
@@ -419,8 +430,6 @@
       border: 1px solid #bde3cc;
       background: var(--green-soft);
     }
-
-    /* PWA install banner */
 
     .install-banner {
       display: grid;
@@ -503,8 +512,6 @@
       color: var(--navy);
       font-size: 0.84rem;
     }
-
-    /* Monitoring plan card */
 
     .monitoring-plan-card {
       overflow: hidden;
@@ -648,6 +655,139 @@
       color: var(--navy);
       font-size: 1.03rem;
       font-weight: 850;
+    }
+
+    .device-card {
+      overflow: hidden;
+      margin-top: 18px;
+      border: 1px solid #d8d2f2;
+      border-radius: var(--radius-md);
+      background:
+        radial-gradient(circle at 100% 0%, rgba(156, 115, 226, 0.16), transparent 12rem),
+        linear-gradient(145deg, #fbfaff, #f4f0fc);
+    }
+
+    .device-card-inner {
+      padding: 17px;
+    }
+
+    .device-card-topline {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .device-card-title-wrap {
+      display: flex;
+      gap: 11px;
+      align-items: flex-start;
+    }
+
+    .device-icon {
+      display: grid;
+      flex: 0 0 auto;
+      width: 39px;
+      height: 39px;
+      place-items: center;
+      color: var(--purple);
+      font-size: 1.08rem;
+      border-radius: 12px;
+      background: var(--purple-soft);
+    }
+
+    .device-card-title {
+      margin: 0 0 3px;
+      color: var(--navy);
+      font-size: 0.98rem;
+      font-weight: 850;
+    }
+
+    .device-card-subtitle {
+      margin: 0;
+      color: var(--slate-600);
+      font-size: 0.78rem;
+      line-height: 1.42;
+    }
+
+    .simulated-badge {
+      padding: 6px 8px;
+      color: var(--purple);
+      font-size: 0.66rem;
+      font-weight: 850;
+      letter-spacing: 0.045em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      border: 1px solid #dacaf2;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.75);
+    }
+
+    .device-status-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      margin-top: 15px;
+      padding: 13px;
+      border: 1px solid #dfd8f0;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.78);
+    }
+
+    .device-status-label {
+      margin-bottom: 4px;
+      color: var(--slate-600);
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .device-status-value {
+      color: var(--navy);
+      font-size: 0.89rem;
+      font-weight: 800;
+    }
+
+    .device-reading-box {
+      min-width: 106px;
+      padding: 10px 12px;
+      color: white;
+      text-align: center;
+      border-radius: 11px;
+      background: linear-gradient(135deg, #6d3ba3, #4f277e);
+    }
+
+    .device-reading-label {
+      display: block;
+      color: rgba(255, 255, 255, 0.69);
+      font-size: 0.62rem;
+      font-weight: 750;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .device-reading-value {
+      display: block;
+      margin-top: 2px;
+      color: white;
+      font-size: 1.05rem;
+      font-weight: 900;
+    }
+
+    .device-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .device-note {
+      margin: 12px 0 0;
+      color: #69507f;
+      font-size: 0.74rem;
+      line-height: 1.45;
     }
 
     .result-card {
@@ -905,6 +1045,23 @@
       .monitoring-plan-grid {
         grid-template-columns: 1fr;
       }
+
+      .device-status-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .device-reading-box {
+        width: 100%;
+      }
+
+      .device-controls {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .device-controls .button {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -919,7 +1076,6 @@
       <span class="prototype-badge">Prototype</span>
     </header>
 
-    <!-- Install banner: shown only after a Chromium browser permits it -->
     <section
       id="installBanner"
       class="install-banner hidden"
@@ -947,7 +1103,6 @@
       </button>
     </section>
 
-    <!-- iPhone/iPad Safari instructions -->
     <section
       id="iosInstallHelp"
       class="ios-install-help hidden"
@@ -961,7 +1116,6 @@
       </span>
     </section>
 
-    <!-- PIN ENTRY SCREEN -->
     <section id="pinScreen" class="screen active" aria-labelledby="pinTitle">
       <article class="card hero-card">
         <div class="card-body">
@@ -1054,7 +1208,6 @@
       </article>
     </section>
 
-    <!-- PATIENT DASHBOARD / SUBMISSION SCREEN -->
     <section id="dashboardScreen" class="screen" aria-labelledby="dashboardTitle">
       <article class="card profile-card">
         <div id="patientAvatar" class="avatar">P</div>
@@ -1083,6 +1236,79 @@
               <div id="targetValue" class="metric-value">—</div>
             </div>
           </div>
+
+          <!-- Simulated Bluetooth device module -->
+          <section id="deviceCaptureCard" class="device-card hidden" aria-live="polite">
+            <div class="device-card-inner">
+              <div class="device-card-topline">
+                <div class="device-card-title-wrap">
+                  <div id="deviceIcon" class="device-icon">⌁</div>
+                  <div>
+                    <h3 class="device-card-title">Optional Device Reading</h3>
+                    <p id="deviceDescription" class="device-card-subtitle">
+                      Connect a prototype simulated device or enter a reading manually.
+                    </p>
+                  </div>
+                </div>
+
+                <span class="simulated-badge">Simulated BLE</span>
+              </div>
+
+              <div class="device-status-panel">
+                <div>
+                  <div class="device-status-label">Device Status</div>
+                  <div id="deviceStatusValue" class="device-status-value">
+                    No device connected
+                  </div>
+                </div>
+
+                <div id="deviceReadingBox" class="device-reading-box hidden">
+                  <span class="device-reading-label">Captured reading</span>
+                  <span id="deviceReadingValue" class="device-reading-value">—</span>
+                </div>
+              </div>
+
+              <div class="device-controls">
+                <button
+                  id="connectSimulatedDeviceButton"
+                  class="button button-primary button-small"
+                  type="button"
+                >
+                  Connect Simulated Device
+                </button>
+
+                <button
+                  id="generateSimulatedReadingButton"
+                  class="button button-secondary button-small hidden"
+                  type="button"
+                >
+                  Generate Reading
+                </button>
+
+                <button
+                  id="useDeviceReadingButton"
+                  class="button button-success button-small hidden"
+                  type="button"
+                >
+                  Use This Reading
+                </button>
+
+                <button
+                  id="disconnectSimulatedDeviceButton"
+                  class="button button-secondary button-small hidden"
+                  type="button"
+                >
+                  Disconnect
+                </button>
+              </div>
+
+              <p class="device-note">
+                Prototype demonstration only. This screen simulates a Bluetooth
+                device connection; no live medical-device data is being read.
+                Manual entry remains available below.
+              </p>
+            </div>
+          </section>
 
           <form id="readingForm" novalidate>
             <div class="field">
@@ -1158,22 +1384,13 @@
     </section>
 
     <p class="footer-note">
-      RPM Rewards prototype · Automated target comparison only · Not clinical advice or
-      a substitute for care from your clinician.
+      RPM Rewards prototype · Simulated device capture and automated target
+      comparison only · Not clinical advice or a substitute for care from your clinician.
     </p>
   </main>
 
   <script>
     "use strict";
-
-    /*
-      =======================================================================
-      CONFIGURATION
-      =======================================================================
-
-      DIRECT BROWSER-TO-AIRTABLE PROTOTYPE ONLY.
-      Do not use this PAT-based architecture with actual PHI or production data.
-    */
 
     const AIRTABLE_BASE_ID = "appM02rx1BXGfqZBg";
     const AIRTABLE_PAT = "patJ3q6pem42aW1Vw.026ff4a06a3a34ad35e7c64f07690e4292aa7a987809045fa5c34752da0c2a06";
@@ -1197,6 +1414,10 @@
         eligible: true,
         milestone: "Weight Loss Goal"
       },
+      "Heart Rate (bpm)": {
+        eligible: false,
+        milestone: null
+      },
       "HbA1c (%)": {
         eligible: false,
         milestone: null
@@ -1207,11 +1428,43 @@
       }
     };
 
+    const SIMULATED_DEVICE_CONFIG = {
+      "Blood Pressure": {
+        name: "Demo BLE Blood Pressure Cuff",
+        icon: "▣",
+        description:
+          "Simulate a Bluetooth-enabled blood pressure cuff reading, or enter your reading manually.",
+        sourceLabel: "Simulated Bluetooth Blood Pressure Cuff"
+      },
+      "Weight (lbs)": {
+        name: "Demo BLE Smart Scale",
+        icon: "⚖",
+        description:
+          "Simulate a Bluetooth-enabled smart scale reading, or enter your weight manually.",
+        sourceLabel: "Simulated Bluetooth Smart Scale"
+      },
+      "Heart Rate (bpm)": {
+        name: "Demo BLE Heart-Rate Sensor",
+        icon: "♥",
+        description:
+          "Simulate a Bluetooth-enabled heart-rate sensor reading, or enter your pulse manually.",
+        sourceLabel: "Simulated Bluetooth Heart-Rate Sensor"
+      }
+    };
+
     const state = {
       patient: null,
       submittedPin: "",
       vitals: [],
-      rewards: []
+      rewards: [],
+      readingSource: "Patient-entered manual reading",
+      simulatedDevice: {
+        connected: false,
+        metric: "",
+        deviceName: "",
+        sourceLabel: "",
+        reading: ""
+      }
     };
 
     const elements = {
@@ -1242,6 +1495,17 @@
       metricInstruction: document.getElementById("metricInstruction"),
       metricTypeValue: document.getElementById("metricTypeValue"),
       targetValue: document.getElementById("targetValue"),
+
+      deviceCaptureCard: document.getElementById("deviceCaptureCard"),
+      deviceIcon: document.getElementById("deviceIcon"),
+      deviceDescription: document.getElementById("deviceDescription"),
+      deviceStatusValue: document.getElementById("deviceStatusValue"),
+      deviceReadingBox: document.getElementById("deviceReadingBox"),
+      deviceReadingValue: document.getElementById("deviceReadingValue"),
+      connectSimulatedDeviceButton: document.getElementById("connectSimulatedDeviceButton"),
+      generateSimulatedReadingButton: document.getElementById("generateSimulatedReadingButton"),
+      useDeviceReadingButton: document.getElementById("useDeviceReadingButton"),
+      disconnectSimulatedDeviceButton: document.getElementById("disconnectSimulatedDeviceButton"),
 
       readingForm: document.getElementById("readingForm"),
       readingLabel: document.getElementById("readingLabel"),
@@ -1337,6 +1601,7 @@
 
       if (metric === "Weight (lbs)") return `${value} lbs`;
       if (metric === "HbA1c (%)") return `${value}%`;
+      if (metric === "Heart Rate (bpm)") return `${value} bpm`;
 
       return String(value);
     }
@@ -1495,6 +1760,25 @@
         return;
       }
 
+      if (metric === "Heart Rate (bpm)") {
+        elements.readingLabel.textContent = "Heart rate reading";
+        elements.readingInput.type = "number";
+        elements.readingInput.inputMode = "numeric";
+        elements.readingInput.step = "1";
+        elements.readingInput.min = "0";
+        elements.readingInput.placeholder = "Example: 74";
+
+        elements.inputPrefix.textContent = "bpm";
+        elements.inputPrefix.classList.remove("hidden");
+        elements.readingInput.classList.add("has-prefix");
+
+        elements.readingHelp.textContent =
+          "Enter your pulse in beats per minute, or use a prototype simulated device reading above.";
+        elements.metricInstruction.textContent =
+          "Enter your current heart rate in beats per minute.";
+        return;
+      }
+
       if (metric === "HbA1c (%)") {
         elements.readingLabel.textContent = "HbA1c result";
         elements.readingInput.type = "number";
@@ -1521,6 +1805,7 @@
         elements.readingInput.step = "0.1";
         elements.readingInput.min = "0";
         elements.readingInput.placeholder = "Example: 24.8";
+
         elements.readingHelp.textContent =
           "Enter your BMI value. Decimals are allowed.";
         elements.metricInstruction.textContent =
@@ -1559,6 +1844,9 @@
       } else if (metric === "Weight (lbs)") {
         reminder =
           `Today, please record and submit your current weight. Your current goal is ${target}.`;
+      } else if (metric === "Heart Rate (bpm)") {
+        reminder =
+          `Today, please record and submit your heart rate. Your current prototype goal is ${target}.`;
       } else if (metric === "HbA1c (%)") {
         reminder =
           `Please submit your most recent HbA1c result when it is available. Your current goal is ${target}.`;
@@ -1572,6 +1860,199 @@
 
       elements.monitoringPlanReminder.textContent = reminder;
       elements.monitoringPlanCard.classList.remove("hidden");
+    }
+
+    function resetSimulatedDeviceState() {
+      state.readingSource = "Patient-entered manual reading";
+
+      state.simulatedDevice = {
+        connected: false,
+        metric: "",
+        deviceName: "",
+        sourceLabel: "",
+        reading: ""
+      };
+    }
+
+    function configureSimulatedDeviceModule(patient) {
+      resetSimulatedDeviceState();
+
+      const metric = patient.targetMetricType;
+      const config = SIMULATED_DEVICE_CONFIG[metric];
+
+      if (!config) {
+        elements.deviceCaptureCard.classList.add("hidden");
+        return;
+      }
+
+      elements.deviceCaptureCard.classList.remove("hidden");
+      elements.deviceIcon.textContent = config.icon;
+      elements.deviceDescription.textContent = config.description;
+      elements.deviceStatusValue.textContent = "No device connected";
+      elements.deviceReadingBox.classList.add("hidden");
+      elements.deviceReadingValue.textContent = "—";
+
+      elements.connectSimulatedDeviceButton.classList.remove("hidden");
+      elements.connectSimulatedDeviceButton.disabled = false;
+      elements.connectSimulatedDeviceButton.textContent = "Connect Simulated Device";
+
+      elements.generateSimulatedReadingButton.classList.add("hidden");
+      elements.useDeviceReadingButton.classList.add("hidden");
+      elements.disconnectSimulatedDeviceButton.classList.add("hidden");
+    }
+
+    function randomInteger(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function generateSimulatedReading(metric, targetValue) {
+      if (metric === "Blood Pressure") {
+        const target = parseBloodPressure(targetValue);
+        const outcomeRoll = Math.random();
+
+        let systolic;
+        let diastolic;
+
+        if (outcomeRoll < 0.66) {
+          systolic = Math.max(85, target.systolic - randomInteger(1, 12));
+          diastolic = Math.max(50, target.diastolic - randomInteger(1, 8));
+        } else {
+          systolic = target.systolic + randomInteger(3, 18);
+          diastolic = target.diastolic + randomInteger(1, 12);
+        }
+
+        return `${systolic}/${diastolic}`;
+      }
+
+      if (metric === "Weight (lbs)") {
+        const target = parseNumericValue(targetValue, metric).numericValue;
+        const outcomeRoll = Math.random();
+
+        const reading =
+          outcomeRoll < 0.66
+            ? target - (Math.random() * 7 + 0.4)
+            : target + (Math.random() * 8 + 0.4);
+
+        return Math.max(60, reading).toFixed(1);
+      }
+
+      if (metric === "Heart Rate (bpm)") {
+        const target = parseNumericValue(targetValue, metric).numericValue;
+        const outcomeRoll = Math.random();
+
+        const reading =
+          outcomeRoll < 0.72
+            ? Math.max(45, target - randomInteger(4, 27))
+            : target + randomInteger(3, 22);
+
+        return String(reading);
+      }
+
+      return "";
+    }
+
+    function renderSimulatedDeviceConnection() {
+      const device = state.simulatedDevice;
+
+      elements.deviceStatusValue.textContent =
+        `Connected: ${device.deviceName}`;
+
+      elements.connectSimulatedDeviceButton.classList.add("hidden");
+      elements.generateSimulatedReadingButton.classList.remove("hidden");
+      elements.disconnectSimulatedDeviceButton.classList.remove("hidden");
+
+      if (device.reading) {
+        elements.deviceReadingBox.classList.remove("hidden");
+        elements.deviceReadingValue.textContent = formatMetricDisplay(
+          device.metric,
+          device.reading
+        );
+        elements.useDeviceReadingButton.classList.remove("hidden");
+      } else {
+        elements.deviceReadingBox.classList.add("hidden");
+        elements.useDeviceReadingButton.classList.add("hidden");
+      }
+    }
+
+    async function connectSimulatedDevice() {
+      if (!state.patient) return;
+
+      const metric = state.patient.targetMetricType;
+      const config = SIMULATED_DEVICE_CONFIG[metric];
+
+      if (!config) return;
+
+      elements.connectSimulatedDeviceButton.disabled = true;
+      elements.connectSimulatedDeviceButton.textContent = "Connecting…";
+      elements.deviceStatusValue.textContent = "Searching for prototype device…";
+
+      await new Promise((resolve) => setTimeout(resolve, 850));
+
+      state.simulatedDevice = {
+        connected: true,
+        metric,
+        deviceName: config.name,
+        sourceLabel: config.sourceLabel,
+        reading: generateSimulatedReading(metric, state.patient.targetValue)
+      };
+
+      renderSimulatedDeviceConnection();
+
+      elements.deviceStatusValue.textContent =
+        `Connected: ${config.name} · New reading ready`;
+    }
+
+    function generateAnotherSimulatedReading() {
+      if (!state.patient || !state.simulatedDevice.connected) return;
+
+      const metric = state.patient.targetMetricType;
+
+      state.simulatedDevice.reading = generateSimulatedReading(
+        metric,
+        state.patient.targetValue
+      );
+
+      state.readingSource = state.simulatedDevice.sourceLabel;
+
+      renderSimulatedDeviceConnection();
+
+      elements.deviceStatusValue.textContent =
+        `Connected: ${state.simulatedDevice.deviceName} · Updated reading received`;
+    }
+
+    function useSimulatedDeviceReading() {
+      if (!state.simulatedDevice.connected || !state.simulatedDevice.reading) return;
+
+      elements.readingInput.value = state.simulatedDevice.reading;
+      state.readingSource = state.simulatedDevice.sourceLabel;
+
+      setStatus(
+        elements.readingStatus,
+        `Prototype device reading loaded: ${formatMetricDisplay(
+          state.patient.targetMetricType,
+          state.simulatedDevice.reading
+        )}. Review it, then submit when ready.`,
+        "info"
+      );
+
+      elements.readingInput.focus();
+    }
+
+    function disconnectSimulatedDevice() {
+      resetSimulatedDeviceState();
+
+      if (!state.patient) {
+        elements.deviceCaptureCard.classList.add("hidden");
+        return;
+      }
+
+      configureSimulatedDeviceModule(state.patient);
+
+      setStatus(
+        elements.readingStatus,
+        "Prototype device disconnected. You may enter a reading manually.",
+        "info"
+      );
     }
 
     function parseBloodPressure(value) {
@@ -1619,6 +2100,10 @@
         throw new Error(`Enter a valid non-negative value for ${metric}.`);
       }
 
+      if (metric === "Heart Rate (bpm)" && (numericValue < 25 || numericValue > 260)) {
+        throw new Error("Enter a heart rate between 25 and 260 bpm.");
+      }
+
       return {
         numericValue,
         normalized: normalized.replace(/\.0+$/, "")
@@ -1645,7 +2130,7 @@
         };
       }
 
-      if (["Weight (lbs)", "HbA1c (%)", "BMI"].includes(metric)) {
+      if (["Weight (lbs)", "HbA1c (%)", "BMI", "Heart Rate (bpm)"].includes(metric)) {
         const target = parseNumericValue(targetValue, metric);
         const submitted = parseNumericValue(submittedValue, metric);
 
@@ -1657,11 +2142,11 @@
       }
 
       throw new Error(
-        `The metric "${metric}" is not supported by this prototype. Supported metrics are Blood Pressure, Weight (lbs), HbA1c (%), and BMI.`
+        `The metric "${metric}" is not supported by this prototype.`
       );
     }
 
-    function buildMessages(patient, evaluation) {
+    function buildMessages(patient, evaluation, source) {
       const metric = patient.targetMetricType;
       const submitted = formatMetricDisplay(metric, evaluation.normalizedSubmittedValue);
       const target = formatMetricDisplay(metric, evaluation.normalizedTargetValue);
@@ -1672,6 +2157,8 @@
       };
 
       const rewardEligible = evaluation.achieved && rewardConfig.eligible;
+
+      const sourceText = source || "Patient-entered manual reading";
 
       let patientMessage = "";
       let clinicalLog = "";
@@ -1684,6 +2171,7 @@
 
         clinicalLog =
           `RPM prototype submission logged on ${new Date().toLocaleString()}. ` +
+          `Reading source: ${sourceText}. ` +
           `Patient-reported ${metric}: ${submitted}. Configured target: ${target}. ` +
           `Automated prototype evaluation: Target Achieved. Reward-eligible metric; $${REWARD_AMOUNT.toFixed(
             2
@@ -1695,6 +2183,7 @@
 
         clinicalLog =
           `RPM prototype submission logged on ${new Date().toLocaleString()}. ` +
+          `Reading source: ${sourceText}. ` +
           `Patient-reported ${metric}: ${submitted}. Configured target: ${target}. ` +
           `Automated prototype evaluation: Target Achieved. No reward issued because this metric is not reward-enabled in the current prototype. ` +
           `System-generated prototype workflow entry; not a substitute for clinical assessment.`;
@@ -1704,6 +2193,7 @@
 
         clinicalLog =
           `RPM prototype submission logged on ${new Date().toLocaleString()}. ` +
+          `Reading source: ${sourceText}. ` +
           `Patient-reported ${metric}: ${submitted}. Configured target: ${target}. ` +
           `Automated prototype evaluation: Target Missed. No reward issued. ` +
           `System-generated prototype workflow entry; not a substitute for clinical assessment.`;
@@ -1964,7 +2454,7 @@
       }
     }
 
-    function renderSubmissionResult(evaluation, messages) {
+    function renderSubmissionResult(evaluation, messages, source) {
       const metric = state.patient.targetMetricType;
 
       const submitted = formatMetricDisplay(
@@ -2013,6 +2503,10 @@
           '<div class="no-reward-line">ⓘ No reward was issued for this reading</div>';
       }
 
+      const sourceLine = source
+        ? `<p style="margin-top: 11px; font-size: 0.78rem; color: #5e6c84;">Source: ${escapeHtml(source)}</p>`
+        : "";
+
       elements.submissionResult.className = "";
 
       elements.submissionResult.innerHTML = `
@@ -2021,6 +2515,7 @@
           <h2>${escapeHtml(title)}</h2>
           <p>${escapeHtml(body)}</p>
           ${rewardLine}
+          ${sourceLine}
         </article>
       `;
     }
@@ -2080,6 +2575,7 @@
 
         state.patient = patient;
         state.submittedPin = pin;
+        state.readingSource = "Patient-entered manual reading";
 
         elements.patientAvatar.textContent = getInitials(patient.name);
         elements.dashboardTitle.textContent = `Welcome, ${patient.name}`;
@@ -2098,6 +2594,7 @@
           metaParts.join(" · ") || "Remote patient monitoring participant";
 
         configureMetricInput(patient);
+        configureSimulatedDeviceModule(patient);
         renderMonitoringPlan(patient);
 
         elements.submissionResult.className = "hidden";
@@ -2158,7 +2655,8 @@
         return;
       }
 
-      const messages = buildMessages(state.patient, evaluation);
+      const source = state.readingSource || "Patient-entered manual reading";
+      const messages = buildMessages(state.patient, evaluation, source);
 
       setButtonLoading(elements.readingSubmitButton, true, "Saving reading…");
 
@@ -2180,8 +2678,10 @@
           await createReward(state.patient, messages.milestone);
         }
 
-        renderSubmissionResult(evaluation, messages);
+        renderSubmissionResult(evaluation, messages, source);
+
         elements.readingInput.value = "";
+        state.readingSource = "Patient-entered manual reading";
 
         setStatus(
           elements.readingStatus,
@@ -2213,6 +2713,7 @@
       state.submittedPin = "";
       state.vitals = [];
       state.rewards = [];
+      resetSimulatedDeviceState();
 
       elements.pinForm.reset();
       elements.readingForm.reset();
@@ -2221,6 +2722,7 @@
       setStatus(elements.readingStatus, "");
 
       elements.monitoringPlanCard.classList.add("hidden");
+      elements.deviceCaptureCard.classList.add("hidden");
 
       elements.submissionResult.className = "hidden";
       elements.submissionResult.innerHTML = "";
@@ -2236,12 +2738,6 @@
       showScreen("pin");
       elements.pinInput.focus();
     }
-
-    /*
-      =======================================================================
-      PWA INSTALLATION AND SERVICE WORKER
-      =======================================================================
-    */
 
     let deferredInstallPrompt = null;
 
@@ -2324,12 +2820,41 @@
     elements.signOutButton.addEventListener("click", signOut);
     elements.refreshButton.addEventListener("click", refreshPatientData);
 
+    elements.connectSimulatedDeviceButton.addEventListener(
+      "click",
+      connectSimulatedDevice
+    );
+
+    elements.generateSimulatedReadingButton.addEventListener(
+      "click",
+      generateAnotherSimulatedReading
+    );
+
+    elements.useDeviceReadingButton.addEventListener(
+      "click",
+      useSimulatedDeviceReading
+    );
+
+    elements.disconnectSimulatedDeviceButton.addEventListener(
+      "click",
+      disconnectSimulatedDevice
+    );
+
     elements.pinInput.addEventListener("input", () => {
       setStatus(elements.pinStatus, "");
     });
 
     elements.readingInput.addEventListener("input", () => {
       setStatus(elements.readingStatus, "");
+
+      const typedValue = elements.readingInput.value.trim();
+
+      if (
+        state.simulatedDevice.connected &&
+        typedValue !== state.simulatedDevice.reading
+      ) {
+        state.readingSource = "Patient-entered manual reading";
+      }
     });
 
     elements.walletHistory.innerHTML =
