@@ -1,0 +1,2109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="RPM Health Rewards is a remote patient monitoring and outcomes rewards platform for providers and patients."
+  />
+  <meta name="theme-color" content="#102a43" />
+
+  <title>RPM Health Rewards | Better Monitoring. Better Outcomes.</title>
+
+  <style>
+    :root {
+      --navy: #102a43;
+      --navy-deep: #081c2c;
+      --blue: #1976d2;
+      --blue-dark: #0e5fae;
+      --blue-soft: #e8f2ff;
+      --teal: #078878;
+      --teal-dark: #056e62;
+      --teal-soft: #e7faf6;
+      --green: #14804a;
+      --green-soft: #e9f8ef;
+      --amber: #a05b00;
+      --red: #b42318;
+      --red-soft: #fff0ef;
+      --slate-900: #172b4d;
+      --slate-800: #253858;
+      --slate-700: #42526e;
+      --slate-600: #5e6c84;
+      --slate-500: #6b778c;
+      --slate-300: #c1c7d0;
+      --slate-200: #dfe1e6;
+      --slate-100: #f4f5f7;
+      --white: #ffffff;
+      --shadow: 0 14px 40px rgba(16, 42, 67, 0.10);
+      --radius-xl: 24px;
+      --radius-lg: 17px;
+      --radius-md: 13px;
+      --radius-sm: 10px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: #f4f8fb;
+    }
+
+    body {
+      min-width: 320px;
+      margin: 0;
+      color: var(--slate-900);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 2% 0%, rgba(38, 132, 255, 0.12), transparent 33rem),
+        linear-gradient(165deg, #f1f8fc 0%, #ffffff 36%, #f4f8fb 100%);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.65;
+    }
+
+    .site-shell {
+      width: min(100%, 1320px);
+      margin: 0 auto;
+      padding: 0 22px;
+    }
+
+    .site-header {
+      position: sticky;
+      z-index: 100;
+      top: 0;
+      border-bottom: 1px solid rgba(193, 199, 208, 0.7);
+      background: rgba(248, 251, 253, 0.92);
+      backdrop-filter: blur(14px);
+    }
+
+    .nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      min-height: 74px;
+    }
+
+    .brand {
+      display: flex;
+      flex: 0 0 auto;
+      align-items: center;
+      gap: 11px;
+      color: var(--navy);
+      font-size: 1.02rem;
+      font-weight: 850;
+      letter-spacing: -0.025em;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 41px;
+      height: 41px;
+      place-items: center;
+      color: var(--white);
+      font-size: 1.15rem;
+      border-radius: 13px;
+      background: linear-gradient(135deg, #1266b0, #00a58b);
+      box-shadow: 0 7px 18px rgba(25, 118, 210, 0.22);
+    }
+
+    .desktop-nav {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 11px;
+      color: var(--slate-700);
+      font-size: 0.85rem;
+      font-weight: 760;
+      border-radius: 9px;
+      transition: color 160ms ease, background 160ms ease;
+    }
+
+    .nav-link:hover {
+      color: var(--blue-dark);
+      background: var(--blue-soft);
+    }
+
+    .nav-link.portal-link {
+      color: var(--blue-dark);
+    }
+
+    .key-icon {
+      display: inline-grid;
+      width: 17px;
+      height: 17px;
+      place-items: center;
+      color: var(--amber);
+      font-size: 0.95rem;
+    }
+
+    .nav-cta {
+      margin-left: 6px;
+      padding: 10px 14px;
+      color: var(--white);
+      font-size: 0.84rem;
+      font-weight: 800;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #176fc0, #0960b1);
+      box-shadow: 0 7px 14px rgba(25, 118, 210, 0.18);
+    }
+
+    .mobile-menu-button {
+      display: none;
+      width: 42px;
+      height: 42px;
+      color: var(--navy);
+      font-size: 1.35rem;
+      border: 1px solid var(--slate-300);
+      border-radius: 11px;
+      background: var(--white);
+    }
+
+    .mobile-nav {
+      display: none;
+      padding: 0 0 14px;
+    }
+
+    .mobile-nav.open {
+      display: grid;
+      gap: 5px;
+    }
+
+    .mobile-nav .nav-link {
+      padding: 12px;
+      border: 1px solid transparent;
+    }
+
+    .mobile-nav .nav-link:hover {
+      border-color: #cfe1f4;
+    }
+
+    section {
+      scroll-margin-top: 94px;
+    }
+
+    .section {
+      padding: 88px 0;
+    }
+
+    .section-heading {
+      max-width: 720px;
+      margin: 0 auto 38px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      margin-bottom: 9px;
+      color: var(--blue);
+      font-size: 0.75rem;
+      font-weight: 850;
+      letter-spacing: 0.095em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: clamp(2.5rem, 6vw, 4.6rem);
+      line-height: 1.03;
+      letter-spacing: -0.06em;
+    }
+
+    h2 {
+      margin-bottom: 13px;
+      color: var(--navy);
+      font-size: clamp(1.85rem, 3.4vw, 2.7rem);
+      line-height: 1.12;
+      letter-spacing: -0.045em;
+    }
+
+    h3 {
+      margin-bottom: 8px;
+      color: var(--navy);
+      font-size: 1.08rem;
+      letter-spacing: -0.02em;
+    }
+
+    .lead {
+      color: var(--slate-600);
+      font-size: 1.05rem;
+      line-height: 1.65;
+    }
+
+    .muted {
+      color: var(--slate-600);
+      line-height: 1.58;
+    }
+
+    .small {
+      color: var(--slate-600);
+      font-size: 0.82rem;
+      line-height: 1.5;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 11px;
+      margin-top: 27px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 47px;
+      padding: 12px 17px;
+      font-size: 0.92rem;
+      font-weight: 820;
+      border: 0;
+      border-radius: 12px;
+      transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .button-primary {
+      color: var(--white);
+      background: linear-gradient(135deg, #176fc0, #0960b1);
+      box-shadow: 0 10px 19px rgba(25, 118, 210, 0.22);
+    }
+
+    .button-teal {
+      color: var(--white);
+      background: linear-gradient(135deg, #098f7d, #057468);
+      box-shadow: 0 10px 19px rgba(7, 136, 120, 0.20);
+    }
+
+    .button-secondary {
+      color: var(--navy);
+      border: 1px solid var(--slate-300);
+      background: var(--white);
+    }
+
+    .button-secondary:hover {
+      border-color: #98bce0;
+      background: #f7fbff;
+    }
+
+    .card {
+      border: 1px solid rgba(193, 199, 208, 0.68);
+      border-radius: var(--radius-xl);
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 80px 0 68px;
+    }
+
+    .hero::before {
+      position: absolute;
+      top: 36px;
+      right: -100px;
+      width: 510px;
+      height: 510px;
+      content: "";
+      border: 72px solid rgba(7, 136, 120, 0.07);
+      border-radius: 999px;
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(390px, 0.95fr);
+      gap: 52px;
+      align-items: center;
+    }
+
+    .hero-copy {
+      max-width: 680px;
+    }
+
+    .hero-copy h1 span {
+      color: var(--teal);
+    }
+
+    .hero-copy .lead {
+      max-width: 640px;
+    }
+
+    .hero-trust-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 23px;
+    }
+
+    .trust-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 10px;
+      color: var(--slate-700);
+      font-size: 0.77rem;
+      font-weight: 740;
+      border: 1px solid #d7e4ed;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.73);
+    }
+
+    .trust-pill .check {
+      color: var(--green);
+      font-weight: 900;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 455px;
+    }
+
+    .hero-panel {
+      position: absolute;
+      inset: 24px 0 0 30px;
+      overflow: hidden;
+      border: 1px solid rgba(193, 225, 235, 0.9);
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at 100% 5%, rgba(80, 204, 182, 0.26), transparent 15rem),
+        linear-gradient(145deg, #0e3c59, #0a6d70);
+      box-shadow: 0 22px 50px rgba(16, 42, 67, 0.20);
+    }
+
+    .hero-panel::after {
+      position: absolute;
+      right: -48px;
+      bottom: -80px;
+      width: 250px;
+      height: 250px;
+      content: "";
+      border: 38px solid rgba(255, 255, 255, 0.10);
+      border-radius: 999px;
+    }
+
+    .visual-app-header {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 25px 25px 0;
+      color: rgba(255, 255, 255, 0.92);
+      font-size: 0.85rem;
+      font-weight: 800;
+    }
+
+    .visual-dot-row {
+      display: flex;
+      gap: 5px;
+    }
+
+    .visual-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 99px;
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    .visual-main-card {
+      position: relative;
+      z-index: 1;
+      margin: 24px 22px;
+      padding: 21px;
+      border: 1px solid rgba(255, 255, 255, 0.17);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(7px);
+    }
+
+    .visual-welcome {
+      margin-bottom: 5px;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.76rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .visual-title {
+      margin-bottom: 16px;
+      color: var(--white);
+      font-size: 1.55rem;
+      font-weight: 860;
+      letter-spacing: -0.035em;
+    }
+
+    .visual-metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+    }
+
+    .visual-metric {
+      padding: 13px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.13);
+    }
+
+    .visual-metric-label {
+      margin-bottom: 5px;
+      color: rgba(255, 255, 255, 0.66);
+      font-size: 0.65rem;
+      font-weight: 780;
+      letter-spacing: 0.055em;
+      text-transform: uppercase;
+    }
+
+    .visual-metric-value {
+      color: var(--white);
+      font-size: 1.09rem;
+      font-weight: 860;
+    }
+
+    .visual-success-card {
+      position: absolute;
+      z-index: 3;
+      right: -10px;
+      bottom: 16px;
+      width: min(270px, 76%);
+      padding: 16px;
+      border: 1px solid #bde5ce;
+      border-radius: 16px;
+      background: rgba(248, 255, 251, 0.98);
+      box-shadow: 0 17px 35px rgba(5, 49, 57, 0.25);
+    }
+
+    .visual-success-icon {
+      display: inline-grid;
+      width: 29px;
+      height: 29px;
+      margin-bottom: 8px;
+      place-items: center;
+      color: var(--green);
+      font-size: 0.88rem;
+      font-weight: 900;
+      border-radius: 9px;
+      background: var(--green-soft);
+    }
+
+    .visual-success-card strong {
+      display: block;
+      color: var(--navy);
+      font-size: 0.92rem;
+    }
+
+    .visual-success-card span {
+      display: block;
+      margin-top: 3px;
+      color: var(--slate-600);
+      font-size: 0.75rem;
+      line-height: 1.38;
+    }
+
+    .visual-reward {
+      position: absolute;
+      z-index: 2;
+      bottom: -17px;
+      left: -3px;
+      padding: 13px 16px;
+      color: var(--white);
+      font-size: 0.83rem;
+      font-weight: 850;
+      border-radius: 13px;
+      background: linear-gradient(135deg, #1a8552, #0b6b40);
+      box-shadow: 0 12px 24px rgba(4, 89, 49, 0.26);
+    }
+
+    .soft-section {
+      background:
+        linear-gradient(180deg, rgba(232, 242, 255, 0.58), rgba(255, 255, 255, 0));
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .step-card {
+      padding: 24px;
+      border: 1px solid rgba(193, 199, 208, 0.68);
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 7px 23px rgba(16, 42, 67, 0.06);
+    }
+
+    .step-number {
+      display: grid;
+      width: 36px;
+      height: 36px;
+      margin-bottom: 17px;
+      place-items: center;
+      color: var(--blue-dark);
+      font-size: 0.86rem;
+      font-weight: 900;
+      border-radius: 11px;
+      background: var(--blue-soft);
+    }
+
+    .step-card:nth-child(2) .step-number {
+      color: var(--teal-dark);
+      background: var(--teal-soft);
+    }
+
+    .step-card:nth-child(3) .step-number {
+      color: var(--green);
+      background: var(--green-soft);
+    }
+
+    .step-card p {
+      margin-bottom: 0;
+      color: var(--slate-600);
+      font-size: 0.9rem;
+      line-height: 1.58;
+    }
+
+    .outcomes-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: 42px;
+      align-items: center;
+    }
+
+    .outcomes-visual {
+      position: relative;
+      min-height: 370px;
+      overflow: hidden;
+      border-radius: 25px;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(120, 229, 207, 0.35), transparent 13rem),
+        linear-gradient(145deg, #0b5870, #0c7c70);
+      box-shadow: 0 20px 47px rgba(16, 42, 67, 0.17);
+    }
+
+    .outcomes-visual::after {
+      position: absolute;
+      right: -48px;
+      bottom: -48px;
+      width: 230px;
+      height: 230px;
+      content: "";
+      border: 38px solid rgba(255, 255, 255, 0.09);
+      border-radius: 50%;
+    }
+
+    .outcome-chart-card {
+      position: absolute;
+      top: 35px;
+      right: 27px;
+      left: 27px;
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(7px);
+    }
+
+    .outcome-chart-title {
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 0.76rem;
+      font-weight: 760;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .chart-bars {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      height: 151px;
+      margin-top: 14px;
+      padding: 0 4px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.28);
+    }
+
+    .bar-group {
+      display: grid;
+      justify-items: center;
+      gap: 7px;
+    }
+
+    .bar {
+      width: 22px;
+      border-radius: 7px 7px 2px 2px;
+      background: linear-gradient(180deg, #8af1d5, #25b89a);
+    }
+
+    .bar-label {
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.64rem;
+    }
+
+    .outcomes-stat {
+      position: absolute;
+      z-index: 2;
+      bottom: 29px;
+      left: 27px;
+      padding: 15px 17px;
+      color: var(--white);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      background: rgba(7, 54, 65, 0.30);
+    }
+
+    .outcomes-stat strong {
+      display: block;
+      font-size: 1.5rem;
+      letter-spacing: -0.045em;
+    }
+
+    .outcomes-stat span {
+      display: block;
+      margin-top: 3px;
+      color: rgba(255, 255, 255, 0.75);
+      font-size: 0.73rem;
+    }
+
+    .feature-list {
+      display: grid;
+      gap: 15px;
+      margin-top: 26px;
+    }
+
+    .feature-item {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 12px;
+      align-items: start;
+    }
+
+    .feature-icon {
+      display: grid;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      color: var(--blue-dark);
+      font-size: 1rem;
+      border-radius: 11px;
+      background: var(--blue-soft);
+    }
+
+    .feature-item:nth-child(2) .feature-icon {
+      color: var(--teal-dark);
+      background: var(--teal-soft);
+    }
+
+    .feature-item:nth-child(3) .feature-icon {
+      color: var(--green);
+      background: var(--green-soft);
+    }
+
+    .feature-item h3 {
+      margin-bottom: 4px;
+      font-size: 0.98rem;
+    }
+
+    .feature-item p {
+      margin-bottom: 0;
+      color: var(--slate-600);
+      font-size: 0.87rem;
+      line-height: 1.5;
+    }
+
+    .portal-section {
+      position: relative;
+      overflow: hidden;
+      padding: 86px 0;
+      background:
+        radial-gradient(circle at 4% 20%, rgba(38, 132, 255, 0.13), transparent 21rem),
+        linear-gradient(145deg, #eff8fc, #f6fbfc);
+    }
+
+    .portal-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .portal-card {
+      position: relative;
+      overflow: hidden;
+      padding: 30px;
+      border: 1px solid #cfe0eb;
+      border-radius: var(--radius-xl);
+      background: var(--white);
+      box-shadow: 0 12px 30px rgba(16, 42, 67, 0.08);
+    }
+
+    .portal-card::after {
+      position: absolute;
+      right: -53px;
+      bottom: -63px;
+      width: 180px;
+      height: 180px;
+      content: "";
+      border: 30px solid rgba(25, 118, 210, 0.06);
+      border-radius: 50%;
+    }
+
+    .portal-card.patient-card::after {
+      border-color: rgba(7, 136, 120, 0.08);
+    }
+
+    .portal-card-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .portal-icon {
+      display: grid;
+      width: 51px;
+      height: 51px;
+      margin-bottom: 19px;
+      place-items: center;
+      color: var(--blue-dark);
+      font-size: 1.38rem;
+      border-radius: 16px;
+      background: var(--blue-soft);
+    }
+
+    .patient-card .portal-icon {
+      color: var(--teal-dark);
+      background: var(--teal-soft);
+    }
+
+    .protected-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 12px;
+      padding: 6px 9px;
+      color: var(--amber);
+      font-size: 0.71rem;
+      font-weight: 850;
+      letter-spacing: 0.035em;
+      text-transform: uppercase;
+      border: 1px solid #f0d6a2;
+      border-radius: 999px;
+      background: #fff9eb;
+    }
+
+    .protected-badge span {
+      font-size: 0.88rem;
+    }
+
+    .portal-card h3 {
+      margin-bottom: 9px;
+      font-size: 1.38rem;
+    }
+
+    .portal-card p {
+      max-width: 480px;
+      margin-bottom: 0;
+      color: var(--slate-600);
+      line-height: 1.58;
+    }
+
+    .portal-card .button-row {
+      margin-top: 22px;
+    }
+
+    .portal-card .button {
+      min-height: 43px;
+      font-size: 0.86rem;
+    }
+
+    .faq-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+      gap: 43px;
+      align-items: start;
+    }
+
+    .faq-side-card {
+      padding: 25px;
+      border: 1px solid #d6e6ef;
+      border-radius: var(--radius-lg);
+      background:
+        radial-gradient(circle at 100% 0%, rgba(56, 177, 235, 0.13), transparent 10rem),
+        #f9fcfe;
+    }
+
+    .faq-side-icon {
+      display: grid;
+      width: 45px;
+      height: 45px;
+      margin-bottom: 16px;
+      place-items: center;
+      color: var(--blue-dark);
+      font-size: 1.25rem;
+      border-radius: 14px;
+      background: var(--blue-soft);
+    }
+
+    .faq-side-card h3 {
+      font-size: 1.15rem;
+    }
+
+    .faq-side-card p {
+      margin-bottom: 0;
+      color: var(--slate-600);
+      font-size: 0.9rem;
+      line-height: 1.56;
+    }
+
+    .faq-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .faq-item {
+      overflow: hidden;
+      border: 1px solid var(--slate-200);
+      border-radius: 13px;
+      background: var(--white);
+    }
+
+    .faq-item summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 16px 17px;
+      color: var(--navy);
+      font-size: 0.92rem;
+      font-weight: 790;
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .faq-item summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq-item summary::after {
+      flex: 0 0 auto;
+      content: "+";
+      color: var(--blue);
+      font-size: 1.18rem;
+      font-weight: 500;
+    }
+
+    .faq-item[open] summary::after {
+      content: "−";
+    }
+
+    .faq-answer {
+      padding: 0 17px 17px;
+      color: var(--slate-600);
+      font-size: 0.89rem;
+      line-height: 1.58;
+    }
+
+    .faq-answer p {
+      margin: 0;
+    }
+
+    .pricing-section {
+      position: relative;
+      overflow: hidden;
+      color: var(--white);
+      background:
+        radial-gradient(circle at 90% 10%, rgba(66, 200, 177, 0.31), transparent 16rem),
+        linear-gradient(135deg, #0b3149, #0b6470 68%, #087c6d);
+    }
+
+    .pricing-section::before {
+      position: absolute;
+      top: -112px;
+      left: -100px;
+      width: 330px;
+      height: 330px;
+      content: "";
+      border: 55px solid rgba(255, 255, 255, 0.06);
+      border-radius: 50%;
+    }
+
+    .pricing-content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(270px, 0.62fr);
+      gap: 40px;
+      align-items: center;
+    }
+
+    .pricing-section .eyebrow {
+      color: #aee7ff;
+    }
+
+    .pricing-section h2 {
+      color: var(--white);
+    }
+
+    .pricing-section .lead {
+      max-width: 650px;
+      color: rgba(255, 255, 255, 0.79);
+    }
+
+    .pricing-section .button-secondary {
+      color: var(--navy);
+      border-color: var(--white);
+      background: var(--white);
+    }
+
+    .pricing-callout {
+      padding: 25px;
+      border: 1px solid rgba(255, 255, 255, 0.19);
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+    }
+
+    .pricing-callout-label {
+      margin-bottom: 8px;
+      color: rgba(255, 255, 255, 0.66);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .pricing-callout strong {
+      display: block;
+      margin-bottom: 9px;
+      font-size: 1.62rem;
+      letter-spacing: -0.04em;
+    }
+
+    .pricing-callout p {
+      margin-bottom: 0;
+      color: rgba(255, 255, 255, 0.75);
+      font-size: 0.88rem;
+      line-height: 1.53;
+    }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 0.76fr) minmax(0, 1.24fr);
+      gap: 34px;
+      align-items: start;
+    }
+
+    .contact-details {
+      padding: 27px;
+      border: 1px solid #d7e6ee;
+      border-radius: var(--radius-xl);
+      background:
+        radial-gradient(circle at 100% 0%, rgba(45, 187, 157, 0.14), transparent 12rem),
+        #f9fcfd;
+    }
+
+    .contact-details h2 {
+      font-size: 1.85rem;
+    }
+
+    .contact-methods {
+      display: grid;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .contact-method {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 11px;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid #dbe8ef;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .contact-method-icon {
+      display: grid;
+      width: 35px;
+      height: 35px;
+      place-items: center;
+      color: var(--teal-dark);
+      font-size: 1rem;
+      border-radius: 10px;
+      background: var(--teal-soft);
+    }
+
+    .contact-method-label {
+      margin-bottom: 2px;
+      color: var(--slate-600);
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .contact-method-value {
+      overflow-wrap: anywhere;
+      color: var(--navy);
+      font-size: 0.88rem;
+      font-weight: 770;
+    }
+
+    .contact-method-value:hover {
+      color: var(--blue);
+    }
+
+    .contact-form-card {
+      padding: 28px;
+    }
+
+    .contact-form-card h2 {
+      margin-bottom: 7px;
+      font-size: 1.82rem;
+    }
+
+    .contact-form-card > p {
+      margin-bottom: 21px;
+      color: var(--slate-600);
+      font-size: 0.91rem;
+      line-height: 1.55;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 13px;
+    }
+
+    .form-group {
+      margin-top: 15px;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--slate-700);
+      font-size: 0.84rem;
+      font-weight: 770;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 12px 13px;
+      color: var(--slate-900);
+      font-size: 0.91rem;
+      outline: none;
+      border: 1px solid var(--slate-300);
+      border-radius: 11px;
+      background: var(--white);
+      transition: border-color 150ms ease, box-shadow 150ms ease;
+    }
+
+    textarea {
+      min-height: 132px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(25, 118, 210, 0.12);
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #a7b0bc;
+    }
+
+    .form-note {
+      margin: 12px 0 0;
+      color: var(--slate-500);
+      font-size: 0.74rem;
+      line-height: 1.48;
+    }
+
+    .form-status {
+      display: none;
+      margin-top: 14px;
+      padding: 11px 12px;
+      font-size: 0.84rem;
+      line-height: 1.43;
+      border-radius: 10px;
+    }
+
+    .form-status.visible {
+      display: block;
+    }
+
+    .form-status.success {
+      color: var(--green);
+      border: 1px solid #bde3cc;
+      background: var(--green-soft);
+    }
+
+    .form-status.error {
+      color: var(--red);
+      border: 1px solid #f1c3c0;
+      background: var(--red-soft);
+    }
+
+    .site-footer {
+      padding: 31px 0;
+      color: rgba(255, 255, 255, 0.72);
+      background: var(--navy-deep);
+    }
+
+    .footer-grid {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--white);
+      font-size: 0.92rem;
+      font-weight: 830;
+    }
+
+    .footer-mark {
+      display: grid;
+      width: 31px;
+      height: 31px;
+      place-items: center;
+      color: var(--white);
+      font-size: 0.85rem;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #1266b0, #00a58b);
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.73);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .footer-links a:hover {
+      color: var(--white);
+    }
+
+    .footer-note {
+      flex-basis: 100%;
+      margin: 3px 0 0;
+      color: rgba(255, 255, 255, 0.48);
+      font-size: 0.71rem;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 1080px) {
+      .hero-grid {
+        grid-template-columns: minmax(0, 1fr) minmax(335px, 0.85fr);
+        gap: 31px;
+      }
+
+      .outcomes-grid,
+      .faq-layout,
+      .contact-layout {
+        gap: 27px;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .desktop-nav {
+        display: none;
+      }
+
+      .mobile-menu-button {
+        display: grid;
+        place-items: center;
+      }
+
+      .hero {
+        padding: 59px 0 46px;
+      }
+
+      .hero-grid,
+      .outcomes-grid,
+      .faq-layout,
+      .pricing-content,
+      .contact-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy {
+        max-width: none;
+      }
+
+      .hero-visual {
+        width: min(100%, 560px);
+        min-height: 410px;
+        margin: 3px auto 0;
+      }
+
+      .outcomes-visual {
+        width: min(100%, 580px);
+        margin: 0 auto;
+      }
+
+      .section {
+        padding: 68px 0;
+      }
+
+      .faq-side-card {
+        max-width: 560px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .site-shell {
+        padding: 0 14px;
+      }
+
+      .nav-bar {
+        min-height: 65px;
+      }
+
+      .brand {
+        font-size: 0.92rem;
+      }
+
+      .brand-mark {
+        width: 36px;
+        height: 36px;
+      }
+
+      h1 {
+        font-size: clamp(2.35rem, 12vw, 3.45rem);
+      }
+
+      .hero-visual {
+        min-height: 376px;
+      }
+
+      .hero-panel {
+        inset: 13px 7px 0 7px;
+      }
+
+      .visual-success-card {
+        right: 9px;
+      }
+
+      .visual-reward {
+        left: 9px;
+      }
+
+      .steps-grid,
+      .portal-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        padding: 54px 0;
+      }
+
+      .section-heading {
+        margin-bottom: 28px;
+      }
+
+      .portal-card,
+      .contact-details,
+      .contact-form-card {
+        padding: 23px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-group.full {
+        grid-column: auto;
+      }
+
+      .button-row {
+        align-items: stretch;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      .footer-grid {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="site-shell">
+      <nav class="nav-bar" aria-label="Primary navigation">
+        <a class="brand" href="#home" aria-label="RPM Health Rewards home">
+          <span class="brand-mark">♥</span>
+          <span>RPM Health Rewards</span>
+        </a>
+
+        <div class="desktop-nav">
+          <a class="nav-link portal-link" href="providers.html">
+            <span class="key-icon" aria-hidden="true">🔑</span>
+            Provider Portal
+          </a>
+
+          <a class="nav-link portal-link" href="rpm.html">
+            <span class="key-icon" aria-hidden="true">🔑</span>
+            Patient Portal
+          </a>
+
+          <a class="nav-link" href="#faq">FAQ</a>
+          <a class="nav-link" href="#pricing">Pricing</a>
+          <a class="nav-cta" href="#contact">Contact Us</a>
+        </div>
+
+        <button
+          id="mobileMenuButton"
+          class="mobile-menu-button"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mobileNav"
+          aria-label="Open navigation menu"
+        >
+          ☰
+        </button>
+      </nav>
+
+      <div id="mobileNav" class="mobile-nav">
+        <a class="nav-link portal-link" href="providers.html">
+          <span class="key-icon" aria-hidden="true">🔑</span>
+          Provider Portal
+        </a>
+
+        <a class="nav-link portal-link" href="rpm.html">
+          <span class="key-icon" aria-hidden="true">🔑</span>
+          Patient Portal
+        </a>
+
+        <a class="nav-link" href="#faq">FAQ</a>
+        <a class="nav-link" href="#pricing">Pricing</a>
+        <a class="nav-link" href="#contact">Contact Us</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="site-shell">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <div class="eyebrow">Value-Based Remote Patient Monitoring</div>
+
+            <h1>
+              Better monitoring.<br />
+              Better <span>health rewards.</span>
+            </h1>
+
+            <p class="lead">
+              RPM Health Rewards helps providers support consistent remote
+              monitoring while giving patients a clear, motivating experience
+              for tracking progress toward personalized health goals.
+            </p>
+
+            <div class="button-row">
+              <a class="button button-primary" href="#portals">
+                Explore Secure Portals
+                <span aria-hidden="true">→</span>
+              </a>
+
+              <a class="button button-secondary" href="#contact">
+                Talk With Our Team
+              </a>
+            </div>
+
+            <div class="hero-trust-row">
+              <span class="trust-pill">
+                <span class="check">✓</span>
+                RPM workflow visibility
+              </span>
+
+              <span class="trust-pill">
+                <span class="check">✓</span>
+                Patient-centered engagement
+              </span>
+
+              <span class="trust-pill">
+                <span class="check">✓</span>
+                Provider operational insight
+              </span>
+            </div>
+          </div>
+
+          <div class="hero-visual" aria-label="Illustration of the RPM Health Rewards patient experience">
+            <div class="hero-panel">
+              <div class="visual-app-header">
+                <span>RPM Rewards</span>
+
+                <span class="visual-dot-row" aria-hidden="true">
+                  <span class="visual-dot"></span>
+                  <span class="visual-dot"></span>
+                  <span class="visual-dot"></span>
+                </span>
+              </div>
+
+              <div class="visual-main-card">
+                <div class="visual-welcome">Today’s monitoring plan</div>
+                <div class="visual-title">Blood Pressure Check</div>
+
+                <div class="visual-metrics">
+                  <div class="visual-metric">
+                    <div class="visual-metric-label">Current goal</div>
+                    <div class="visual-metric-value">130/80</div>
+                  </div>
+
+                  <div class="visual-metric">
+                    <div class="visual-metric-label">Submitted</div>
+                    <div class="visual-metric-value">124/76</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="visual-reward">★ $5.00 reward recorded</div>
+            </div>
+
+            <div class="visual-success-card">
+              <div class="visual-success-icon">✓</div>
+              <strong>Goal achieved</strong>
+              <span>Your reading meets today’s configured target.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section soft-section">
+      <div class="site-shell">
+        <div class="section-heading">
+          <div class="eyebrow">How It Works</div>
+          <h2>A connected experience for providers and patients</h2>
+
+          <p class="lead">
+            RPM Health Rewards brings monitoring activity, progress feedback,
+            rewards, and operational review into a simple, coordinated workflow.
+          </p>
+        </div>
+
+        <div class="steps-grid">
+          <article class="step-card">
+            <div class="step-number">01</div>
+            <h3>Personalized monitoring plan</h3>
+            <p>
+              Providers configure an assigned patient, monitoring metric, and
+              individualized target such as a blood-pressure goal or weight target.
+            </p>
+          </article>
+
+          <article class="step-card">
+            <div class="step-number">02</div>
+            <h3>Simple patient engagement</h3>
+            <p>
+              Patients securely enter their assigned portal, see what they are
+              measuring, submit readings, and receive immediate progress feedback.
+            </p>
+          </article>
+
+          <article class="step-card">
+            <div class="step-number">03</div>
+            <h3>Provider operational visibility</h3>
+            <p>
+              Care teams review monitoring activity, reward records, system-generated
+              workflow notes, and internal billing-review status in one workspace.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="site-shell">
+        <div class="outcomes-grid">
+          <div class="outcomes-visual" aria-label="Illustration of patient monitoring progress over time">
+            <div class="outcome-chart-card">
+              <div class="outcome-chart-title">Monitoring progress</div>
+
+              <div class="chart-bars" aria-hidden="true">
+                <div class="bar-group">
+                  <div class="bar" style="height: 47px;"></div>
+                  <div class="bar-label">Mon</div>
+                </div>
+
+                <div class="bar-group">
+                  <div class="bar" style="height: 73px;"></div>
+                  <div class="bar-label">Tue</div>
+                </div>
+
+                <div class="bar-group">
+                  <div class="bar" style="height: 95px;"></div>
+                  <div class="bar-label">Wed</div>
+                </div>
+
+                <div class="bar-group">
+                  <div class="bar" style="height: 117px;"></div>
+                  <div class="bar-label">Thu</div>
+                </div>
+
+                <div class="bar-group">
+                  <div class="bar" style="height: 139px;"></div>
+                  <div class="bar-label">Fri</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="outcomes-stat">
+              <strong>Clear progress</strong>
+              <span>Simple, goal-oriented patient feedback</span>
+            </div>
+          </div>
+
+          <div>
+            <div class="eyebrow">Designed for Engagement</div>
+            <h2>Make each monitoring interaction meaningful</h2>
+
+            <p class="lead">
+              The platform is designed around a clear principle: patients are more
+              likely to stay engaged when they understand their goal, receive timely
+              feedback, and can see meaningful progress.
+            </p>
+
+            <div class="feature-list">
+              <article class="feature-item">
+                <div class="feature-icon">♥</div>
+                <div>
+                  <h3>Patient-first experience</h3>
+                  <p>
+                    A mobile-friendly portal reminds patients what to measure,
+                    shows their goal, and makes routine submissions straightforward.
+                  </p>
+                </div>
+              </article>
+
+              <article class="feature-item">
+                <div class="feature-icon">▣</div>
+                <div>
+                  <h3>Provider workflow support</h3>
+                  <p>
+                    A centralized provider workspace supports patient review,
+                    monitoring activity visibility, reward history, and
+                    internal billing workflow management.
+                  </p>
+                </div>
+              </article>
+
+              <article class="feature-item">
+                <div class="feature-icon">★</div>
+                <div>
+                  <h3>Outcome-oriented rewards</h3>
+                  <p>
+                    Configured reward rules can recognize qualifying Blood Pressure
+                    and Weight outcomes while preserving a transparent rewards ledger.
+                  </p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="portals" class="portal-section">
+      <div class="site-shell">
+        <div class="section-heading">
+          <div class="eyebrow">Secure Portal Access</div>
+          <h2>Choose your RPM Health Rewards workspace</h2>
+
+          <p class="lead">
+            Provider and Patient experiences are accessed separately. Each portal
+            requires the appropriate authorized credentials.
+          </p>
+        </div>
+
+        <div class="portal-grid">
+          <article class="portal-card">
+            <div class="portal-card-content">
+              <div class="portal-icon">▦</div>
+
+              <div class="protected-badge">
+                <span aria-hidden="true">🔑</span>
+                Provider credentials required
+              </div>
+
+              <h3>Provider Portal</h3>
+
+              <p>
+                Review provider-scoped RPM patient rosters, monitoring activity,
+                patient details, rewards-wallet records, and internal billing workflow.
+              </p>
+
+              <div class="button-row">
+                <a class="button button-primary" href="providers.html">
+                  <span aria-hidden="true">🔑</span>
+                  Open Provider Portal
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="portal-card patient-card">
+            <div class="portal-card-content">
+              <div class="portal-icon">♥</div>
+
+              <div class="protected-badge">
+                <span aria-hidden="true">🔑</span>
+                Patient PIN required
+              </div>
+
+              <h3>Patient Portal</h3>
+
+              <p>
+                Review your monitoring plan, submit an assigned reading, view
+                recent activity and rewards, or install the mobile-friendly
+                portal directly to a supported device.
+              </p>
+
+              <div class="button-row">
+                <a class="button button-teal" href="rpm.html">
+                  <span aria-hidden="true">🔑</span>
+                  Open Patient Portal
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="section">
+      <div class="site-shell">
+        <div class="faq-layout">
+          <aside class="faq-side-card">
+            <div class="faq-side-icon">?</div>
+            <h3>Frequently asked questions</h3>
+
+            <p>
+              This starter FAQ is intentionally easy to edit. Update the questions
+              and answers as the RPM Health Rewards offering, onboarding process,
+              and clinical operations mature.
+            </p>
+
+            <div class="button-row">
+              <a class="button button-secondary" href="#contact">
+                Ask a Question
+              </a>
+            </div>
+          </aside>
+
+          <div class="faq-list">
+            <details class="faq-item" open>
+              <summary>What is RPM Health Rewards?</summary>
+              <div class="faq-answer">
+                <p>
+                  RPM Health Rewards is a remote patient monitoring engagement
+                  platform concept that combines provider operational visibility
+                  with a patient-facing experience for assigned health metrics,
+                  progress feedback, and qualifying outcome rewards.
+                </p>
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>Who can use the Provider Portal?</summary>
+              <div class="faq-answer">
+                <p>
+                  The Provider Portal is intended for authorized clinical,
+                  operational, and billing-workflow users within participating
+                  provider organizations. Access requirements are determined by
+                  the organization’s implementation and security controls.
+                </p>
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>How do patients access the Patient Portal?</summary>
+              <div class="faq-answer">
+                <p>
+                  Patients use a clinic-assigned PIN to access their monitoring
+                  plan, submit their assigned reading, and view recent activity.
+                  On compatible devices, the Patient Portal may also be installed
+                  as a Progressive Web App from the browser.
+                </p>
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>Can the Patient Portal be installed on a phone?</summary>
+              <div class="faq-answer">
+                <p>
+                  Yes. On supported Android browsers, the Patient Portal may show
+                  an Install option. On iPhone or iPad, open the portal in Safari,
+                  select Share, then choose Add to Home Screen.
+                </p>
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>How do rewards work?</summary>
+              <div class="faq-answer">
+                <p>
+                  In the current prototype, qualifying Blood Pressure and Weight
+                  readings that meet configured targets can generate a recorded
+                  $5 reward transaction. HbA1c and BMI readings are logged but are
+                  not currently reward-enabled.
+                </p>
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>Does clicking a billing action submit an insurance claim?</summary>
+              <div class="faq-answer">
+                <p>
+                  No. The current Provider Portal supports an internal billing
+                  workflow such as Ready for Review, Under Review, Ready to Bill,
+                  or Billed. It does not submit, adjudicate, or verify payer claims.
+                </p>
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>Is this website providing medical advice?</summary>
+              <div class="faq-answer">
+                <p>
+                  No. RPM Health Rewards is an operational and patient-engagement
+                  platform concept. Individual clinical decisions, patient care,
+                  device selection, documentation, and billing determinations
+                  remain the responsibility of qualified providers and participating organizations.
+                </p>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing" class="section pricing-section">
+      <div class="site-shell">
+        <div class="pricing-content">
+          <div>
+            <div class="eyebrow">Pricing</div>
+            <h2>Flexible program design is coming soon.</h2>
+
+            <p class="lead">
+              RPM Health Rewards is being designed for provider organizations
+              seeking a practical, patient-centered approach to remote monitoring
+              engagement and operational workflow visibility.
+            </p>
+
+            <div class="button-row">
+              <a class="button button-secondary" href="#contact">
+                Reach Out for More Information
+              </a>
+            </div>
+          </div>
+
+          <aside class="pricing-callout">
+            <div class="pricing-callout-label">Program model</div>
+            <strong>Coming Soon</strong>
+            <p>
+              Contact us to discuss provider workflows, pilot concepts,
+              patient-engagement goals, and potential implementation models.
+            </p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="site-shell">
+        <div class="contact-layout">
+          <aside class="contact-details">
+            <div class="eyebrow">Contact RPM Health Rewards</div>
+            <h2>Let’s discuss your RPM workflow.</h2>
+
+            <p class="muted">
+              Reach out to learn more about the RPM Health Rewards platform,
+              prototype demonstrations, provider workflow concepts, or future
+              collaboration opportunities.
+            </p>
+
+            <div class="contact-methods">
+              <div class="contact-method">
+                <div class="contact-method-icon">✉</div>
+                <div>
+                  <div class="contact-method-label">Email</div>
+                  <a
+                    class="contact-method-value"
+                    href="mailto:rpm.health.rewards@gmail.com"
+                  >
+                    rpm.health.rewards@gmail.com
+                  </a>
+                </div>
+              </div>
+
+              <div class="contact-method">
+                <div class="contact-method-icon">◷</div>
+                <div>
+                  <div class="contact-method-label">Response</div>
+                  <div class="contact-method-value">
+                    We will respond as soon as possible.
+                  </div>
+                </div>
+              </div>
+
+              <div class="contact-method">
+                <div class="contact-method-icon">⌁</div>
+                <div>
+                  <div class="contact-method-label">Important</div>
+                  <div class="contact-method-value">
+                    Do not send patient, medical, or other sensitive information.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
+
+          <article class="card contact-form-card">
+            <h2>Send a message</h2>
+
+            <p>
+              Use the form below for general business, partnership, and product
+              inquiries. Please do not include protected health information,
+              passwords, PINs, or other sensitive information.
+            </p>
+
+            <form id="contactForm">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="contactName">Your name</label>
+                  <input
+                    id="contactName"
+                    name="name"
+                    type="text"
+                    autocomplete="name"
+                    placeholder="Your name"
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="contactEmail">Email address</label>
+                  <input
+                    id="contactEmail"
+                    name="email"
+                    type="email"
+                    autocomplete="email"
+                    placeholder="you@example.com"
+                    required
+                  />
+                </div>
+
+                <div class="form-group full">
+                  <label for="contactOrganization">Organization</label>
+                  <input
+                    id="contactOrganization"
+                    name="organization"
+                    type="text"
+                    autocomplete="organization"
+                    placeholder="Organization or practice name"
+                  />
+                </div>
+
+                <div class="form-group full">
+                  <label for="contactMessage">Message</label>
+                  <textarea
+                    id="contactMessage"
+                    name="message"
+                    placeholder="Tell us how we can help. Please do not include patient or sensitive information."
+                    required
+                  ></textarea>
+                </div>
+              </div>
+
+              <div id="contactFormStatus" class="form-status" role="alert"></div>
+
+              <div class="button-row">
+                <button id="contactSubmitButton" class="button button-primary" type="submit">
+                  Send Message
+                  <span aria-hidden="true">→</span>
+                </button>
+              </div>
+
+              <p class="form-note">
+                By submitting this form, you confirm that your message does not
+                contain patient information, medical information, passwords, PINs,
+                or other sensitive information.
+              </p>
+            </form>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-shell">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="footer-mark">♥</span>
+          <span>RPM Health Rewards</span>
+        </div>
+
+        <div class="footer-links">
+          <a href="#home">Home</a>
+          <a href="providers.html">Provider Portal</a>
+          <a href="rpm.html">Patient Portal</a>
+          <a href="#faq">FAQ</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#contact">Contact</a>
+        </div>
+
+        <p class="footer-note">
+          © <span id="currentYear"></span> RPM Health Rewards. Prototype website.
+          This website and associated prototype tools do not provide medical advice,
+          make clinical determinations, submit insurance claims, or replace the
+          judgment of qualified healthcare professionals.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    "use strict";
+
+    const mobileMenuButton = document.getElementById("mobileMenuButton");
+    const mobileNav = document.getElementById("mobileNav");
+    const contactForm = document.getElementById("contactForm");
+    const contactFormStatus = document.getElementById("contactFormStatus");
+    const contactSubmitButton = document.getElementById("contactSubmitButton");
+
+    mobileMenuButton.addEventListener("click", () => {
+      const isOpen = mobileNav.classList.toggle("open");
+
+      mobileMenuButton.setAttribute("aria-expanded", String(isOpen));
+      mobileMenuButton.textContent = isOpen ? "×" : "☰";
+      mobileMenuButton.setAttribute(
+        "aria-label",
+        isOpen ? "Close navigation menu" : "Open navigation menu"
+      );
+    });
+
+    mobileNav.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        mobileNav.classList.remove("open");
+        mobileMenuButton.textContent = "☰";
+        mobileMenuButton.setAttribute("aria-expanded", "false");
+        mobileMenuButton.setAttribute("aria-label", "Open navigation menu");
+      });
+    });
+
+    document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+    function showFormStatus(message, type) {
+      contactFormStatus.textContent = message;
+      contactFormStatus.className = `form-status visible ${type}`;
+    }
+
+    contactForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const formData = new FormData(contactForm);
+
+      const name = String(formData.get("name") || "").trim();
+      const email = String(formData.get("email") || "").trim();
+      const organization = String(formData.get("organization") || "").trim();
+      const message = String(formData.get("message") || "").trim();
+
+      if (!name || !email || !message) {
+        showFormStatus(
+          "Please enter your name, email address, and message before sending.",
+          "error"
+        );
+        return;
+      }
+
+      contactSubmitButton.disabled = true;
+      contactSubmitButton.textContent = "Opening email…";
+
+      const subject = encodeURIComponent("RPM Health Rewards Website Inquiry");
+
+      const emailBody = encodeURIComponent(
+        `Name: ${name}\n` +
+        `Email: ${email}\n` +
+        `Organization: ${organization || "Not provided"}\n\n` +
+        `Message:\n${message}\n\n` +
+        `Note: The sender was reminded not to include patient or sensitive information.`
+      );
+
+      window.location.href =
+        `mailto:rpm.health.rewards@gmail.com?subject=${subject}&body=${emailBody}`;
+
+      showFormStatus(
+        "Your email application should now open with a prepared message. If it does not, email rpm.health.rewards@gmail.com directly.",
+        "success"
+      );
+
+      contactSubmitButton.disabled = false;
+      contactSubmitButton.innerHTML =
+        'Send Message <span aria-hidden="true">→</span>';
+    });
+  </script>
+</body>
+</html>
