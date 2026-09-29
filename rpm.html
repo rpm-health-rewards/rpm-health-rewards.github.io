@@ -88,7 +88,7 @@
     }
 
     .app-shell {
-      width: min(100%);
+      width: min(100%, 700px);
       margin: 0 auto;
       padding: 20px 16px 36px;
     }
@@ -1266,67 +1266,106 @@
     }
   
     /* ================================================================
-       MOBILE PHONE LAYOUT SAFETY
-       Prevents a desktop-width embedded layout on narrow Android phones.
+       ANDROID PHONE PORTRAIT LAYOUT FIX
+       Keep this block at the END of the style section.
        ================================================================ */
 
-    html,
-    body {
+    html {
       width: 100%;
       max-width: 100%;
       overflow-x: hidden;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
     }
 
-    @media (max-width: 600px) {
+    body {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      overflow-x: hidden;
+    }
+
+    @media screen and (max-width: 600px) {
       .app-shell {
-        width: 100%;
-        max-width: 100%;
-        margin: 0;
-        padding: 12px 10px 28px;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+        padding: 12px 10px 28px !important;
       }
 
       .topbar {
-        margin: 2px 2px 16px;
-      }
-
-      .card,
-      .video-help-card,
-      .device-card {
-        max-width: 100%;
-      }
-
-      .button-row {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .button-row .button {
         width: 100%;
+        max-width: 100%;
+        margin: 2px 0 16px !important;
+      }
+
+      .screen,
+      .card,
+      .hero-card,
+      .monitoring-plan-card,
+      .profile-card,
+      .wallet-card,
+      .video-help-card,
+      .device-card,
+      .history-list,
+      .install-banner,
+      .ios-install-help {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+      }
+
+      .hero-card .card-body,
+      .card-body {
+        padding: 20px 17px;
+      }
+
+      .hero-card .card-body {
+        padding-top: 25px;
+        padding-bottom: 25px;
+      }
+
+      .metric-strip,
+      .monitoring-plan-grid {
+        grid-template-columns: 1fr !important;
       }
 
       .profile-card {
+        grid-template-columns: 1fr !important;
+      }
+
+      .button-row {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+      }
+
+      .button-row .button,
+      .device-controls .button {
+        width: 100%;
+      }
+
+      .device-controls {
+        display: grid;
         grid-template-columns: 1fr;
       }
 
-      .avatar {
-        width: 44px;
-        height: 44px;
-        border-radius: 13px;
-      }
-
-      .wallet-card {
-        grid-template-columns: auto minmax(0, 1fr);
-      }
-
       .history-row {
-        grid-template-columns: minmax(0, 1fr);
+        grid-template-columns: 1fr !important;
       }
 
       .history-row .pill {
         justify-self: start;
       }
-    }
 
+      input[type="text"],
+      input[type="password"],
+      input[type="number"] {
+        max-width: 100%;
+      }
+    }
 </style>
 
 </head>
