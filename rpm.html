@@ -1008,6 +1008,181 @@
       display: none !important;
     }
 
+    /* ================================================================
+       JITSI V0 VIDEO COMMUNICATOR
+       Synthetic-data prototype only.
+       ================================================================ */
+
+    .video-help-card {
+      overflow: hidden;
+      margin-top: 17px;
+      border: 1px solid #c9e4f3;
+      border-radius: var(--radius-md);
+      background:
+        radial-gradient(circle at 100% 0%, rgba(47, 168, 241, 0.16), transparent 12rem),
+        linear-gradient(145deg, #f8fcff, #edf7fd);
+    }
+
+    .video-help-card-inner {
+      padding: 17px;
+    }
+
+    .video-help-topline {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .video-help-title-wrap {
+      display: flex;
+      gap: 11px;
+      align-items: flex-start;
+    }
+
+    .video-help-icon {
+      display: grid;
+      flex: 0 0 auto;
+      width: 40px;
+      height: 40px;
+      place-items: center;
+      color: var(--blue-dark);
+      font-size: 1.05rem;
+      border-radius: 12px;
+      background: var(--blue-soft);
+    }
+
+    .video-help-title {
+      margin: 0 0 3px;
+      color: var(--navy);
+      font-size: 0.98rem;
+      font-weight: 850;
+    }
+
+    .video-help-copy {
+      margin: 0;
+      color: var(--slate-600);
+      font-size: 0.8rem;
+      line-height: 1.45;
+    }
+
+    .video-prototype-badge {
+      padding: 6px 8px;
+      color: var(--blue-dark);
+      font-size: 0.66rem;
+      font-weight: 850;
+      letter-spacing: 0.045em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      border: 1px solid #c7e1f2;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.78);
+    }
+
+    .video-help-note {
+      margin: 12px 0 0;
+      color: #426580;
+      font-size: 0.73rem;
+      line-height: 1.45;
+    }
+
+    .video-call-modal {
+      position: fixed;
+      z-index: 1000;
+      inset: 0;
+      display: grid;
+      padding: 15px;
+      place-items: center;
+      background: rgba(8, 28, 44, 0.72);
+      backdrop-filter: blur(4px);
+    }
+
+    .video-call-panel {
+      display: flex;
+      flex-direction: column;
+      width: min(100%, 980px);
+      height: min(92vh, 720px);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      background: #0c2638;
+      box-shadow: 0 24px 70px rgba(8, 28, 44, 0.38);
+    }
+
+    .video-call-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 18px;
+      color: white;
+      background:
+        radial-gradient(circle at 100% 0%, rgba(57, 188, 233, 0.22), transparent 12rem),
+        linear-gradient(135deg, #102a43, #0c5c70);
+    }
+
+    .video-call-header strong {
+      display: block;
+      margin-bottom: 3px;
+      font-size: 1rem;
+    }
+
+    .video-call-header span {
+      display: block;
+      max-width: 660px;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.76rem;
+      line-height: 1.42;
+    }
+
+    .video-call-close {
+      display: grid;
+      flex: 0 0 auto;
+      width: 35px;
+      height: 35px;
+      padding: 0;
+      place-items: center;
+      color: white;
+      font-size: 1.25rem;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.10);
+    }
+
+    .jitsi-meeting-container {
+      flex: 1;
+      min-height: 0;
+      background: #111;
+    }
+
+    .video-call-footer {
+      padding: 10px 15px;
+      color: rgba(255, 255, 255, 0.71);
+      font-size: 0.71rem;
+      line-height: 1.42;
+      background: #0a1f2e;
+    }
+
+    @media (max-width: 420px) {
+      .video-help-topline {
+        flex-direction: column;
+      }
+
+      .video-call-modal {
+        padding: 0;
+      }
+
+      .video-call-panel {
+        width: 100%;
+        height: 100vh;
+        border-radius: 0;
+      }
+
+      .video-call-header {
+        padding: 14px;
+      }
+    }
+
     .footer-note {
       margin: 23px 10px 0;
       color: var(--slate-500);
@@ -1346,6 +1521,44 @@
         </div>
       </article>
 
+      <article class="video-help-card">
+        <div class="video-help-card-inner">
+          <div class="video-help-topline">
+            <div class="video-help-title-wrap">
+              <div class="video-help-icon" aria-hidden="true">◉</div>
+
+              <div>
+                <h3 class="video-help-title">Need help with your reading?</h3>
+                <p class="video-help-copy">
+                  Connect with the RPM clinic video room to discuss a question,
+                  a reading, or your monitoring plan.
+                </p>
+              </div>
+            </div>
+
+            <span class="video-prototype-badge">Prototype Video</span>
+          </div>
+
+          <div class="button-row" style="margin-top: 16px;">
+            <button
+              id="videoCallClinicButton"
+              class="button button-primary"
+              type="button"
+            >
+              ◉ Video Call Clinic
+            </button>
+          </div>
+
+          <p class="video-help-note">
+            Prototype behavior: a clinic team member must be available in the
+            RPM Health Rewards video communicator to join this demonstration call.
+            This feature does not create clinical documentation or establish billing eligibility.
+          </p>
+        </div>
+      </article>
+
+      
+
       <section id="submissionResult" class="hidden" aria-live="polite"></section>
 
       <div class="section-title">
@@ -1391,6 +1604,43 @@
       comparison only · Not clinical advice or a substitute for care from your clinician.
     </p>
   </main>
+
+<script src="https://meet.jit.si/external_api.js"></script>
+
+  <div
+    id="videoCallModal"
+    class="video-call-modal hidden"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="videoCallTitle"
+  >
+    <div class="video-call-panel">
+      <header class="video-call-header">
+        <div>
+          <strong id="videoCallTitle">RPM Clinic Video Room</strong>
+          <span id="videoCallHeaderText">
+            Connecting to the RPM Health Rewards prototype clinic communicator.
+          </span>
+        </div>
+
+        <button
+          id="closeVideoCallButton"
+          class="video-call-close"
+          type="button"
+          aria-label="Close video call"
+        >
+          ×
+        </button>
+      </header>
+
+      <div id="jitsiMeetingContainer" class="jitsi-meeting-container"></div>
+
+      <footer class="video-call-footer">
+        Prototype video demonstration only. Do not use this public room for real
+        patient information, clinical care, emergencies, or billable RPM services.
+      </footer>
+    </div>
+  </div>
 
   <script>
     "use strict";
@@ -1471,7 +1721,14 @@
     };
 
     const elements = {
-      pinScreen: document.getElementById("pinScreen"),
+     
+      videoCallClinicButton: document.getElementById("videoCallClinicButton"),
+      videoCallModal: document.getElementById("videoCallModal"),
+      closeVideoCallButton: document.getElementById("closeVideoCallButton"),
+      videoCallHeaderText: document.getElementById("videoCallHeaderText"),
+      jitsiMeetingContainer: document.getElementById("jitsiMeetingContainer"),
+
+ pinScreen: document.getElementById("pinScreen"),
       dashboardScreen: document.getElementById("dashboardScreen"),
 
       installBanner: document.getElementById("installBanner"),
@@ -1524,6 +1781,9 @@
       walletHistory: document.getElementById("walletHistory"),
       vitalsHistory: document.getElementById("vitalsHistory"),
       refreshButton: document.getElementById("refreshButton")
+
+
+
     };
 
     function tableUrl(tableName) {
@@ -2738,6 +2998,8 @@
       elements.vitalsHistory.innerHTML =
         '<div class="empty-state">Sign in to view recent readings.</div>';
 
+showScreen("pin")
+
       showScreen("pin");
       elements.pinInput.focus();
     }
@@ -2869,6 +3131,105 @@
     if (!isStandaloneDisplayMode()) {
       showIosInstallInstructionsIfNeeded();
     }
+
+    elements.videoCallClinicButton.addEventListener(
+      "click",
+      openPatientVideoCall
+    );
+
+    elements.closeVideoCallButton.addEventListener(
+      "click",
+      closePatientVideoCall
+    );
+
+    /* ================================================================
+       JITSI V0 VIDEO COMMUNICATOR
+       Public synthetic-data demo room only.
+       ================================================================ */
+
+    const JITSI_DOMAIN = "meet.jit.si";
+    const JITSI_DEMO_ROOM = "rpm-health-rewards-prototype-clinic-video-demo-2026";
+
+    let patientJitsiApi = null;
+
+    function openPatientVideoCall() {
+      if (!state.patient) {
+        return;
+      }
+
+      if (typeof JitsiMeetExternalAPI === "undefined") {
+        setStatus(
+          elements.readingStatus,
+          "The video meeting service could not load. Check your internet connection and try again.",
+          "error"
+        );
+        return;
+      }
+
+      elements.videoCallHeaderText.textContent =
+        "Calling the RPM Health Rewards prototype clinic room. Waiting for a clinic team member to join.";
+
+      elements.videoCallModal.classList.remove("hidden");
+      document.body.style.overflow = "hidden";
+
+      if (patientJitsiApi) {
+        return;
+      }
+
+      patientJitsiApi = new JitsiMeetExternalAPI(JITSI_DOMAIN, {
+        roomName: JITSI_DEMO_ROOM,
+        parentNode: elements.jitsiMeetingContainer,
+        width: "100%",
+        height: "100%",
+        userInfo: {
+          displayName: "Patient Demo User"
+        },
+        configOverwrite: {
+          prejoinPageEnabled: true,
+          startWithAudioMuted: false,
+          startWithVideoMuted: false,
+          disableDeepLinking: true
+        },
+        interfaceConfigOverwrite: {
+          TOOLBAR_BUTTONS: [
+            "microphone",
+            "camera",
+            "desktop",
+            "chat",
+            "raisehand",
+            "tileview",
+            "hangup"
+          ]
+        }
+      });
+
+      patientJitsiApi.addEventListener("videoConferenceJoined", () => {
+        elements.videoCallHeaderText.textContent =
+          "You are in the RPM Health Rewards prototype clinic video room. Waiting for a clinic team member if one has not joined yet.";
+      });
+
+      patientJitsiApi.addEventListener("participantJoined", () => {
+        elements.videoCallHeaderText.textContent =
+          "A clinic participant joined the prototype video room.";
+      });
+
+      patientJitsiApi.addEventListener("videoConferenceLeft", () => {
+        closePatientVideoCall();
+      });
+    }
+
+    function closePatientVideoCall() {
+      elements.videoCallModal.classList.add("hidden");
+      document.body.style.overflow = "";
+
+      if (patientJitsiApi) {
+        patientJitsiApi.dispose();
+        patientJitsiApi = null;
+      }
+
+      elements.jitsiMeetingContainer.innerHTML = "";
+    }
+
   </script>
 </body>
 </html>

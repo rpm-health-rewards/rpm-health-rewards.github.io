@@ -1179,6 +1179,232 @@
       grid-column: 1 / -1;
     }
 
+    /* ================================================================
+       JITSI V0 VIDEO COMMUNICATOR
+       Synthetic-data prototype only.
+       ================================================================ */
+
+    .video-communicator-card {
+      margin-top: 16px;
+      padding: 17px;
+      border: 1px solid #c8e1f2;
+      border-radius: var(--radius-lg);
+      background:
+        radial-gradient(circle at 100% 0%, rgba(55, 177, 238, 0.14), transparent 11rem),
+        linear-gradient(145deg, #f7fcff, #edf7fd);
+    }
+
+    .video-communicator-card h3 {
+      margin-bottom: 5px;
+    }
+
+    .video-communicator-card p {
+      margin: 0;
+      color: var(--slate-600);
+      font-size: 0.81rem;
+      line-height: 1.45;
+    }
+
+    .video-communicator-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+      padding: 10px 11px;
+      color: #17606e;
+      font-size: 0.78rem;
+      font-weight: 760;
+      border: 1px solid #c8e7ec;
+      border-radius: 10px;
+      background: #f1fbfc;
+    }
+
+    .video-communicator-status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #15a67e;
+      box-shadow: 0 0 0 4px rgba(21, 166, 126, 0.12);
+    }
+
+    .video-request-confirmation {
+      padding: 17px;
+      border: 1px solid #bddfcb;
+      border-radius: 14px;
+      background:
+        radial-gradient(circle at 100% 0%, rgba(63, 190, 128, 0.13), transparent 10rem),
+        #f3fbf6;
+    }
+
+    .video-request-icon {
+      display: grid;
+      width: 43px;
+      height: 43px;
+      margin-bottom: 12px;
+      place-items: center;
+      color: var(--green);
+      font-size: 1.12rem;
+      border-radius: 13px;
+      background: var(--green-soft);
+    }
+
+    .video-request-confirmation h3 {
+      margin-bottom: 6px;
+    }
+
+    .video-request-confirmation p {
+      margin-bottom: 0;
+      color: var(--slate-600);
+      font-size: 0.84rem;
+      line-height: 1.5;
+    }
+
+    .video-request-future-note {
+      margin-top: 13px !important;
+      padding: 10px 11px;
+      color: #2a6372 !important;
+      font-size: 0.77rem !important;
+      border-left: 3px solid #1c9eb4;
+      border-radius: 0 9px 9px 0;
+      background: #e9f8fb;
+    }
+
+      /* ================================================================
+       JITSI V0 VIDEO COMMUNICATOR
+       Floating, draggable, resizable Provider Portal panel.
+       ================================================================ */
+
+    .video-call-modal {
+      position: fixed;
+      z-index: 1000;
+      right: 24px;
+      bottom: 24px;
+      display: block;
+      width: min(760px, calc(100vw - 48px));
+      height: min(590px, calc(100vh - 48px));
+      min-width: 380px;
+      min-height: 310px;
+      overflow: auto;
+      resize: both;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 18px;
+      background: #0c2638;
+      box-shadow: 0 24px 70px rgba(8, 28, 44, 0.38);
+    }
+
+    .video-call-modal.hidden {
+      display: none !important;
+    }
+
+    .video-call-modal.video-minimized {
+      width: min(340px, calc(100vw - 32px)) !important;
+      height: auto !important;
+      min-width: 0;
+      min-height: 0;
+      overflow: hidden;
+      resize: none;
+    }
+
+    .video-call-modal.video-minimized .jitsi-meeting-container,
+    .video-call-modal.video-minimized .video-call-footer {
+      display: none;
+    }
+
+    .video-call-modal.video-minimized .video-call-panel {
+      height: auto;
+      min-height: 0;
+    }
+
+    .video-call-panel {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      overflow: hidden;
+      border-radius: 17px;
+      background: #0c2638;
+    }
+
+    .video-call-header {
+      display: flex;
+      flex: 0 0 auto;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 13px 14px;
+      color: white;
+      cursor: move;
+      user-select: none;
+      background:
+        radial-gradient(circle at 100% 0%, rgba(57, 188, 233, 0.22), transparent 12rem),
+        linear-gradient(135deg, #102a43, #0c5c70);
+    }
+
+    .video-call-header strong {
+      display: block;
+      margin-bottom: 3px;
+      font-size: 0.91rem;
+    }
+
+    .video-call-header span {
+      display: block;
+      max-width: 530px;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.69rem;
+      line-height: 1.38;
+    }
+
+    .video-call-header-actions {
+      display: flex;
+      flex: 0 0 auto;
+      gap: 7px;
+    }
+
+    .video-call-minimize,
+    .video-call-close {
+      display: grid;
+      width: 31px;
+      height: 31px;
+      padding: 0;
+      place-items: center;
+      color: white;
+      font-size: 1.05rem;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.10);
+    }
+
+    .video-call-close {
+      font-size: 1.18rem;
+    }
+
+    .jitsi-meeting-container {
+      flex: 1 1 auto;
+      min-height: 0;
+      background: #111;
+    }
+
+    .video-call-footer {
+      flex: 0 0 auto;
+      padding: 8px 11px;
+      color: rgba(255, 255, 255, 0.71);
+      font-size: 0.64rem;
+      line-height: 1.35;
+      background: #0a1f2e;
+    }
+
+    @media (max-width: 700px) {
+      .video-call-modal {
+        right: 12px;
+        bottom: 12px;
+        width: calc(100vw - 24px);
+        height: min(68vh, 500px);
+        min-width: 0;
+        min-height: 260px;
+        resize: none;
+      }
+    }
     .footer-note {
       margin: 24px 8px 0;
       color: var(--slate-500);
@@ -1352,15 +1578,22 @@
           </div>
         </div>
 
-        <div class="dashboard-actions">
+              <div class="dashboard-actions">
+          <button id="openClinicVideoButton" class="button button-secondary" type="button">
+            ◉ Video Communicator
+          </button>
+
           <button id="refreshDashboardButton" class="button button-secondary" type="button">
             ↻ Refresh
           </button>
+
           <button id="changeProviderButton" class="button button-secondary" type="button">
             Switch Provider
           </button>
         </div>
-      </section>
+     
+
+ </section>
 
       <section class="kpi-grid" aria-label="Practice financial and RPM summary">
         <article class="kpi-card">
@@ -1487,8 +1720,33 @@
             <span>Latest 6</span>
           </div>
 
-          <div id="recentActivityList">
+                  <div id="recentActivityList">
             <div class="empty-state">Loading recent monitoring activity…</div>
+          </div>
+
+          <!-- JITSI V0: Clinic room availability card -->
+          <div class="video-communicator-card">
+            <h3>Clinic Video Communicator</h3>
+
+            <p>
+              Remain available in the prototype clinic video room to receive
+              patient-initiated support calls.
+            </p>
+
+            <div class="video-communicator-status">
+              <span class="video-communicator-status-dot" aria-hidden="true"></span>
+              Available for demo patient calls
+            </div>
+
+            <div class="button-row" style="margin-top: 13px;">
+              <button
+                id="joinDemoClinicRoomButton"
+                class="button button-primary button-small"
+                type="button"
+              >
+                ◉ Join Demo Clinic Room
+              </button>
+            </div>
           </div>
         </aside>
       </section>
@@ -1627,6 +1885,56 @@
     </div>
   </aside>
 
+ <div
+    id="providerVideoCallModal"
+    class="video-call-modal hidden"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="providerVideoCallTitle"
+  >
+    <div class="video-call-panel">
+
+          <header id="providerVideoCallHeader" class="video-call-header">
+        <div>
+          <strong id="providerVideoCallTitle">RPM Clinic Video Communicator</strong>
+          <span id="providerVideoCallHeaderText">
+            Joining the RPM Health Rewards prototype clinic video room.
+          </span>
+        </div>
+
+        <div class="video-call-header-actions">
+          <button
+            id="minimizeProviderVideoCallButton"
+            class="video-call-minimize"
+            type="button"
+            aria-label="Minimize clinic video communicator"
+            title="Minimize"
+          >
+            −
+          </button>
+
+          <button
+            id="closeProviderVideoCallButton"
+            class="video-call-close"
+            type="button"
+            aria-label="Close clinic video communicator"
+            title="Close"
+          >
+            ×
+          </button>
+        </div>
+      </header>
+      <div id="providerJitsiMeetingContainer" class="jitsi-meeting-container"></div>
+
+      <footer class="video-call-footer">
+        Prototype video demonstration only. Do not use this public room for real
+        patient information, clinical care, emergencies, or billable RPM services.
+      </footer>
+    </div>
+  </div>
+
+<script src="https://meet.jit.si/external_api.js"></script>
+
   <script>
     "use strict";
 
@@ -1679,6 +1987,16 @@
     };
 
     const el = {
+
+      openClinicVideoButton: document.getElementById("openClinicVideoButton"),
+      joinDemoClinicRoomButton: document.getElementById("joinDemoClinicRoomButton"),
+      providerVideoCallModal: document.getElementById("providerVideoCallModal"),
+      closeProviderVideoCallButton: document.getElementById("closeProviderVideoCallButton"),
+      providerVideoCallHeaderText: document.getElementById("providerVideoCallHeaderText"),
+      providerJitsiMeetingContainer: document.getElementById("providerJitsiMeetingContainer"),
+      providerVideoCallHeader: document.getElementById("providerVideoCallHeader"),
+      minimizeProviderVideoCallButton: document.getElementById("minimizeProviderVideoCallButton"),
+
       providerSelectScreen: document.getElementById("providerSelectScreen"),
       dashboardScreen: document.getElementById("dashboardScreen"),
 
@@ -1733,6 +2051,9 @@
       newPatientAssignedDoctor: document.getElementById("newPatientAssignedDoctor"),
       addPatientStatus: document.getElementById("addPatientStatus"),
       saveNewPatientButton: document.getElementById("saveNewPatientButton")
+
+
+
     };
 
     /* ================================================================
@@ -2688,6 +3009,31 @@
         </section>
       `;
 
+      const patientCommunicationHtml = `
+        <section class="drawer-section">
+          <div class="drawer-section-head">
+            <div>
+              <h3>Patient Communication</h3>
+              <p>
+                Request a synchronous prototype video check-in with this patient.
+              </p>
+            </div>
+          </div>
+
+          <div class="workflow-actions">
+            <button
+              id="requestPatientVideoCheckInButton"
+              class="button button-primary button-small"
+              type="button"
+            >
+              ◉ Request Patient Video Check-In
+            </button>
+          </div>
+
+          <div id="videoCheckInRequestPanel" class="hidden" style="margin-top: 13px;"></div>
+        </section>
+      `;
+
       const workflowHtml = `
         <section class="drawer-section">
           <div class="drawer-section-head">
@@ -2770,9 +3116,10 @@
         </section>
       `;
 
-      el.patientDrawerBody.innerHTML = `
+           el.patientDrawerBody.innerHTML = `
         ${summaryHtml}
         ${patientDetails}
+        ${patientCommunicationHtml}
         ${workflowHtml}
         ${vitalsHtml}
         ${rewardsHtml}
@@ -2927,7 +3274,12 @@
           updateBillingWorkflow(button.dataset.workflowStatus, button);
         });
       });
-    }
+  
+      document
+        .getElementById("requestPatientVideoCheckInButton")
+        ?.addEventListener("click", renderVideoCheckInRequestPanel);
+
+  }
 
     async function handlePatientEditSubmit(event) {
       event.preventDefault();
@@ -3226,13 +3578,38 @@
        EVENT WIRING
        ================================================================ */
 
-    el.providerSelectForm.addEventListener("submit", handleProviderSelectSubmit);
+      el.providerSelectForm.addEventListener("submit", handleProviderSelectSubmit);
 
     el.refreshDashboardButton.addEventListener("click", refreshDashboard);
 
+    el.minimizeProviderVideoCallButton.addEventListener(
+      "click",
+      toggleProviderVideoMinimize
+    );
+
+    /* ================================================================
+       JITSI V0 VIDEO COMMUNICATOR EVENT LISTENERS
+       ================================================================ */
+
+    el.openClinicVideoButton.addEventListener("click", () => {
+      openProviderVideoCommunicator("available");
+    });
+
+    if (el.joinDemoClinicRoomButton) {
+      el.joinDemoClinicRoomButton.addEventListener("click", () => {
+        openProviderVideoCommunicator("available");
+      });
+    }
+
+    el.closeProviderVideoCallButton.addEventListener(
+      "click",
+      closeProviderVideoCommunicator
+    );
+
     el.changeProviderButton.addEventListener("click", () => {
       closeAllDrawers();
-      state.selectedProvider = null;
+            closeProviderVideoCommunicator();
+state.selectedProvider = null;
       state.allPatients = [];
       state.rosterPatients = [];
       state.patientSummaries = new Map();
@@ -3240,6 +3617,7 @@
       state.patientDetail = null;
       showScreen("select");
       el.providerSelect.focus();
+      closeProviderVideoCommunicator();
     });
 
     el.patientSearchInput.addEventListener("input", applyRosterFiltersAndRender);
@@ -3310,7 +3688,266 @@
     }
 
     initialize();
-  </script>
+  
+    /* ================================================================
+       JITSI V0 VIDEO COMMUNICATOR
+       Public synthetic-data demo room only.
+       ================================================================ */
+
+    const JITSI_DOMAIN = "meet.jit.si";
+    const JITSI_DEMO_ROOM = "rpm-health-rewards-prototype-clinic-video-demo-2026";
+
+    let providerJitsiApi = null;
+
+    function openProviderVideoCommunicator(context = "available") {
+      if (typeof JitsiMeetExternalAPI === "undefined") {
+        window.alert(
+          "The video meeting service could not load. Check the internet connection and try again."
+        );
+        return;
+      }
+
+      if (context === "patient-request") {
+        el.providerVideoCallHeaderText.textContent =
+          "Joining the prototype clinic room after a patient video check-in request. Waiting for the patient to join.";
+      } else {
+        el.providerVideoCallHeaderText.textContent =
+          "You are available in the RPM Health Rewards prototype clinic video room. Patients may join from the Patient Portal.";
+      }
+
+      el.providerVideoCallModal.classList.remove("hidden");
+
+      el.providerVideoCallModal.classList.remove("video-minimized");
+      el.minimizeProviderVideoCallButton.textContent = "−";
+      el.minimizeProviderVideoCallButton.setAttribute(
+        "aria-label",
+        "Minimize clinic video communicator"
+      );     
+
+ document.body.style.overflow = "hidden";
+
+      if (providerJitsiApi) {
+        return;
+      }
+
+      const providerName = state.selectedProvider?.name || "Clinic Provider";
+
+      providerJitsiApi = new JitsiMeetExternalAPI(JITSI_DOMAIN, {
+        roomName: JITSI_DEMO_ROOM,
+        parentNode: el.providerJitsiMeetingContainer,
+        width: "100%",
+        height: "100%",
+        userInfo: {
+          displayName: `Provider: ${providerName}`
+        },
+        configOverwrite: {
+          prejoinPageEnabled: true,
+          startWithAudioMuted: false,
+          startWithVideoMuted: false,
+          disableDeepLinking: true
+        },
+        interfaceConfigOverwrite: {
+          TOOLBAR_BUTTONS: [
+            "microphone",
+            "camera",
+            "desktop",
+            "chat",
+            "raisehand",
+            "tileview",
+            "hangup"
+          ]
+        }
+      });
+
+      providerJitsiApi.addEventListener("videoConferenceJoined", () => {
+        el.providerVideoCallHeaderText.textContent =
+          "You are available in the RPM Health Rewards prototype clinic video room. Waiting for a patient if no patient has joined yet.";
+      });
+
+      providerJitsiApi.addEventListener("participantJoined", () => {
+        el.providerVideoCallHeaderText.textContent =
+          "A participant joined the prototype clinic video room.";
+      });
+
+      providerJitsiApi.addEventListener("videoConferenceLeft", () => {
+        closeProviderVideoCommunicator();
+      });
+    }
+
+    function closeProviderVideoCommunicator() {
+      el.providerVideoCallModal.classList.add("hidden");
+
+      el.providerVideoCallModal.classList.remove("video-minimized");
+
+      document.body.style.overflow = "";
+
+      if (providerJitsiApi) {
+        providerJitsiApi.dispose();
+        providerJitsiApi = null;
+      }
+
+      el.providerJitsiMeetingContainer.innerHTML = "";
+    }
+
+    function toggleProviderVideoMinimize() {
+      const isMinimized = el.providerVideoCallModal.classList.toggle(
+        "video-minimized"
+      );
+
+      el.minimizeProviderVideoCallButton.textContent = isMinimized ? "□" : "−";
+      el.minimizeProviderVideoCallButton.setAttribute(
+        "aria-label",
+        isMinimized
+          ? "Restore clinic video communicator"
+          : "Minimize clinic video communicator"
+      );
+
+      el.minimizeProviderVideoCallButton.title = isMinimized
+        ? "Restore"
+        : "Minimize";
+    }
+
+    function makeProviderVideoDraggable() {
+      let dragging = false;
+      let startX = 0;
+      let startY = 0;
+      let initialLeft = 0;
+      let initialTop = 0;
+
+      el.providerVideoCallHeader.addEventListener("pointerdown", (event) => {
+        if (event.target.closest("button")) {
+          return;
+        }
+
+        if (el.providerVideoCallModal.classList.contains("video-minimized")) {
+          return;
+        }
+
+        const rect = el.providerVideoCallModal.getBoundingClientRect();
+
+        dragging = true;
+        startX = event.clientX;
+        startY = event.clientY;
+        initialLeft = rect.left;
+        initialTop = rect.top;
+
+        el.providerVideoCallModal.style.left = `${rect.left}px`;
+        el.providerVideoCallModal.style.top = `${rect.top}px`;
+        el.providerVideoCallModal.style.right = "auto";
+        el.providerVideoCallModal.style.bottom = "auto";
+
+        el.providerVideoCallHeader.setPointerCapture(event.pointerId);
+      });
+
+      el.providerVideoCallHeader.addEventListener("pointermove", (event) => {
+        if (!dragging) {
+          return;
+        }
+
+        const maxLeft = Math.max(
+          0,
+          window.innerWidth - el.providerVideoCallModal.offsetWidth
+        );
+
+        const maxTop = Math.max(
+          0,
+          window.innerHeight - el.providerVideoCallModal.offsetHeight
+        );
+
+        const nextLeft = Math.min(
+          maxLeft,
+          Math.max(0, initialLeft + event.clientX - startX)
+        );
+
+        const nextTop = Math.min(
+          maxTop,
+          Math.max(0, initialTop + event.clientY - startY)
+        );
+
+        el.providerVideoCallModal.style.left = `${nextLeft}px`;
+        el.providerVideoCallModal.style.top = `${nextTop}px`;
+      });
+
+      function stopDragging(event) {
+        if (!dragging) {
+          return;
+        }
+
+        dragging = false;
+
+        if (el.providerVideoCallHeader.hasPointerCapture(event.pointerId)) {
+          el.providerVideoCallHeader.releasePointerCapture(event.pointerId);
+        }
+      }
+
+      el.providerVideoCallHeader.addEventListener("pointerup", stopDragging);
+      el.providerVideoCallHeader.addEventListener("pointercancel", stopDragging);
+    }
+
+    
+    makeProviderVideoDraggable();
+
+    function renderVideoCheckInRequestPanel() {
+      const panel = document.getElementById("videoCheckInRequestPanel");
+
+      if (!panel) {
+        return;
+      }
+
+      panel.classList.remove("hidden");
+
+      panel.innerHTML = `
+        <div class="video-request-confirmation">
+          <div class="video-request-icon">✓</div>
+
+          <h3>Video Check-In Request Created</h3>
+
+          <p>
+            In this prototype, the patient must already have the RPM Health Rewards
+            Patient Portal open and select <strong>Video Call Clinic</strong>.
+          </p>
+
+          <p class="video-request-future-note">
+            <strong>Future authenticated workflow:</strong> The patient will receive
+            a secure push notification or time-limited invitation link and will join
+            a patient/provider-specific protected video room.
+          </p>
+
+          <div class="button-row" style="margin-top: 14px;">
+            <button
+              id="joinRequestedPatientVideoButton"
+              class="button button-success button-small"
+              type="button"
+            >
+              ◉ Join Demo Clinic Video Room
+            </button>
+
+            <button
+              id="closeVideoRequestPanelButton"
+              class="button button-secondary button-small"
+              type="button"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      `;
+
+      document
+        .getElementById("joinRequestedPatientVideoButton")
+        ?.addEventListener("click", () => {
+          openProviderVideoCommunicator("patient-request");
+        });
+
+      document
+        .getElementById("closeVideoRequestPanelButton")
+        ?.addEventListener("click", () => {
+          panel.classList.add("hidden");
+          panel.innerHTML = "";
+        });
+    }
+
+</script>
 </body>
 </html>
 
