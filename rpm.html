@@ -1264,7 +1264,71 @@
         width: 100%;
       }
     }
-  </style>
+  
+    /* ================================================================
+       MOBILE PHONE LAYOUT SAFETY
+       Prevents a desktop-width embedded layout on narrow Android phones.
+       ================================================================ */
+
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    @media (max-width: 600px) {
+      .app-shell {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 12px 10px 28px;
+      }
+
+      .topbar {
+        margin: 2px 2px 16px;
+      }
+
+      .card,
+      .video-help-card,
+      .device-card {
+        max-width: 100%;
+      }
+
+      .button-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .button-row .button {
+        width: 100%;
+      }
+
+      .profile-card {
+        grid-template-columns: 1fr;
+      }
+
+      .avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: 13px;
+      }
+
+      .wallet-card {
+        grid-template-columns: auto minmax(0, 1fr);
+      }
+
+      .history-row {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .history-row .pill {
+        justify-self: start;
+      }
+    }
+
+</style>
+
 </head>
 
 <body>
@@ -3093,15 +3157,17 @@ showScreen("pin")
       elements.iosInstallHelp.classList.add("hidden");
     });
 
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker
-          .register("./service-worker.js")
-          .catch((error) => {
-            console.warn("Service worker registration failed:", error);
-          });
+ if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/service-worker.js", {
+        scope: "/"
+      })
+      .catch((error) => {
+        console.warn("Service worker registration failed:", error);
       });
-    }
+  });
+}
 
     elements.pinForm.addEventListener("submit", handlePinSubmit);
     elements.readingForm.addEventListener("submit", handleReadingSubmit);

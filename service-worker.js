@@ -1,12 +1,11 @@
-const CACHE_NAME = "rpm-rewards-patient-v1";
+const CACHE_NAME = "rpm-rewards-patient-v2";
 
 const APP_SHELL = [
-  "./",
-  "./rpm.html",
-  "./manifest.webmanifest",
-  "./offline.html",
-  "./icons/icon-192.png",
-  "./icons/icon-512.png"
+  "/rpm.html",
+  "/manifest.webmanifest",
+  "/offline.html",
+  "/icons/icon-192.png",
+  "/icons/icon-512.png"
 ];
 
 self.addEventListener("install", (event) => {
