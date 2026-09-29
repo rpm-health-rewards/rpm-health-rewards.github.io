@@ -1,4 +1,4 @@
-const CACHE_NAME = "rpm-rewards-patient-v2";
+const CACHE_NAME = "rpm-rewards-patient-v3";
 
 const APP_SHELL = [
   "/rpm.html",
